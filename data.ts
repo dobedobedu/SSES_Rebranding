@@ -405,7 +405,7 @@ export const personas: Persona[] = [
       usedTo: ['Professional sports coaching', 'International dorm life', 'Sport-first identity', '$91K+ tuition'],
       expecting: ['Academic Rescue without quitting sport', 'Flexible training windows (11am-2pm)', 'D1 recruitment expertise', 'Small focused classes'],
       emotionalDrivers: 'Panic that child is "just an athlete" without college-ready academic profile.',
-      nuggets: ['IMG Transfer Flow Analysis: Interactive visualization of 195-260 annual transfers. 44% leave due to financial burden. View the complete journey map to see where students go and why.', 'sankey_graph_reference']
+      nuggets: ['IMG Transfer Flow Analysis: 195-260 annual transfers. 44% leave due to financial burden. View the complete journey map to see where students go and why.', 'Financial burden is the #1 reason for IMG transfers - SSES offers $66K annual savings']
     },
     spending: {
       sensitivity: 'ROI-sensitive academics.',

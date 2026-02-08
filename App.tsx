@@ -59,7 +59,6 @@ const App: React.FC = () => {
   }, []);
 
   const handleSegmentClick = useCallback((segment: PrioritySegmentType) => {
-    // Find the persona with this priority type and open their detail panel
     const persona = personas.find(p => p.priorityType === segment);
     if (persona) {
       setActiveCell({ personaId: persona.id, colIndex: MatrixColumn.SEGMENT });
@@ -70,24 +69,58 @@ const App: React.FC = () => {
   const selectedPersona = personas.find(p => p.id === activeCell.personaId);
 
   return (
-    <div className="min-h-screen">
-      {/* Header Section */}
-      <header className="max-w-7xl mx-auto px-6 pt-16 pb-12 md:flex justify-between items-end border-b border-slate-200">
-        <div className="mb-6 md:mb-0">
-          <h1 className="text-5xl font-extralight text-slate-900 tracking-tight leading-none">
-            SSES <span className="font-black text-emerald-600">GROWTH</span>
-          </h1>
-          <p className="text-slate-400 text-sm font-semibold tracking-[0.2em] mt-2 uppercase">
-            Strategic Persona Intelligence Matrix 2026
-          </p>
-        </div>
-        <div className="flex flex-col items-end">
-          <div className="bg-emerald-600 text-white px-4 py-2 rounded-full text-[10px] font-bold tracking-widest uppercase mb-2">
-            Confidential Strategy
+    <div className="min-h-screen bg-[#f5f5f0]">
+      {/* TE-Style Header */}
+      <header className="border-b-2 border-[#0a0a0a] bg-[#0a0a0a] text-white">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            {/* Logo & Title */}
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-[#ff6b00] flex items-center justify-center">
+                <span className="font-mono text-lg font-bold text-white">SSES</span>
+              </div>
+              <div>
+                <h1 className="font-mono text-xl md:text-2xl font-bold tracking-tight">
+                  GROWTH <span className="text-[#ff6b00]">MATRIX</span>
+                </h1>
+                <p className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-[0.2em]">
+                  Strategic Persona Intelligence / 2026
+                </p>
+              </div>
+            </div>
+
+            {/* Status Indicators */}
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-[#00cc66] animate-pulse" />
+                <span className="font-mono text-[10px] uppercase tracking-wider text-[#8a8a8a]">Live Data</span>
+              </div>
+              <div className="px-3 py-1.5 border border-[#ff6b00] text-[#ff6b00] font-mono text-[10px] uppercase tracking-wider">
+                Confidential
+              </div>
+              <div className="hidden md:block font-mono text-[10px] text-[#8a8a8a]">
+                Tampa Bay / Sarasota Region
+              </div>
+            </div>
           </div>
-          <p className="text-xs text-slate-400 font-medium italic">
-            Target Market: Sarasota & Tampa Relocation Corridors
-          </p>
+        </div>
+
+        {/* Sub-header with version */}
+        <div className="border-t border-[#2a2a2a] px-4 md:px-6 py-2">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <span className="font-mono text-[10px] text-[#8a8a8a]">VER. 2.0.0</span>
+              <span className="font-mono text-[10px] text-[#8a8a8a]">|</span>
+              <span className="font-mono text-[10px] text-[#8a8a8a]">5 SEGMENTS</span>
+              <span className="font-mono text-[10px] text-[#8a8a8a]">|</span>
+              <span className="font-mono text-[10px] text-[#8a8a8a]">3 PRIORITY</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-[10px] text-[#8a8a8a]">
+                {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).toUpperCase()}
+              </span>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -107,7 +140,7 @@ const App: React.FC = () => {
 
       {/* Bottom Panel */}
       {selectedPersona && (
-        <DetailPanel 
+        <DetailPanel
           persona={selectedPersona}
           colIndex={activeCell.colIndex ?? MatrixColumn.SEGMENT}
           isOpen={isPanelOpen}
@@ -128,12 +161,22 @@ const App: React.FC = () => {
         />
       )}
 
-      {/* Footer Info */}
-      <footer className="max-w-7xl mx-auto px-8 py-10 opacity-40 hover:opacity-100 transition-opacity">
-        <p className="text-[10px] text-slate-500 uppercase tracking-widest text-center">
-          Intelligence powered by regional research & high-net-worth relocation analysis. 
-          Property of SSES Enrollment Marketing.
-        </p>
+      {/* TE-Style Footer */}
+      <footer className="border-t-2 border-[#0a0a0a] bg-[#0a0a0a] text-white mt-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-4">
+              <span className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-wider">
+                SSES Enrollment Marketing
+              </span>
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="font-mono text-[10px] text-[#8a8a8a]">
+                Powered by Regional Research & HNW Analysis
+              </span>
+            </div>
+          </div>
+        </div>
       </footer>
     </div>
   );

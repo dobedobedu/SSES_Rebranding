@@ -15,30 +15,30 @@ interface QuickInsight {
 
 const SEGMENT_INSIGHTS: Record<Exclude<PrioritySegmentType, null>, { title: string; color: string; insights: QuickInsight[] }> = {
   'img-switcher': {
-    title: 'IMG Switcher',
-    color: 'amber',
+    title: 'IMG SWITCHER',
+    color: '#ff6b00',
     insights: [
-      { icon: '📊', label: 'Annual Transfers', value: '195-260 students' },
-      { icon: '💰', label: 'Top Reason', value: '44% Financial burden' },
-      { icon: '💵', label: 'SSES Savings', value: '$66,255 vs IMG' }
+      { icon: '01', label: 'ANNUAL TRANSFERS', value: '195-260 students' },
+      { icon: '02', label: 'TOP REASON', value: '44% Financial burden' },
+      { icon: '03', label: 'SSES SAVINGS', value: '$66,255 vs IMG' }
     ]
   },
   'bridge-crosser': {
-    title: 'Bridge Crosser',
-    color: 'blue',
+    title: 'BRIDGE CROSSER',
+    color: '#0066ff',
     insights: [
-      { icon: '🎓', label: 'K-8 Graduates', value: '680-850 annually' },
-      { icon: '🏫', label: 'Top Source', value: '40% Montessori' },
-      { icon: '📈', label: 'SSES Captures', value: '80-105 students' }
+      { icon: '01', label: 'K-8 GRADUATES', value: '680-850 annually' },
+      { icon: '02', label: 'TOP SOURCE', value: '40% Montessori' },
+      { icon: '03', label: 'SSES CAPTURES', value: '80-105 students' }
     ]
   },
   'teen-driver': {
-    title: 'Teen Driver',
-    color: 'purple',
+    title: 'TEEN DRIVER',
+    color: '#9933ff',
     insights: [
-      { icon: '✋', label: 'Veto Power', value: '60%+ influence' },
-      { icon: '📱', label: 'Top Channel', value: 'Instagram/TikTok' },
-      { icon: '🎯', label: 'Key Factor', value: 'Campus aesthetic' }
+      { icon: '01', label: 'VETO POWER', value: '60%+ influence' },
+      { icon: '02', label: 'TOP CHANNEL', value: 'Instagram/TikTok' },
+      { icon: '03', label: 'KEY FACTOR', value: 'Campus aesthetic' }
     ]
   }
 };
@@ -53,38 +53,12 @@ const SegmentQuickView: React.FC<SegmentQuickViewProps> = ({
   const segmentData = SEGMENT_INSIGHTS[segmentType];
   if (!segmentData) return null;
 
-  const colorClasses = {
-    amber: {
-      bg: 'bg-amber-50',
-      border: 'border-amber-300',
-      header: 'bg-amber-100',
-      text: 'text-amber-700',
-      dot: 'bg-amber-500'
-    },
-    blue: {
-      bg: 'bg-blue-50',
-      border: 'border-blue-300',
-      header: 'bg-blue-100',
-      text: 'text-blue-700',
-      dot: 'bg-blue-500'
-    },
-    purple: {
-      bg: 'bg-purple-50',
-      border: 'border-purple-300',
-      header: 'bg-purple-100',
-      text: 'text-purple-700',
-      dot: 'bg-purple-500'
-    }
-  };
-
-  const colors = colorClasses[segmentData.color as keyof typeof colorClasses];
-
   return (
     <div
       className={`
-        fixed z-[100] w-64 rounded-xl border-2 shadow-2xl
-        ${colors.bg} ${colors.border}
-        transform transition-all duration-200
+        fixed z-[100] w-64 border-2 border-[#0a0a0a]
+        bg-[#fafafa] shadow-[8px_8px_0_#0a0a0a]
+        transform transition-all duration-150
         ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}
       `}
       style={{
@@ -93,21 +67,34 @@ const SegmentQuickView: React.FC<SegmentQuickViewProps> = ({
       }}
     >
       {/* Header */}
-      <div className={`${colors.header} px-4 py-2 rounded-t-lg flex items-center gap-2`}>
-        <span className={`w-2 h-2 rounded-full ${colors.dot}`} />
-        <span className={`font-bold text-sm ${colors.text}`}>{segmentData.title}</span>
+      <div
+        className="px-4 py-2 flex items-center gap-2 border-b-2 border-[#0a0a0a]"
+        style={{ backgroundColor: segmentData.color }}
+      >
+        <span className="w-2 h-2 bg-white" />
+        <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">
+          {segmentData.title}
+        </span>
       </div>
 
       {/* Insights */}
-      <div className="p-3 space-y-2">
+      <div className="p-0">
         {segmentData.insights.map((insight, index) => (
-          <div key={index} className="flex items-center gap-2 bg-white/60 rounded-lg px-3 py-2">
-            <span className="text-base">{insight.icon}</span>
-            <div className="flex-1">
-              <div className="text-[10px] text-slate-500 uppercase font-semibold">
+          <div
+            key={index}
+            className="flex items-stretch border-b border-[#e5e5e0] last:border-b-0"
+          >
+            <div
+              className="w-10 flex items-center justify-center font-mono text-xs font-bold"
+              style={{ color: segmentData.color, backgroundColor: '#f0f0eb' }}
+            >
+              {insight.icon}
+            </div>
+            <div className="flex-1 p-3">
+              <div className="font-mono text-[9px] text-[#8a8a8a] uppercase tracking-widest">
                 {insight.label}
               </div>
-              <div className="text-sm font-bold text-slate-900">
+              <div className="font-mono text-xs font-bold mt-0.5">
                 {insight.value}
               </div>
             </div>
@@ -116,8 +103,8 @@ const SegmentQuickView: React.FC<SegmentQuickViewProps> = ({
       </div>
 
       {/* Footer hint */}
-      <div className="px-3 pb-2">
-        <div className="text-[10px] text-slate-400 text-center">
+      <div className="px-3 py-2 bg-[#0a0a0a]">
+        <div className="font-mono text-[9px] text-[#8a8a8a] text-center uppercase tracking-wider">
           Click to view full details
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Persona, COLUMNS, MatrixColumn, PrioritySegmentType } from '../types';
-import { Map, Target, DollarSign, Trophy, Sparkles, Route } from 'lucide-react';
+import { MapPin, DollarSign, Trophy, Zap, Route } from 'lucide-react';
 import SegmentQuickView from './SegmentQuickView';
 
 interface MatrixGridProps {
@@ -32,121 +32,119 @@ const MatrixGrid: React.FC<MatrixGridProps> = ({
     setQuickViewSegment(null);
   };
 
-  const getPriorityStyles = (priorityType: PrioritySegmentType) => {
+  const getPriorityColor = (priorityType: PrioritySegmentType) => {
     switch (priorityType) {
-      case 'img-switcher':
-        return {
-          headerBg: 'bg-amber-50',
-          headerBorder: 'border-amber-200',
-          badge: 'bg-amber-100 text-amber-700',
-          indicator: 'bg-amber-500'
-        };
-      case 'bridge-crosser':
-        return {
-          headerBg: 'bg-blue-50',
-          headerBorder: 'border-blue-200',
-          badge: 'bg-blue-100 text-blue-700',
-          indicator: 'bg-blue-500'
-        };
-      case 'teen-driver':
-        return {
-          headerBg: 'bg-purple-50',
-          headerBorder: 'border-purple-200',
-          badge: 'bg-purple-100 text-purple-700',
-          indicator: 'bg-purple-500'
-        };
-      default:
-        return {
-          headerBg: 'bg-slate-50/50',
-          headerBorder: 'border-slate-100',
-          badge: '',
-          indicator: ''
-        };
+      case 'img-switcher': return '#ff6b00';
+      case 'bridge-crosser': return '#0066ff';
+      case 'teen-driver': return '#9933ff';
+      default: return '#0a0a0a';
     }
   };
 
   const getPriorityLabel = (priorityType: PrioritySegmentType) => {
     switch (priorityType) {
-      case 'img-switcher': return 'IMG Switcher';
-      case 'bridge-crosser': return 'Bridge Crosser';
-      case 'teen-driver': return 'Teen Driver';
+      case 'img-switcher': return 'IMG SWITCHER';
+      case 'bridge-crosser': return 'BRIDGE CROSSER';
+      case 'teen-driver': return 'TEEN DRIVER';
       default: return null;
     }
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
-      {/* Header */}
-      <div className="grid grid-cols-5 bg-slate-100/80 rounded-t-xl border-x border-t border-slate-200 sticky top-0 z-20 overflow-hidden">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
+      {/* Section Header */}
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-1 h-6 bg-[#0a0a0a]" />
+        <h2 className="font-mono text-sm font-bold uppercase tracking-wider">SEGMENT MATRIX</h2>
+        <span className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest ml-auto">
+          {personas.length} SEGMENTS
+        </span>
+      </div>
+
+      {/* Table Header */}
+      <div className="te-table-header">
         {COLUMNS.map((col, i) => (
-          <div key={i} className="p-4 text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest border-r border-slate-200 last:border-0">
-            {col}
-          </div>
+          <div key={i}>{col}</div>
         ))}
       </div>
 
       {/* Rows */}
-      <div className="border-x border-b border-slate-200 bg-white shadow-xl rounded-b-xl overflow-hidden">
-        {personas.map((p) => {
-          const styles = getPriorityStyles(p.priorityType);
+      <div className="border-2 border-[#0a0a0a] border-t-0">
+        {personas.map((p, personaIndex) => {
+          const priorityColor = getPriorityColor(p.priorityType);
           const priorityLabel = getPriorityLabel(p.priorityType);
 
           return (
             <div
               key={p.id}
-              className="grid grid-cols-5 border-b border-slate-100 last:border-0"
+              className="border-b border-[#0a0a0a] last:border-b-0"
               onMouseEnter={(e) => handleMouseEnter(p, e)}
               onMouseLeave={handleMouseLeave}
             >
-              {/* Persona Header */}
-              <div className={`col-span-5 border-b ${styles.headerBorder} ${styles.headerBg} px-4 py-2 flex items-center gap-2`}>
-                {p.priorityType && (
-                  <span className={`w-2 h-2 rounded-full ${styles.indicator}`} />
-                )}
-                <span className="font-bold text-slate-900">{p.name}</span>
+              {/* Persona Header Row */}
+              <div
+                className="flex items-center gap-3 px-4 py-2 bg-[#f0f0eb] border-b border-[#e5e5e0]"
+                style={p.priorityType ? { borderLeft: `4px solid ${priorityColor}` } : {}}
+              >
+                <span className="font-mono text-[10px] text-[#8a8a8a]">[{String(personaIndex + 1).padStart(2, '0')}]</span>
+                <span className="font-bold text-sm uppercase tracking-wide">{p.name}</span>
                 {priorityLabel && (
-                  <span className={`text-[10px] font-medium ${styles.badge} px-2 py-0.5 rounded-full`}>
+                  <span
+                    className="font-mono text-[10px] font-bold px-2 py-0.5 text-white"
+                    style={{ backgroundColor: priorityColor }}
+                  >
                     {priorityLabel}
                   </span>
                 )}
                 {p.touchPoints && (
-                  <span className="text-[10px] text-emerald-600 font-medium bg-emerald-100 px-2 py-0.5 rounded-full">
-                    {p.touchPoints.length} Touch Points
+                  <span className="font-mono text-[10px] text-[#8a8a8a] ml-auto">
+                    {p.touchPoints.length} TOUCH POINTS
                   </span>
                 )}
               </div>
-            
-            {/* Data Columns */}
-            {[0, 1, 2, 3, 4].map((colIdx) => {
-              const isActive = activeCell.personaId === p.id && activeCell.colIndex === colIdx;
-              const isOtherActive = isPanelOpen && !isActive;
 
-              const handleClick = () => {
-                if (colIdx === 0 && p.touchPoints) {
-                  // Segment column opens touch point modal
-                  onOpenTouchPointModal(p);
-                } else {
-                  onSelectCell(p, colIdx);
-                }
-              };
+              {/* Data Columns */}
+              <div className="grid grid-cols-5">
+                {[0, 1, 2, 3, 4].map((colIdx) => {
+                  const isActive = activeCell.personaId === p.id && activeCell.colIndex === colIdx;
+                  const isOtherActive = isPanelOpen && !isActive;
 
-              return (
-                <div
-                  key={colIdx}
-                  onClick={handleClick}
-                  className={`
-                    relative p-4 md:p-6 text-xs md:text-sm transition-all duration-300 cursor-pointer border-r border-slate-100 last:border-0 min-h-[100px] flex items-center
-                    ${isActive ? 'bg-emerald-50 z-10 scale-[1.02] shadow-inner ring-1 ring-emerald-200' : 'hover:bg-slate-50'}
-                    ${isOtherActive ? 'opacity-40 blur-[1px]' : 'opacity-100'}
-                  `}
-                >
-                  <CellContent persona={p} colIndex={colIdx} />
-                  {isActive && (
-                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500 rounded-r" />
-                  )}
-                </div>
-              );
-            })}
+                  const handleClick = () => {
+                    if (colIdx === 0 && p.touchPoints) {
+                      onOpenTouchPointModal(p);
+                    } else {
+                      onSelectCell(p, colIdx);
+                    }
+                  };
+
+                  return (
+                    <div
+                      key={colIdx}
+                      onClick={handleClick}
+                      className={`
+                        p-4 min-h-[80px] flex flex-col justify-center cursor-pointer
+                        border-r border-[#e5e5e0] last:border-r-0
+                        transition-all duration-150
+                        ${isActive ? 'bg-[#0a0a0a] text-white' : 'bg-white hover:bg-[#f5f5f0]'}
+                        ${isOtherActive ? 'opacity-30' : 'opacity-100'}
+                      `}
+                    >
+                      <CellContent
+                        persona={p}
+                        colIndex={colIdx}
+                        isActive={isActive}
+                        priorityColor={p.priorityType ? priorityColor : undefined}
+                      />
+                      {isActive && (
+                        <div
+                          className="absolute left-0 top-0 bottom-0 w-1"
+                          style={{ backgroundColor: priorityColor || '#ff6b00' }}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           );
         })}
@@ -162,66 +160,94 @@ const MatrixGrid: React.FC<MatrixGridProps> = ({
   );
 };
 
-const CellContent: React.FC<{ persona: Persona; colIndex: number }> = ({ persona, colIndex }) => {
+const CellContent: React.FC<{
+  persona: Persona;
+  colIndex: number;
+  isActive: boolean;
+  priorityColor?: string;
+}> = ({ persona, colIndex, isActive, priorityColor }) => {
+  const textColor = isActive ? 'text-white' : 'text-[#0a0a0a]';
+  const mutedColor = isActive ? 'text-[#8a8a8a]' : 'text-[#4a4a4a]';
+  const accentColor = priorityColor || (isActive ? '#ff6b00' : '#0a0a0a');
+
   switch (colIndex) {
-    case 0: 
+    case 0:
       return (
-        <div className="flex flex-col gap-2">
+        <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <Route className="w-4 h-4 text-emerald-600" />
-            <span className="font-bold text-slate-900">Journey Map</span>
-            {persona.touchPoints && (
-              <span className="text-[9px] text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">{persona.touchPoints.length} steps</span>
-            )}
+            <Route className="w-4 h-4" style={{ color: accentColor }} />
+            <span className={`font-mono text-[10px] font-bold uppercase tracking-wider ${textColor}`}>
+              Journey Map
+            </span>
           </div>
-          <span className="text-xs text-slate-500 line-clamp-2">Click to explore touch points</span>
-          <span className="text-[10px] text-slate-400">{persona.steps.length} campaign steps</span>
+          <span className={`font-mono text-[10px] ${mutedColor}`}>
+            {persona.touchPoints?.length || 0} touch points
+          </span>
         </div>
       );
-    case 1: 
+    case 1:
       return (
-        <div className="flex flex-col gap-2">
+        <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <Map className="w-4 h-4 text-emerald-600" />
-            <span className="font-bold text-slate-900">Location</span>
+            <MapPin className="w-4 h-4" style={{ color: accentColor }} />
+            <span className={`font-mono text-[10px] font-bold uppercase tracking-wider ${textColor}`}>
+              Location
+            </span>
           </div>
-          <span className="text-slate-600 line-clamp-3">{persona.location.region}</span>
+          <span className={`text-xs ${mutedColor} line-clamp-2`}>
+            {persona.location.region}
+          </span>
         </div>
       );
-    case 2: 
+    case 2:
       return (
-        <div className="flex flex-col gap-2">
+        <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <DollarSign className="w-4 h-4 text-emerald-600" />
-            <span className="font-bold text-slate-900">Budget</span>
+            <DollarSign className="w-4 h-4" style={{ color: accentColor }} />
+            <span className={`font-mono text-[10px] font-bold uppercase tracking-wider ${textColor}`}>
+              Budget
+            </span>
           </div>
-          <span className="text-slate-600 line-clamp-3">{persona.spending.budgetRange}</span>
-          <span className="text-[10px] text-slate-400">{persona.spending.ticketItems.length} ticket items</span>
+          <span className={`text-xs ${mutedColor} line-clamp-2`}>
+            {persona.spending.budgetRange}
+          </span>
         </div>
       );
-    case 3: 
+    case 3:
       return (
-        <div className="flex flex-col gap-2">
+        <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <Trophy className="w-4 h-4 text-emerald-600" />
-            <span className="font-bold text-slate-900">Competition</span>
+            <Trophy className="w-4 h-4" style={{ color: accentColor }} />
+            <span className={`font-mono text-[10px] font-bold uppercase tracking-wider ${textColor}`}>
+              Competition
+            </span>
           </div>
-          <span className="text-slate-600 line-clamp-2">vs. {persona.competition.schools[0]?.name || 'N/A'}</span>
-          <span className="text-[10px] text-slate-400">{persona.competition.schools.length} competitors</span>
+          <span className={`text-xs ${mutedColor} line-clamp-2`}>
+            vs. {persona.competition.schools[0]?.name || 'N/A'}
+          </span>
+          <span className={`font-mono text-[10px] ${mutedColor}`}>
+            {persona.competition.schools.length} competitors
+          </span>
         </div>
       );
-    case 4: 
+    case 4:
       return (
-        <div className="flex flex-col gap-2">
+        <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-emerald-600" />
-            <span className="font-bold text-slate-900">Value</span>
+            <Zap className="w-4 h-4" style={{ color: accentColor }} />
+            <span className={`font-mono text-[10px] font-bold uppercase tracking-wider ${textColor}`}>
+              Strategy
+            </span>
           </div>
-          <span className="text-emerald-700 font-medium line-clamp-3">Strategic High Value</span>
-          <span className="text-[10px] text-slate-400">{persona.touchPoints?.length || 0} touch points</span>
+          <span className={`text-xs font-medium line-clamp-2`} style={{ color: accentColor }}>
+            High Value
+          </span>
+          <span className={`font-mono text-[10px] ${mutedColor}`}>
+            {persona.touchPoints?.length || 0} touch points
+          </span>
         </div>
       );
-    default: 
+    default:
       return null;
   }
 };
