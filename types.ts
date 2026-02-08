@@ -90,57 +90,72 @@ export interface TouchPoint {
   rightPanelData: any;
 }
 
-export type PrioritySegmentType = 'img-switcher' | 'bridge-crosser' | 'teen-driver' | null;
+// Source citation types
+export type ConfidenceLevel = 'high' | 'medium' | 'low' | 'unverified';
+
+export interface DataSource {
+  document: string;
+  confidence: ConfidenceLevel;
+  note?: string;
+}
+
+export interface SourcedValue<T> {
+  value: T;
+  source: DataSource;
+}
+
+// Priority segment type - now includes all 5 personas as options
+export type PrioritySegmentType = 'corp' | 'life' | 'pivot' | 'bridge' | 'teen' | null;
 
 export interface IMGTransferMetrics {
-  totalTransfers: { min: number; max: number };
+  totalTransfers: SourcedValue<{ min: number; max: number }>;
   timeframe: string;
   reasons: {
-    financial: number;
-    athletic: number;
-    academic: number;
-    relocation: number;
+    financial: SourcedValue<number>;
+    athletic: SourcedValue<number>;
+    academic: SourcedValue<number>;
+    relocation: SourcedValue<number>;
   };
   destinations: {
-    publicSchool: number;
-    privateSchool: number;
-    outOfState: number;
-    other: number;
+    publicSchool: SourcedValue<number>;
+    privateSchool: SourcedValue<number>;
+    outOfState: SourcedValue<number>;
+    other: SourcedValue<number>;
   };
   ssesAdvantage: {
-    tuitionSavings: number;
-    imgTuition: number;
-    ssesTuition: number;
+    tuitionSavings: SourcedValue<number>;
+    imgTuition: SourcedValue<number>;
+    ssesTuition: SourcedValue<number>;
   };
 }
 
 export interface K8TransitionMetrics {
-  totalGraduates: { min: number; max: number };
+  totalGraduates: SourcedValue<{ min: number; max: number }>;
   annualRange: string;
   schoolTypes: {
-    montessori: number;
-    religious: number;
-    otherPrivate: number;
-    public: number;
+    montessori: SourcedValue<number>;
+    religious: SourcedValue<number>;
+    otherPrivate: SourcedValue<number>;
+    public: SourcedValue<number>;
   };
   budgetSegments: {
-    high: number;
-    mid: number;
-    low: number;
+    high: SourcedValue<number>;
+    mid: SourcedValue<number>;
+    low: SourcedValue<number>;
   };
-  ssesCaptures: { min: number; max: number };
+  ssesCaptures: SourcedValue<{ min: number; max: number }>;
 }
 
 export interface TeenInfluenceMetrics {
-  vetoPercentage: number;
+  vetoPercentage: SourcedValue<number>;
   discoveryChannels: string[];
   keyFactors: string[];
 }
 
 export interface ExecutiveSummary {
-  totalK8Pipeline: { min: number; max: number };
-  imgOpportunity: { min: number; max: number };
-  teenInfluence: number;
+  totalK8Pipeline: SourcedValue<{ min: number; max: number }>;
+  imgOpportunity: SourcedValue<{ min: number; max: number }>;
+  // Remove teenInfluence as unverified
   prioritySegments: PrioritySegmentType[];
 }
 
@@ -169,3 +184,8 @@ export const COLUMNS = [
   "Competition",
   "Strategic Value"
 ];
+
+// Helper to create sourced values
+export function sourced<T>(value: T, document: string, confidence: ConfidenceLevel, note?: string): SourcedValue<T> {
+  return { value, source: { document, confidence, note } };
+}

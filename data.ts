@@ -1,47 +1,133 @@
-import { Persona, ExecutiveSummary, IMGTransferMetrics, K8TransitionMetrics, TeenInfluenceMetrics } from './types';
+import { Persona, ExecutiveSummary, IMGTransferMetrics, K8TransitionMetrics, TeenInfluenceMetrics, sourced } from './types';
 
-// Research metrics for priority segments
+// ============================================
+// RESEARCH METRICS WITH SOURCE CITATIONS
+// ============================================
+// Sources from: /Saint Stephens Research Data/Canon/
+// - Student_Journey_Analysis_Report.md
+// - EXECUTIVE_SUMMARY_Refined_Research.md
+// - HIGH_CONFIDENCE_DATA_ANALYSIS.md
+// ============================================
+
+// IMG Transfer Metrics - Sources: Student_Journey_Analysis_Report.md lines 14, 610
 export const imgTransferMetrics: IMGTransferMetrics = {
-  totalTransfers: { min: 195, max: 260 },
+  totalTransfers: sourced(
+    { min: 195, max: 260 },
+    'Student_Journey_Analysis_Report.md:14',
+    'medium',
+    'Estimated from enrollment trends, retention rate analysis, review platform sentiment'
+  ),
   timeframe: '2020-2024',
   reasons: {
-    financial: 44,
-    athletic: 22,
-    academic: 19,
-    relocation: 14
+    financial: sourced(
+      44,
+      'Student_Journey_Analysis_Report.md:610',
+      'low',
+      'Inferred from review analysis and parent sentiment'
+    ),
+    athletic: sourced(
+      22,
+      'Student_Journey_Analysis_Report.md:616',
+      'low',
+      'Estimated from athletic signing data cross-reference'
+    ),
+    academic: sourced(
+      19,
+      'Student_Journey_Analysis_Report.md:623',
+      'low',
+      'Inferred from social media sentiment and review themes'
+    ),
+    relocation: sourced(
+      14,
+      'Student_Journey_Analysis_Report.md:631',
+      'low',
+      'Estimated from enrollment pattern analysis'
+    )
   },
   destinations: {
-    publicSchool: 35,
-    privateSchool: 40,
-    outOfState: 15,
-    other: 10
+    publicSchool: sourced(35, 'EXECUTIVE_SUMMARY_Refined_Research.md:379', 'medium', 'Cross-referenced with transfer data'),
+    privateSchool: sourced(40, 'Student_Journey_Analysis_Report.md:198', 'medium', 'Inferred from school capacity'),
+    outOfState: sourced(15, 'Student_Journey_Analysis_Report.md:17', 'low', 'Estimated from return-to-home patterns'),
+    other: sourced(10, 'Student_Journey_Analysis_Report.md:43', 'low', 'Estimated from remaining transfers')
   },
   ssesAdvantage: {
-    tuitionSavings: 66255,
-    imgTuition: 91000,
-    ssesTuition: 24745
+    tuitionSavings: sourced(
+      66255,
+      'HIGH_CONFIDENCE_DATA_ANALYSIS.md:98-100',
+      'high',
+      'Official IMG Academy and SSES tuition rates'
+    ),
+    imgTuition: sourced(
+      91200,
+      'HIGH_CONFIDENCE_DATA_ANALYSIS.md:98-99',
+      'high',
+      'IMG Academy official boarding tuition'
+    ),
+    ssesTuition: sourced(
+      24745,
+      'HIGH_CONFIDENCE_DATA_ANALYSIS.md:263-266',
+      'high',
+      'Saint Stephen\'s official tuition + fees'
+    )
   }
 };
 
+// K-8 Transition Metrics - Sources: Student_Journey_Analysis_Report.md lines 148, 150
 export const k8TransitionMetrics: K8TransitionMetrics = {
-  totalGraduates: { min: 680, max: 850 },
+  totalGraduates: sourced(
+    { min: 680, max: 850 },
+    'Student_Journey_Analysis_Report.md:148',
+    'medium',
+    'Calculated from Private School Review enrollment trends'
+  ),
   annualRange: 'Annual K-8 graduates',
   schoolTypes: {
-    montessori: 40,
-    religious: 32,
-    otherPrivate: 20,
-    public: 8
+    montessori: sourced(
+      40,
+      'Student_Journey_Analysis_Report.md:150',
+      'medium',
+      'Center Montessori, Foundations Christian, Mangrove School enrollment'
+    ),
+    religious: sourced(
+      32,
+      'Student_Journey_Analysis_Report.md:156',
+      'medium',
+      'St. Joseph Catholic, Bradenton Christian, other religious K-8'
+    ),
+    otherPrivate: sourced(
+      20,
+      'Student_Journey_Analysis_Report.md:162',
+      'low',
+      'Other private K-8 without upper programs'
+    ),
+    public: sourced(
+      8,
+      'Student_Journey_Analysis_Report.md:166',
+      'low',
+      'Public K-8 families seeking private alternatives'
+    )
   },
   budgetSegments: {
-    high: 25,
-    mid: 50,
-    low: 25
+    high: sourced(25, 'EXECUTIVE_SUMMARY_Refined_Research.md:259', 'medium', 'Household income $150K+'),
+    mid: sourced(50, 'EXECUTIVE_SUMMARY_Refined_Research.md:266', 'medium', 'Household income $80K-$150K'),
+    low: sourced(25, 'EXECUTIVE_SUMMARY_Refined_Research.md:273', 'medium', 'Household income $50K-$80K')
   },
-  ssesCaptures: { min: 80, max: 105 }
+  ssesCaptures: sourced(
+    { min: 80, max: 105 },
+    'Student_Journey_Analysis_Report.md:199',
+    'low',
+    'Estimated private high school transfer share'
+  )
 };
 
+// Teen Influence Metrics - WARNING: NOT FOUND IN RESEARCH
 export const teenInfluenceMetrics: TeenInfluenceMetrics = {
-  vetoPercentage: 60,
+  vetoPercentage: sourced(
+    60,
+    'NOT VERIFIED',
+    'unverified',
+    'This metric was not found in research documents. Requires validation.'
+  ),
   discoveryChannels: [
     'Instagram',
     'TikTok',
@@ -59,11 +145,24 @@ export const teenInfluenceMetrics: TeenInfluenceMetrics = {
 };
 
 export const executiveSummary: ExecutiveSummary = {
-  totalK8Pipeline: { min: 680, max: 850 },
-  imgOpportunity: { min: 195, max: 260 },
-  teenInfluence: 60,
-  prioritySegments: ['img-switcher', 'bridge-crosser', 'teen-driver']
+  totalK8Pipeline: sourced(
+    { min: 680, max: 850 },
+    'Student_Journey_Analysis_Report.md:148',
+    'medium',
+    'Annual K-8 graduates requiring upper school'
+  ),
+  imgOpportunity: sourced(
+    { min: 195, max: 260 },
+    'Student_Journey_Analysis_Report.md:14',
+    'medium',
+    'Annual IMG Academy transfers (2020-2024)'
+  ),
+  // Default priority - user can change
+  prioritySegments: ['pivot', 'bridge']
 };
+
+// Default priority segments (user can override)
+export const DEFAULT_PRIORITIES: string[] = ['pivot', 'bridge'];
 
 export const personas: Persona[] = [
   {
@@ -398,7 +497,7 @@ export const personas: Persona[] = [
   {
     id: 'pivot',
     name: 'Strategic Pivot (IMG)',
-    priorityType: 'img-switcher',
+    
     imgTransferMetrics: imgTransferMetrics,
     location: {
       region: 'Local Bradenton / IMG Academy',
@@ -520,7 +619,7 @@ export const personas: Persona[] = [
   {
     id: 'bridge',
     name: 'Local Bridge Crosser',
-    priorityType: 'bridge-crosser',
+    
     k8TransitionMetrics: k8TransitionMetrics,
     location: {
       region: 'Bradenton Montessori/K-8 families',
@@ -643,7 +742,7 @@ export const personas: Persona[] = [
   {
     id: 'teen',
     name: 'The Teen Advocate',
-    priorityType: 'teen-driver',
+    
     teenInfluenceMetrics: teenInfluenceMetrics,
     location: {
       region: 'Sarasota/Bradenton (Student Voice)',

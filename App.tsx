@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { personas } from './data';
+import { personas, DEFAULT_PRIORITIES } from './data';
 import { Persona, MatrixColumn, PrioritySegmentType } from './types';
 import MatrixGrid from './components/MatrixGrid';
 import DetailPanel from './components/DetailPanel';
@@ -15,6 +15,9 @@ const App: React.FC = () => {
   const [selectedTactics, setSelectedTactics] = useState<Set<string>>(new Set());
   const [isTouchPointModalOpen, setIsTouchPointModalOpen] = useState(false);
   const [selectedPersonaForTouchPoints, setSelectedPersonaForTouchPoints] = useState<Persona | null>(null);
+
+  // User-selectable priority segments
+  const [prioritySegments, setPrioritySegments] = useState<string[]>(DEFAULT_PRIORITIES);
 
   const handleSelectCell = useCallback((persona: Persona, colIndex: MatrixColumn) => {
     setActiveCell({ personaId: persona.id, colIndex });
@@ -59,14 +62,31 @@ const App: React.FC = () => {
   }, []);
 
   const handleSegmentClick = useCallback((segment: PrioritySegmentType) => {
-    const persona = personas.find(p => p.priorityType === segment);
+    if (!segment) return;
+    const persona = personas.find(p => p.id === segment);
     if (persona) {
       setActiveCell({ personaId: persona.id, colIndex: MatrixColumn.SEGMENT });
       setIsPanelOpen(true);
     }
   }, []);
 
-  const selectedPersona = personas.find(p => p.id === activeCell.personaId);
+  const handleTogglePriority = useCallback((segmentId: string) => {
+    setPrioritySegments(prev => {
+      if (prev.includes(segmentId)) {
+        return prev.filter(id => id !== segmentId);
+      } else {
+        return [...prev, segmentId];
+      }
+    });
+  }, []);
+
+  // Add priorityType to personas based on user selection
+  const enrichedPersonas = personas.map(p => ({
+    ...p,
+    priorityType: prioritySegments.includes(p.id) ? (p.id as PrioritySegmentType) : null
+  }));
+
+  const selectedPersona = enrichedPersonas.find(p => p.id === activeCell.personaId);
 
   return (
     <div className="min-h-screen bg-[#f5f5f0]">
@@ -93,7 +113,7 @@ const App: React.FC = () => {
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-[#00cc66] animate-pulse" />
-                <span className="font-mono text-[10px] uppercase tracking-wider text-[#8a8a8a]">Live Data</span>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-[#8a8a8a]">Research-Backed</span>
               </div>
               <div className="px-3 py-1.5 border border-[#ff6b00] text-[#ff6b00] font-mono text-[10px] uppercase tracking-wider">
                 Confidential
@@ -109,11 +129,11 @@ const App: React.FC = () => {
         <div className="border-t border-[#2a2a2a] px-4 md:px-6 py-2">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <span className="font-mono text-[10px] text-[#8a8a8a]">VER. 2.0.0</span>
+              <span className="font-mono text-[10px] text-[#8a8a8a]">VER. 2.1.0</span>
               <span className="font-mono text-[10px] text-[#8a8a8a]">|</span>
               <span className="font-mono text-[10px] text-[#8a8a8a]">5 SEGMENTS</span>
               <span className="font-mono text-[10px] text-[#8a8a8a]">|</span>
-              <span className="font-mono text-[10px] text-[#8a8a8a]">3 PRIORITY</span>
+              <span className="font-mono text-[10px] text-[#8a8a8a]">{prioritySegments.length} PRIORITY</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="font-mono text-[10px] text-[#8a8a8a]">
@@ -125,12 +145,16 @@ const App: React.FC = () => {
       </header>
 
       {/* Executive Dashboard */}
-      <ExecutiveDashboard onSegmentClick={handleSegmentClick} />
+      <ExecutiveDashboard
+        onSegmentClick={handleSegmentClick}
+        prioritySegments={prioritySegments}
+        onTogglePriority={handleTogglePriority}
+      />
 
       {/* Main Grid */}
       <main>
         <MatrixGrid
-          personas={personas}
+          personas={enrichedPersonas}
           onSelectCell={handleSelectCell}
           activeCell={activeCell}
           isPanelOpen={isPanelOpen}
@@ -170,10 +194,8 @@ const App: React.FC = () => {
                 SSES Enrollment Marketing
               </span>
             </div>
-            <div className="flex items-center gap-4">
-              <span className="font-mono text-[10px] text-[#8a8a8a]">
-                Powered by Regional Research & HNW Analysis
-              </span>
+            <div className="flex items-center gap-4 text-[10px] text-[#8a8a8a]">
+              <span className="font-mono">Sources: Student_Journey_Analysis_Report.md, HIGH_CONFIDENCE_DATA_ANALYSIS.md</span>
             </div>
           </div>
         </div>
