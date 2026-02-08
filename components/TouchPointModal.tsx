@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Persona, TouchPoint } from '../types';
-import { X, Check, Circle, Building2, Users, Globe, Lightbulb, Trophy, Heart, Sparkles, MapPin, Target } from 'lucide-react';
+import { X, Check, Building2, Users, Globe, Lightbulb, Trophy, Heart, Sparkles, MapPin, Target } from 'lucide-react';
 
 interface TouchPointModalProps {
   persona: Persona;
@@ -27,12 +27,21 @@ const TouchPointModal: React.FC<TouchPointModalProps> = ({ persona, isOpen, onCl
     });
   };
 
-  const getPriorityColor = (priority: string) => {
+  const getPriorityStyles = (priority: string) => {
     switch (priority) {
-      case 'immediate': return 'bg-emerald-100 text-emerald-700 border-emerald-200';
-      case 'short-term': return 'bg-amber-100 text-amber-700 border-amber-200';
-      case 'long-term': return 'bg-blue-100 text-blue-700 border-blue-200';
-      default: return 'bg-slate-100 text-slate-700 border-slate-200';
+      case 'immediate': return { bg: '#ff6b00', text: 'white', border: '#ff6b00' };
+      case 'short-term': return { bg: '#0066ff', text: 'white', border: '#0066ff' };
+      case 'long-term': return { bg: '#4a4a4a', text: 'white', border: '#4a4a4a' };
+      default: return { bg: '#f5f5f0', text: '#0a0a0a', border: '#0a0a0a' };
+    }
+  };
+
+  const getPersonaColor = () => {
+    switch (persona.priorityType) {
+      case 'img-switcher': return '#ff6b00';
+      case 'bridge-crosser': return '#0066ff';
+      case 'teen-driver': return '#9933ff';
+      default: return '#0a0a0a';
     }
   };
 
@@ -44,66 +53,77 @@ const TouchPointModal: React.FC<TouchPointModalProps> = ({ persona, isOpen, onCl
 
   if (!isOpen || touchPoints.length === 0) return null;
 
+  const accentColor = getPersonaColor();
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+      <div
+        className="absolute inset-0 bg-[#0a0a0a]/80"
         onClick={onClose}
       />
 
-      {/* Modal Container */}
-      <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-6xl max-h-[90vh] overflow-hidden flex flex-col">
-        
-        {/* Header */}
-        <div className="px-8 py-6 border-b border-slate-100 flex items-center justify-between bg-white">
-          <div>
-            <div className="flex items-center gap-3 mb-1">
-              <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-bold uppercase tracking-widest">
-                Journey Map
-              </span>
-              <h2 className="text-2xl font-black text-slate-900">{persona.name}</h2>
+      {/* Modal Container - TE Style */}
+      <div className="relative bg-[#fafafa] border-2 border-[#0a0a0a] shadow-[12px_12px_0_#0a0a0a] w-full max-w-6xl max-h-[90vh] overflow-hidden flex flex-col">
+
+        {/* Header - TE Style */}
+        <div className="px-6 py-4 border-b-2 border-[#0a0a0a] flex items-center justify-between bg-[#0a0a0a] text-white">
+          <div className="flex items-center gap-4">
+            <div className="w-1 h-10" style={{ backgroundColor: accentColor }} />
+            <div>
+              <div className="flex items-center gap-3">
+                <span
+                  className="font-mono text-[10px] font-bold px-2 py-1 uppercase tracking-wider text-white"
+                  style={{ backgroundColor: accentColor }}
+                >
+                  Journey Map
+                </span>
+                <h2 className="font-mono text-lg font-bold uppercase tracking-wide">{persona.name}</h2>
+              </div>
+              <p className="font-mono text-[10px] text-[#8a8a8a] mt-1">
+                {touchPoints.length} touch points / Progressive disclosure
+              </p>
             </div>
-            <p className="text-xs text-slate-400 font-medium">{touchPoints.length} touch points • Progressive disclosure</p>
           </div>
-          <button 
+          <button
             onClick={onClose}
-            className="p-2 bg-slate-50 hover:bg-slate-100 rounded-full transition-all border border-slate-100"
+            className="p-2 border-2 border-white hover:bg-white hover:text-[#0a0a0a] transition-all"
           >
-            <X className="w-5 h-5 text-slate-400" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Main Content */}
         <div className="flex flex-1 overflow-hidden">
-          
-          {/* Left Column - Touch Point Selector (smaller indicators) */}
-          <div className="w-[350px] border-r border-slate-100 flex flex-col bg-slate-50/50">
-            
-            {/* Compact Vertical Step Indicator */}
-            <div className="p-4 flex justify-center">
-              <div className="flex items-center gap-2">
+
+          {/* Left Column - Touch Point Selector */}
+          <div className="w-[320px] border-r-2 border-[#0a0a0a] flex flex-col bg-[#f5f5f0]">
+
+            {/* Step Indicator */}
+            <div className="p-4 border-b border-[#0a0a0a] bg-[#0a0a0a]">
+              <div className="flex items-center gap-1 justify-center">
                 {touchPoints.map((tp, index) => (
                   <React.Fragment key={tp.id}>
                     <button
                       onClick={() => setActiveTouchPointIndex(index)}
-                      className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
+                      className={`w-7 h-7 flex items-center justify-center font-mono text-xs font-bold transition-all border-2 ${
                         index === activeTouchPointIndex
-                          ? 'bg-emerald-600 text-white shadow-md'
+                          ? 'text-white'
                           : index < activeTouchPointIndex
-                          ? 'bg-emerald-100 text-emerald-600'
-                          : 'bg-white text-slate-400 border border-slate-200'
+                          ? 'bg-[#00cc66] text-white border-[#00cc66]'
+                          : 'bg-transparent text-[#8a8a8a] border-[#4a4a4a]'
                       }`}
+                      style={index === activeTouchPointIndex ? { backgroundColor: accentColor, borderColor: accentColor } : {}}
                     >
                       {index < activeTouchPointIndex ? (
                         <Check className="w-3.5 h-3.5" />
                       ) : (
-                        index + 1
+                        String(index + 1).padStart(2, '0')
                       )}
                     </button>
                     {index < touchPoints.length - 1 && (
-                      <div className={`w-6 h-0.5 ${
-                        index < activeTouchPointIndex ? 'bg-emerald-300' : 'bg-slate-200'
+                      <div className={`w-4 h-0.5 ${
+                        index < activeTouchPointIndex ? 'bg-[#00cc66]' : 'bg-[#4a4a4a]'
                       }`} />
                     )}
                   </React.Fragment>
@@ -112,27 +132,35 @@ const TouchPointModal: React.FC<TouchPointModalProps> = ({ persona, isOpen, onCl
             </div>
 
             {/* Touch Point List */}
-            <div className="flex-1 overflow-y-auto px-4 pb-4">
-              <div className="space-y-2">
+            <div className="flex-1 overflow-y-auto p-2">
+              <div className="space-y-1">
                 {touchPoints.map((tp, index) => (
                   <button
                     key={tp.id}
                     onClick={() => setActiveTouchPointIndex(index)}
-                    className={`w-full text-left p-4 rounded-2xl transition-all ${
+                    className={`w-full text-left p-3 transition-all border-2 ${
                       index === activeTouchPointIndex
-                        ? 'bg-white shadow-md border-2 border-emerald-200 ring-1 ring-emerald-100'
-                        : 'bg-white border border-slate-200 hover:border-emerald-200'
+                        ? 'bg-white border-[#0a0a0a]'
+                        : 'bg-white border-transparent hover:border-[#0a0a0a]'
                     }`}
+                    style={index === activeTouchPointIndex ? { borderLeftColor: accentColor, borderLeftWidth: '4px' } : {}}
                   >
                     <div className="flex items-start gap-3">
-                      <div className={`mt-0.5 ${index === activeTouchPointIndex ? 'text-emerald-600' : 'text-slate-400'}`}>
+                      <div
+                        className="mt-0.5"
+                        style={{ color: index === activeTouchPointIndex ? accentColor : '#8a8a8a' }}
+                      >
                         {getTouchPointIcon(index)}
                       </div>
                       <div>
-                        <h3 className={`font-bold text-sm ${index === activeTouchPointIndex ? 'text-emerald-900' : 'text-slate-700'}`}>
+                        <h3 className={`font-mono text-xs font-bold uppercase tracking-wide ${
+                          index === activeTouchPointIndex ? '' : 'text-[#4a4a4a]'
+                        }`}
+                        style={index === activeTouchPointIndex ? { color: accentColor } : {}}
+                        >
                           {tp.title}
                         </h3>
-                        <p className="text-[10px] text-slate-500 mt-0.5">{tp.subtitle}</p>
+                        <p className="font-mono text-[10px] text-[#8a8a8a] mt-0.5">{tp.subtitle}</p>
                       </div>
                     </div>
                   </button>
@@ -141,57 +169,72 @@ const TouchPointModal: React.FC<TouchPointModalProps> = ({ persona, isOpen, onCl
             </div>
           </div>
 
-          {/* Right Column - Dynamic Content with Actions */}
+          {/* Right Column - Content */}
           <div className="flex-1 overflow-y-auto bg-white">
-            <div className="p-8">
+            <div className="p-6">
               {/* Touch Point Description */}
-              <div className="mb-8">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-2xl">{getTouchPointIcon(activeTouchPointIndex)}</span>
+              <div className="mb-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <span
+                    className="w-10 h-10 flex items-center justify-center"
+                    style={{ backgroundColor: accentColor, color: 'white' }}
+                  >
+                    {getTouchPointIcon(activeTouchPointIndex)}
+                  </span>
                   <div>
-                    <h3 className="text-2xl font-black text-slate-900">{activeTouchPoint.title}</h3>
-                    <p className="text-emerald-600 font-medium">{activeTouchPoint.subtitle}</p>
+                    <h3 className="font-mono text-xl font-bold uppercase tracking-wide">{activeTouchPoint.title}</h3>
+                    <p className="font-mono text-xs font-bold" style={{ color: accentColor }}>{activeTouchPoint.subtitle}</p>
                   </div>
                 </div>
-                <p className="text-slate-600 leading-relaxed">{activeTouchPoint.description}</p>
+                <p className="text-sm text-[#4a4a4a] leading-relaxed">{activeTouchPoint.description}</p>
               </div>
 
               {/* Dynamic Content */}
-              <div className="mb-8">
-                <RightPanelContent 
-                  type={activeTouchPoint.rightPanelType} 
-                  data={activeTouchPoint.rightPanelData} 
+              <div className="mb-6">
+                <RightPanelContent
+                  type={activeTouchPoint.rightPanelType}
+                  data={activeTouchPoint.rightPanelData}
+                  accentColor={accentColor}
                 />
               </div>
 
-              {/* Actions Section - Now in right panel under the touch point */}
-              <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-                <h4 className="text-xs font-black text-slate-500 uppercase mb-4 tracking-widest flex items-center gap-2">
-                  <Target className="w-4 h-4" /> Recommended Actions for This Touch Point
-                </h4>
-                <div className="space-y-3">
-                  {activeTouchPoint.actions.map((action) => (
-                    <label
-                      key={action.id}
-                      className="flex items-start gap-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:border-emerald-200 transition-all"
-                    >
-                      <div className="mt-0.5">
-                        <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
-                          selectedActions.has(action.id)
-                            ? 'bg-emerald-500 border-emerald-500'
-                            : 'border-slate-300'
-                        }`}>
-                          {selectedActions.has(action.id) && <Check className="w-3.5 h-3.5 text-white" />}
+              {/* Actions Section */}
+              <div className="border-2 border-[#0a0a0a]">
+                <div className="border-b border-[#0a0a0a] px-4 py-2 bg-[#0a0a0a] flex items-center gap-2">
+                  <Target className="w-4 h-4 text-[#ff6b00]" />
+                  <span className="font-mono text-[10px] text-white uppercase tracking-widest">Recommended Actions</span>
+                </div>
+                <div className="p-0 divide-y divide-[#e5e5e0]">
+                  {activeTouchPoint.actions.map((action) => {
+                    const styles = getPriorityStyles(action.priority);
+                    return (
+                      <label
+                        key={action.id}
+                        className="flex items-start gap-3 p-4 cursor-pointer hover:bg-[#f5f5f0] transition-all"
+                      >
+                        <div className="mt-0.5">
+                          <div
+                            className={`w-5 h-5 border-2 flex items-center justify-center transition-all`}
+                            style={{
+                              backgroundColor: selectedActions.has(action.id) ? '#0a0a0a' : 'transparent',
+                              borderColor: '#0a0a0a'
+                            }}
+                          >
+                            {selectedActions.has(action.id) && <Check className="w-3.5 h-3.5 text-white" />}
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex-1" onClick={() => handleActionToggle(action.id)}>
-                        <p className="text-sm text-slate-700 leading-snug">{action.text}</p>
-                        <span className={`inline-block mt-1.5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded border ${getPriorityColor(action.priority)}`}>
-                          {action.priority}
-                        </span>
-                      </div>
-                    </label>
-                  ))}
+                        <div className="flex-1" onClick={() => handleActionToggle(action.id)}>
+                          <p className="text-sm text-[#0a0a0a] leading-snug">{action.text}</p>
+                          <span
+                            className="inline-block mt-2 px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider"
+                            style={{ backgroundColor: styles.bg, color: styles.text }}
+                          >
+                            {action.priority}
+                          </span>
+                        </div>
+                      </label>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -200,26 +243,31 @@ const TouchPointModal: React.FC<TouchPointModalProps> = ({ persona, isOpen, onCl
 
         {/* Action Plan Bar - Bottom */}
         {selectedActions.size > 0 && (
-          <div className="border-t border-slate-100 bg-slate-50 px-8 py-4">
+          <div className="border-t-2 border-[#0a0a0a] bg-[#0a0a0a] px-6 py-4">
             <div className="flex items-center justify-between">
               <div>
-                <h4 className="text-sm font-bold text-slate-700">Campaign Action Plan ({selectedActions.size} selected)</h4>
+                <h4 className="font-mono text-xs font-bold text-white uppercase tracking-wider">
+                  Campaign Action Plan ({selectedActions.size} selected)
+                </h4>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {Array.from(selectedActions).map(actionId => {
                     const action = touchPoints.flatMap(tp => tp.actions).find(a => a.id === actionId);
                     if (!action) return null;
                     return (
-                      <span key={actionId} className="inline-flex items-center gap-1 px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-medium rounded-full">
-                        <Check className="w-3 h-3" />
-                        {action.text.substring(0, 40)}{action.text.length > 40 ? '...' : ''}
+                      <span
+                        key={actionId}
+                        className="inline-flex items-center gap-1 px-2 py-1 font-mono text-[10px] text-white border border-white/30"
+                      >
+                        <Check className="w-3 h-3" style={{ color: accentColor }} />
+                        {action.text.substring(0, 35)}{action.text.length > 35 ? '...' : ''}
                       </span>
                     );
                   })}
                 </div>
               </div>
-              <button 
+              <button
                 onClick={() => setSelectedActions(new Set())}
-                className="px-4 py-2 text-sm text-slate-500 hover:text-slate-700 font-medium"
+                className="px-4 py-2 font-mono text-xs text-[#8a8a8a] uppercase tracking-wider hover:text-white transition-colors"
               >
                 Clear All
               </button>
@@ -231,46 +279,49 @@ const TouchPointModal: React.FC<TouchPointModalProps> = ({ persona, isOpen, onCl
   );
 };
 
-const RightPanelContent: React.FC<{ type: string; data: any }> = ({ type, data }) => {
+const RightPanelContent: React.FC<{ type: string; data: any; accentColor: string }> = ({ type, data, accentColor }) => {
   switch (type) {
     case 'companies':
       return (
-        <div className="space-y-6">
+        <div className="space-y-4">
           {/* Tier 1 */}
-          <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100">
-            <h4 className="text-xs font-black text-emerald-700 uppercase mb-4 tracking-widest flex items-center gap-2">
-              <Building2 className="w-4 h-4" /> Tier 1 — Very High Likelihood
-            </h4>
-            <div className="space-y-3">
+          <div className="border-2 border-[#0a0a0a]">
+            <div className="border-b border-[#0a0a0a] px-4 py-2 bg-[#0a0a0a] flex items-center gap-2">
+              <Building2 className="w-4 h-4 text-[#00cc66]" />
+              <span className="font-mono text-[10px] text-white uppercase tracking-widest">Tier 1 — Very High Likelihood</span>
+            </div>
+            <div className="divide-y divide-[#e5e5e0]">
               {data.tier1.map((company: any, i: number) => (
-                <div key={i} className="bg-white p-4 rounded-xl border border-emerald-100">
+                <div key={i} className="p-4 hover:bg-[#f5f5f0] transition-colors">
                   <div className="flex justify-between items-start mb-2">
-                    <span className="font-bold text-slate-900">{company.name}</span>
-                    <span className="text-[10px] font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
+                    <span className="font-bold text-sm uppercase tracking-wide">{company.name}</span>
+                    <span className="font-mono text-[9px] font-bold px-2 py-0.5 bg-[#00cc66] text-white">
                       {company.likelihood}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-500 mb-1">{company.jobs}</p>
-                  <p className="text-xs text-slate-600 italic">{company.reason}</p>
+                  <p className="font-mono text-[10px] text-[#8a8a8a] mb-1">{company.jobs}</p>
+                  <p className="text-xs text-[#4a4a4a]">{company.reason}</p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Tier 2 */}
-          <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-            <h4 className="text-xs font-black text-slate-500 uppercase mb-4 tracking-widest">Tier 2 — High Likelihood</h4>
-            <div className="space-y-3">
+          <div className="border-2 border-[#4a4a4a]">
+            <div className="border-b border-[#4a4a4a] px-4 py-2 bg-[#4a4a4a]">
+              <span className="font-mono text-[10px] text-white uppercase tracking-widest">Tier 2 — High Likelihood</span>
+            </div>
+            <div className="divide-y divide-[#e5e5e0]">
               {data.tier2.map((company: any, i: number) => (
-                <div key={i} className="bg-white p-4 rounded-xl border border-slate-100">
+                <div key={i} className="p-4 hover:bg-[#f5f5f0] transition-colors">
                   <div className="flex justify-between items-start mb-2">
-                    <span className="font-bold text-slate-900">{company.name}</span>
-                    <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded-full">
+                    <span className="font-bold text-sm uppercase tracking-wide">{company.name}</span>
+                    <span className="font-mono text-[9px] font-bold px-2 py-0.5 bg-[#4a4a4a] text-white">
                       {company.likelihood}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-500 mb-1">{company.jobs}</p>
-                  <p className="text-xs text-slate-600 italic">{company.reason}</p>
+                  <p className="font-mono text-[10px] text-[#8a8a8a] mb-1">{company.jobs}</p>
+                  <p className="text-xs text-[#4a4a4a]">{company.reason}</p>
                 </div>
               ))}
             </div>
@@ -280,13 +331,15 @@ const RightPanelContent: React.FC<{ type: string; data: any }> = ({ type, data }
 
     case 'partners':
       return (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-2">
           {data.categories.map((category: any, i: number) => (
-            <div key={i} className="bg-slate-50 p-5 rounded-2xl border border-slate-100">
-              <h4 className="text-[10px] font-black text-slate-500 uppercase mb-3 tracking-widest">{category.title}</h4>
-              <div className="space-y-2">
+            <div key={i} className="border-2 border-[#0a0a0a]">
+              <div className="border-b border-[#0a0a0a] px-3 py-2 bg-[#f5f5f0]">
+                <span className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest">{category.title}</span>
+              </div>
+              <div className="p-3 space-y-1">
                 {category.items.map((item: string, j: number) => (
-                  <p key={j} className="text-sm text-slate-700 font-medium">{item}</p>
+                  <p key={j} className="text-xs font-medium">{item}</p>
                 ))}
               </div>
             </div>
@@ -296,31 +349,32 @@ const RightPanelContent: React.FC<{ type: string; data: any }> = ({ type, data }
 
     case 'digital':
       return (
-        <div className="space-y-6">
+        <div className="space-y-4">
           {data.channels && (
             <div>
-              <h4 className="text-xs font-black text-slate-500 uppercase mb-3 tracking-widest">Digital Channels</h4>
-              <div className="flex flex-wrap gap-2">
+              <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-2 border-b border-[#e5e5e0] pb-2">
+                Digital Channels
+              </div>
+              <div className="grid grid-cols-2 gap-1">
                 {data.channels.map((channel: string, i: number) => (
-                  <span key={i} className="px-3 py-2 bg-slate-100 text-slate-700 text-sm rounded-lg border border-slate-200">
+                  <div key={i} className="px-3 py-2 bg-[#0a0a0a] text-white font-mono text-xs text-center">
                     {channel}
-                  </span>
+                  </div>
                 ))}
               </div>
             </div>
           )}
-          
+
           {data.expectations && (
-            <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100">
-              <h4 className="text-xs font-black text-emerald-700 uppercase mb-4 tracking-widest">Expectations We Must Meet</h4>
-              <div className="space-y-3">
+            <div className="border-2 border-[#0a0a0a]">
+              <div className="border-b border-[#0a0a0a] px-4 py-2" style={{ backgroundColor: accentColor }}>
+                <span className="font-mono text-[10px] text-white uppercase tracking-widest">Expectations We Must Meet</span>
+              </div>
+              <div className="divide-y divide-[#e5e5e0]">
                 {data.expectations.map((exp: any, i: number) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2" />
-                    <div>
-                      <p className="font-bold text-slate-900">{exp.title}</p>
-                      <p className="text-sm text-slate-600">{exp.description}</p>
-                    </div>
+                  <div key={i} className="p-4">
+                    <p className="font-bold text-sm">{exp.title}</p>
+                    <p className="text-xs text-[#4a4a4a] mt-1">{exp.description}</p>
                   </div>
                 ))}
               </div>
@@ -329,12 +383,14 @@ const RightPanelContent: React.FC<{ type: string; data: any }> = ({ type, data }
 
           {data.contentTypes && (
             <div>
-              <h4 className="text-xs font-black text-slate-500 uppercase mb-3 tracking-widest">Content Types</h4>
-              <div className="space-y-2">
+              <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-2 border-b border-[#e5e5e0] pb-2">
+                Content Types
+              </div>
+              <div className="space-y-1">
                 {data.contentTypes.map((content: any, i: number) => (
-                  <div key={i} className="bg-white p-4 rounded-xl border border-slate-100">
-                    <p className="font-bold text-slate-900">{content.title}</p>
-                    <p className="text-sm text-slate-600">{content.description}</p>
+                  <div key={i} className="border border-[#0a0a0a] p-3">
+                    <p className="font-bold text-xs">{content.title}</p>
+                    <p className="text-[10px] text-[#4a4a4a]">{content.description}</p>
                   </div>
                 ))}
               </div>
@@ -343,15 +399,19 @@ const RightPanelContent: React.FC<{ type: string; data: any }> = ({ type, data }
 
           {data.triggers && (
             <div>
-              <h4 className="text-xs font-black text-slate-500 uppercase mb-3 tracking-widest">Crisis Triggers</h4>
-              <div className="space-y-2">
+              <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-2 border-b border-[#e5e5e0] pb-2">
+                Crisis Triggers
+              </div>
+              <div className="space-y-1">
                 {data.triggers.map((trigger: any, i: number) => (
-                  <div key={i} className="bg-amber-50 p-4 rounded-xl border border-amber-100">
+                  <div key={i} className="border-2 border-[#ff6b00] p-3 bg-[#f5f5f0]">
                     <div className="flex justify-between items-start">
-                      <p className="font-bold text-amber-900">{trigger.trigger}</p>
-                      <span className="text-[10px] font-bold text-amber-600 bg-amber-100 px-2 py-0.5 rounded">{trigger.frequency}</span>
+                      <p className="font-bold text-sm text-[#0a0a0a]">{trigger.trigger}</p>
+                      <span className="font-mono text-[9px] font-bold px-2 py-0.5 bg-[#ff6b00] text-white">
+                        {trigger.frequency}
+                      </span>
                     </div>
-                    <p className="text-sm text-amber-700 mt-1">{trigger.timing}</p>
+                    <p className="font-mono text-[10px] text-[#4a4a4a] mt-1">{trigger.timing}</p>
                   </div>
                 ))}
               </div>
@@ -362,27 +422,29 @@ const RightPanelContent: React.FC<{ type: string; data: any }> = ({ type, data }
 
     case 'communities':
       return (
-        <div className="space-y-6">
-          <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-2">
             {data.communities.map((community: any, i: number) => (
-              <div key={i} className="bg-slate-50 p-5 rounded-2xl border border-slate-100">
-                <h4 className="font-bold text-slate-900 mb-1">{community.name}</h4>
-                <p className="text-xs text-slate-500">{community.type}</p>
-                <span className="inline-block mt-2 px-2 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-bold rounded">
+              <div key={i} className="border-2 border-[#0a0a0a] p-3">
+                <h4 className="font-bold text-sm uppercase tracking-wide">{community.name}</h4>
+                <p className="font-mono text-[10px] text-[#8a8a8a]">{community.type}</p>
+                <span className="inline-block mt-2 px-2 py-0.5 font-mono text-[9px] font-bold text-white" style={{ backgroundColor: accentColor }}>
                   {community.relevance}
                 </span>
               </div>
             ))}
           </div>
-          
+
           {data.events && (
-            <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100">
-              <h4 className="text-xs font-black text-emerald-700 uppercase mb-3 tracking-widest">Recommended Events</h4>
-              <div className="space-y-2">
+            <div className="border-2 border-[#0a0a0a]">
+              <div className="border-b border-[#0a0a0a] px-4 py-2" style={{ backgroundColor: accentColor }}>
+                <span className="font-mono text-[10px] text-white uppercase tracking-widest">Recommended Events</span>
+              </div>
+              <div className="p-3 space-y-1">
                 {data.events.map((event: string, i: number) => (
                   <div key={i} className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-emerald-500" />
-                    <p className="text-sm text-emerald-900">{event}</p>
+                    <MapPin className="w-3 h-3" style={{ color: accentColor }} />
+                    <p className="text-xs">{event}</p>
                   </div>
                 ))}
               </div>
@@ -393,15 +455,17 @@ const RightPanelContent: React.FC<{ type: string; data: any }> = ({ type, data }
 
     case 'validation':
       return (
-        <div className="space-y-6">
+        <div className="space-y-4">
           {data.validationPoints && (
             <div>
-              <h4 className="text-xs font-black text-slate-500 uppercase mb-3 tracking-widest">Validation Points</h4>
-              <div className="space-y-3">
+              <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-2 border-b border-[#e5e5e0] pb-2">
+                Validation Points
+              </div>
+              <div className="space-y-1">
                 {data.validationPoints.map((point: any, i: number) => (
-                  <div key={i} className="bg-white p-4 rounded-xl border border-slate-100">
-                    <p className="font-bold text-slate-900">{point.title}</p>
-                    <p className="text-sm text-slate-600">{point.detail}</p>
+                  <div key={i} className="border border-[#0a0a0a] p-3">
+                    <p className="font-bold text-sm">{point.title}</p>
+                    <p className="text-[10px] text-[#4a4a4a]">{point.detail}</p>
                   </div>
                 ))}
               </div>
@@ -409,13 +473,15 @@ const RightPanelContent: React.FC<{ type: string; data: any }> = ({ type, data }
           )}
 
           {data.proofPoints && (
-            <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100">
-              <h4 className="text-xs font-black text-emerald-700 uppercase mb-3 tracking-widest">Proof Points</h4>
-              <div className="grid grid-cols-2 gap-2">
+            <div className="border-2 border-[#00cc66]">
+              <div className="border-b border-[#00cc66] px-4 py-2 bg-[#00cc66]">
+                <span className="font-mono text-[10px] text-white uppercase tracking-widest">Proof Points</span>
+              </div>
+              <div className="grid grid-cols-2 gap-px bg-[#e5e5e0]">
                 {data.proofPoints.map((proof: string, i: number) => (
-                  <div key={i} className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-emerald-500 mt-0.5" />
-                    <p className="text-sm text-emerald-900">{proof}</p>
+                  <div key={i} className="flex items-start gap-2 p-3 bg-white">
+                    <Check className="w-4 h-4 text-[#00cc66] mt-0.5 flex-shrink-0" />
+                    <p className="text-xs">{proof}</p>
                   </div>
                 ))}
               </div>
@@ -424,12 +490,14 @@ const RightPanelContent: React.FC<{ type: string; data: any }> = ({ type, data }
 
           {data.successStories && (
             <div>
-              <h4 className="text-xs font-black text-slate-500 uppercase mb-3 tracking-widest">Success Stories</h4>
-              <div className="space-y-2">
+              <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-2 border-b border-[#e5e5e0] pb-2">
+                Success Stories
+              </div>
+              <div className="space-y-1">
                 {data.successStories.map((story: string, i: number) => (
-                  <div key={i} className="flex items-center gap-2 p-3 bg-slate-50 rounded-lg">
-                    <Trophy className="w-4 h-4 text-amber-500" />
-                    <p className="text-sm text-slate-700">{story}</p>
+                  <div key={i} className="flex items-center gap-2 p-2 border border-[#0a0a0a] bg-[#f5f5f0]">
+                    <Trophy className="w-4 h-4 text-[#ff6b00]" />
+                    <p className="text-xs">{story}</p>
                   </div>
                 ))}
               </div>
@@ -440,23 +508,25 @@ const RightPanelContent: React.FC<{ type: string; data: any }> = ({ type, data }
 
     case 'social':
       return (
-        <div className="space-y-6">
+        <div className="space-y-4">
           {data.testimonials && (
             <div>
-              <h4 className="text-xs font-black text-slate-500 uppercase mb-3 tracking-widest">Testimonials</h4>
-              <div className="space-y-3">
+              <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-2 border-b border-[#e5e5e0] pb-2">
+                Testimonials
+              </div>
+              <div className="space-y-2">
                 {data.testimonials.map((testimonial: any, i: number) => (
-                  <div key={i} className="bg-slate-50 p-5 rounded-2xl border border-slate-100">
+                  <div key={i} className="border-2 border-[#0a0a0a] p-4">
                     <div className="flex items-start gap-3 mb-2">
-                      <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
-                        <Users className="w-5 h-5 text-emerald-600" />
+                      <div className="w-8 h-8 bg-[#0a0a0a] flex items-center justify-center">
+                        <Users className="w-4 h-4 text-white" />
                       </div>
                       <div>
-                        <p className="font-bold text-slate-900">{testimonial.family}</p>
-                        <p className="text-xs text-slate-500">From: {testimonial.from}</p>
+                        <p className="font-bold text-sm uppercase tracking-wide">{testimonial.family}</p>
+                        <p className="font-mono text-[10px] text-[#8a8a8a]">From: {testimonial.from}</p>
                       </div>
                     </div>
-                    <p className="text-sm text-slate-600 italic">"{testimonial.highlight}"</p>
+                    <p className="text-xs text-[#4a4a4a]">"{testimonial.highlight}"</p>
                   </div>
                 ))}
               </div>
@@ -464,13 +534,15 @@ const RightPanelContent: React.FC<{ type: string; data: any }> = ({ type, data }
           )}
 
           {data.proofPoints && (
-            <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100">
-              <h4 className="text-xs font-black text-emerald-700 uppercase mb-3 tracking-widest">Proof Points</h4>
-              <div className="grid grid-cols-2 gap-2">
+            <div className="border-2 border-[#00cc66]">
+              <div className="border-b border-[#00cc66] px-4 py-2 bg-[#00cc66]">
+                <span className="font-mono text-[10px] text-white uppercase tracking-widest">Proof Points</span>
+              </div>
+              <div className="grid grid-cols-2 gap-px bg-[#e5e5e0]">
                 {data.proofPoints.map((proof: string, i: number) => (
-                  <div key={i} className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-emerald-500 mt-0.5" />
-                    <p className="text-sm text-emerald-900">{proof}</p>
+                  <div key={i} className="flex items-start gap-2 p-3 bg-white">
+                    <Check className="w-4 h-4 text-[#00cc66] mt-0.5 flex-shrink-0" />
+                    <p className="text-xs">{proof}</p>
                   </div>
                 ))}
               </div>
@@ -479,12 +551,14 @@ const RightPanelContent: React.FC<{ type: string; data: any }> = ({ type, data }
 
           {data.programs && (
             <div>
-              <h4 className="text-xs font-black text-slate-500 uppercase mb-3 tracking-widest">Programs</h4>
-              <div className="space-y-2">
+              <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-2 border-b border-[#e5e5e0] pb-2">
+                Programs
+              </div>
+              <div className="space-y-1">
                 {data.programs.map((program: any, i: number) => (
-                  <div key={i} className="bg-white p-4 rounded-xl border border-slate-100">
-                    <p className="font-bold text-slate-900">{program.name}</p>
-                    <p className="text-sm text-slate-600">{program.description}</p>
+                  <div key={i} className="border border-[#0a0a0a] p-3">
+                    <p className="font-bold text-sm">{program.name}</p>
+                    <p className="text-[10px] text-[#4a4a4a]">{program.description}</p>
                   </div>
                 ))}
               </div>
@@ -494,7 +568,7 @@ const RightPanelContent: React.FC<{ type: string; data: any }> = ({ type, data }
       );
 
     default:
-      return <div className="text-slate-500">No data available</div>;
+      return <div className="font-mono text-xs text-[#8a8a8a]">No data available</div>;
   }
 };
 
