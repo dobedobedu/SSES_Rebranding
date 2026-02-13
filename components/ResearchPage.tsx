@@ -3,7 +3,7 @@ import { ArrowLeft, Users, MapPin } from 'lucide-react';
 
 const RESEARCH_TABS = [
   { id: 'local', label: 'Local Family', src: '/local-discover.html', icon: Users },
-  { id: 'migration', label: 'Migration Family', src: '/Relocation Research.html', icon: MapPin },
+  { id: 'migration', label: 'Migration Family', src: '/relocation-radar.html', icon: MapPin },
 ];
 
 const ResearchPage: React.FC = () => {
