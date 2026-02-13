@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, FileText, MapPin, Radar } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 
 const RESEARCH_TABS = [
   { id: 'discovery', label: 'Customer Discovery', src: '/local-discover.html', icon: FileText },
@@ -65,6 +66,7 @@ const ResearchPage: React.FC = () => {
           />
         ))}
       </div>
+      <Analytics />
     </div>
   );
 };
