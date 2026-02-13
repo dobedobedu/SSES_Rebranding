@@ -3,11 +3,15 @@ import { Check, LogIn, LogOut, AlertCircle } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useVoting } from '../hooks/useVoting';
 
-interface VotingSectionProps {
-  prioritySegments?: string[];
-}
+const SEGMENTS = [
+  { id: 'corp', label: 'Corporate Relocator', color: '#4a4a4a', description: 'Healthcare & manufacturing workers' },
+  { id: 'life', label: 'Lifestyle Entrepreneur', color: '#00cc66', description: 'Remote tech workers & founders' },
+  { id: 'pivot', label: 'IMG Switcher', color: '#2D8F6F', description: 'Academic/athletic transfers' },
+  { id: 'bridge', label: 'Bridge Crosser', color: '#0066ff', description: 'K-8 to high school transitions' },
+  { id: 'teen', label: 'Teen Advocate', color: '#9933ff', description: 'Student-influenced decisions' }
+];
 
-export const VotingSection: React.FC<VotingSectionProps> = ({ prioritySegments = [] }) => {
+export const VotingSection: React.FC = () => {
   const { user, signInWithName, signOut, loading: authLoading, setAsAdmin, isAdmin } = useAuth();
   const { userVote, submitVote, deleteVote, fetchUserVote, voteResults, fetchVoteResults, loading: voteLoading, error } = useVoting();
   
@@ -16,14 +20,6 @@ export const VotingSection: React.FC<VotingSectionProps> = ({ prioritySegments =
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [justLoggedIn, setJustLoggedIn] = useState(false);
-
-  // Only show voting if priorities have been selected
-  const showVoting = prioritySegments.length > 0;
-  
-  // Get segments that match the selected priorities
-  const availableSegments = prioritySegments.length > 0 
-    ? SEGMENTS.filter(s => prioritySegments.includes(s.id))
-    : SEGMENTS;
 
   // Fetch user's vote when logged in
   useEffect(() => {
@@ -62,11 +58,6 @@ export const VotingSection: React.FC<VotingSectionProps> = ({ prioritySegments =
       setSubmitError(err instanceof Error ? err.message : 'Login failed');
     }
   };
-
-  // Don't render if no priorities selected
-  if (!showVoting) {
-    return null;
-  }
 
   if (authLoading) {
     return (

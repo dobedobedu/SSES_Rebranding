@@ -324,7 +324,7 @@ SOURCE CITATIONS
             Stakeholder Voting
           </span>
         </div>
-        <VotingSection prioritySegments={prioritySegments} />
+        <VotingSection />
       </div>
       <div>
         <VotingResults />
