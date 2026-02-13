@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { personas, DEFAULT_PRIORITIES } from './data';
 import { Persona, MatrixColumn, PrioritySegmentType } from './types';
 import MatrixGrid from './components/MatrixGrid';
@@ -200,6 +201,7 @@ const App: React.FC = () => {
           </div>
         </div>
       </footer>
+      <Analytics />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 
 interface NavItem {
   label: string;
@@ -337,6 +338,7 @@ export const SplashScreen: React.FC = () => {
           </div>
         </footer>
       </div>
+      <Analytics />
     </div>
   );
 };
