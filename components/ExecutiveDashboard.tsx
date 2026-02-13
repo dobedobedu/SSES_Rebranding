@@ -46,8 +46,8 @@ const KPI_DATA = [
     source: 'Real-time job postings, Feb 2026',
     icon: 'Heart',
     breakdown: [
-      { name: 'Sarasota Memorial Health', value: '1,000+', detail: 'Largest healthcare system', status: '🔥🔥🔥🔥🔥 Massive hiring' },
-      { name: 'Lakewood Ranch Medical', value: '150+', detail: 'Part of UHS network', status: '🔥🔥🔥🔥 Active hiring' },
+      { name: 'Sarasota Memorial Health', value: '1,000+', detail: 'Largest healthcare system', status: '●●●●● Massive hiring' },
+      { name: 'Lakewood Ranch Medical', value: '150+', detail: 'Part of UHS network', status: '●●●● Active hiring' },
       { name: 'HCA Florida Sarasota', value: '113+', detail: 'Opening new Venice ED', status: '🔥🔥🔥🔥 Active hiring' }
     ],
     insight: '#1 hiring sector by volume'
@@ -324,7 +324,7 @@ SOURCE CITATIONS
             Stakeholder Voting
           </span>
         </div>
-        <VotingSection />
+        <VotingSection prioritySegments={prioritySegments} />
       </div>
       <div>
         <VotingResults />
