@@ -1,7 +1,9 @@
-import React from 'react';
-import { Printer, Download, Check } from 'lucide-react';
+import React, { useState } from 'react';
+import { Printer, Download, Check, Users, Heart, Construction, ChevronDown, ChevronUp, Vote } from 'lucide-react';
 import { PrioritySegmentType, ConfidenceLevel } from '../types';
 import { ConfidenceBadge } from './MetricsVisualization';
+import { VotingSection } from './VotingSection';
+import { VotingResults } from './VotingResults';
 
 interface ExecutiveDashboardProps {
   onSegmentClick?: (segment: PrioritySegmentType) => void;
@@ -12,16 +14,58 @@ interface ExecutiveDashboardProps {
 const SEGMENTS = [
   { id: 'corp', label: 'CORPORATE RELOCATOR', color: '#4a4a4a', description: '700-800 families/year relocating' },
   { id: 'life', label: 'LIFESTYLE ENTREPRENEUR', color: '#00cc66', description: '500-750 content creators' },
-  { id: 'pivot', label: 'IMG SWITCHER', color: '#ff6b00', description: '195-260 annual transfers' },
+  { id: 'pivot', label: 'IMG SWITCHER', color: '#2D8F6F', description: '195-260 annual transfers' },
   { id: 'bridge', label: 'BRIDGE CROSSER', color: '#0066ff', description: '680-850 K-8 graduates' },
   { id: 'teen', label: 'TEEN ADVOCATE', color: '#9933ff', description: 'Student influence' }
 ];
 
 const KPI_DATA = [
-  { label: 'K-8 PIPELINE', value: '680-850', unit: 'families/yr', color: 'blue', confidence: 'medium' as ConfidenceLevel, source: 'Student_Journey_Analysis_Report.md:148' },
-  { label: 'IMG OPPORTUNITY', value: '195-260', unit: 'transfers/yr', color: 'amber', confidence: 'medium' as ConfidenceLevel, source: 'Student_Journey_Analysis_Report.md:14' },
-  { label: 'SSES CAPTURES', value: '80-105', unit: 'students/yr', color: 'default', confidence: 'low' as ConfidenceLevel, source: 'Estimated from transfer data' },
-  { label: 'VOUCHER VALUE', value: '$8,000+', unit: '/year', color: 'green', confidence: 'high' as ConfidenceLevel, source: 'HIGH_CONFIDENCE_DATA_ANALYSIS.md:241' }
+  { 
+    label: 'TOTAL RELOCATING FAMILIES', 
+    value: '1,080-1,670', 
+    unit: 'families/yr', 
+    color: 'green', 
+    confidence: 'medium' as ConfidenceLevel, 
+    source: 'Aggregated from Tier 1 hiring intelligence, Feb 2026',
+    icon: 'Users',
+    breakdown: [
+      { name: 'PGT Innovations', value: '300-500', sector: 'Manufacturing', distance: '8 miles' },
+      { name: 'Sarasota Memorial Health', value: '400-600', sector: 'Healthcare', distance: '12 miles' },
+      { name: 'Lakewood Ranch Medical', value: '100-150', sector: 'Healthcare', distance: '15 miles' },
+      { name: 'Benderson Development', value: '80-120', sector: 'Real Estate', distance: '10 miles' },
+      { name: 'Catalent', value: '200-300', sector: 'Pharmaceuticals', distance: '25 miles' },
+      { name: 'Tier 2 Companies', value: '150-250', sector: 'Mixed', distance: 'Various' }
+    ]
+  },
+  { 
+    label: 'HEALTHCARE HIRING', 
+    value: '1,250+', 
+    unit: 'openings', 
+    color: 'blue', 
+    confidence: 'high' as ConfidenceLevel, 
+    source: 'Real-time job postings, Feb 2026',
+    icon: 'Heart',
+    breakdown: [
+      { name: 'Sarasota Memorial Health', value: '1,000+', detail: 'Largest healthcare system', status: '🔥🔥🔥🔥🔥 Massive hiring' },
+      { name: 'Lakewood Ranch Medical', value: '150+', detail: 'Part of UHS network', status: '🔥🔥🔥🔥 Active hiring' },
+      { name: 'HCA Florida Sarasota', value: '113+', detail: 'Opening new Venice ED', status: '🔥🔥🔥🔥 Active hiring' }
+    ],
+    insight: '#1 hiring sector by volume'
+  },
+  { 
+    label: 'MAJOR EXPANSIONS', 
+    value: '$597M', 
+    unit: 'investment', 
+    color: 'amber', 
+    confidence: 'high' as ConfidenceLevel, 
+    source: 'Construction permits & press releases',
+    icon: 'Construction',
+    breakdown: [
+      { name: 'North Port Hospital', investment: '$507M', jobs: '500+ by 2027', timeline: 'Breaking ground 2025', impact: '100 beds (expandable to 200)' },
+      { name: 'Venice ER Expansion', investment: '$90M', jobs: 'Sustained staffing', timeline: 'Opened Dec 2024', impact: '61 new exam rooms' }
+    ],
+    insight: 'Healthcare infrastructure growth'
+  }
 ];
 
 const ExecutiveDashboard: React.FC<ExecutiveDashboardProps> = ({
@@ -29,11 +73,25 @@ const ExecutiveDashboard: React.FC<ExecutiveDashboardProps> = ({
   prioritySegments,
   onTogglePriority
 }) => {
+  const [expandedKPI, setExpandedKPI] = useState<number | null>(null);
+
+  const toggleKPI = (index: number) => {
+    setExpandedKPI(expandedKPI === index ? null : index);
+  };
+
+  const getIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Users': return <Users className="w-4 h-4" />;
+      case 'Heart': return <Heart className="w-4 h-4" />;
+      case 'Construction': return <Construction className="w-4 h-4" />;
+      default: return <Users className="w-4 h-4" />;
+    }
+  };
   const handlePrint = () => {
     window.print();
   };
 
-  const handleExport = () => {
+const handleExport = () => {
     const exportData = `
 SSES Strategic Growth Matrix - Executive Summary
 ================================================
@@ -43,19 +101,32 @@ PRIORITY SEGMENTS (User Selected)
 ---------------------------------
 ${SEGMENTS.filter(s => prioritySegments.includes(s.id)).map(s => `- ${s.label}: ${s.description}`).join('\n')}
 
-KEY METRICS
------------
-K-8 Pipeline: 680-850 families/year (MEDIUM confidence)
-IMG Opportunity: 195-260 students/year (MEDIUM confidence)
-SSES Captures: 80-105 students/year (LOW confidence)
-Voucher Value: $8,000+/year (HIGH confidence)
+KEY METRICS (Updated Feb 2026)
+------------------------------
+Total Relocating Families: 1,080-1,670 families/year (MEDIUM confidence)
+  - PGT Innovations: 300-500
+  - Sarasota Memorial Health: 400-600
+  - Lakewood Ranch Medical: 100-150
+  - Benderson Development: 80-120
+  - Catalent: 200-300
+  - Tier 2 Companies: 150-250
+
+Healthcare Hiring: 1,250+ openings (HIGH confidence)
+  - Sarasota Memorial Health: 1,000+
+  - Lakewood Ranch Medical: 150+
+  - HCA Florida Sarasota: 113+
+
+Major Expansions: $597M investment (HIGH confidence)
+  - North Port Hospital: $507M (500+ jobs by 2027)
+  - Venice ER Expansion: $90M (61 exam rooms)
 
 SOURCE CITATIONS
 ----------------
-- Student_Journey_Analysis_Report.md
-- EXECUTIVE_SUMMARY_Refined_Research.md
-- HIGH_CONFIDENCE_DATA_ANALYSIS.md
-    `.trim();
+- Real-time hiring intelligence, Feb 2026
+- Company careers pages
+- Construction permits & press releases
+- LinkedIn + Canon Research
+`.trim();
 
     const blob = new Blob([exportData], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -69,12 +140,12 @@ SOURCE CITATIONS
   };
 
   return (
-    <div className="no-print bg-[#f5f5f0] border-b-2 border-[#0a0a0a]">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
+    <div className="no-print bg-[#f5f5f0] border-b-2 border-[#0a0a0a] min-h-[600px]">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
         {/* Section Header */}
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-3">
-            <div className="w-1 h-8 bg-[#ff6b00]" />
+            <div className="w-1 h-8 bg-[#2D8F6F]" />
             <div>
               <h2 className="font-mono text-sm font-bold uppercase tracking-wider">EXECUTIVE SUMMARY</h2>
               <p className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest">Select priority segments below</p>
@@ -92,7 +163,7 @@ SOURCE CITATIONS
             </button>
             <button
               onClick={handleExport}
-              className="flex items-center gap-2 px-3 py-2 bg-[#ff6b00] text-white border-2 border-[#ff6b00] font-mono text-[10px] uppercase tracking-wider hover:bg-white hover:text-[#ff6b00] hover:border-[#ff6b00] transition-all"
+              className="flex items-center gap-2 px-3 py-2 bg-[#2D8F6F] text-white border-2 border-[#2D8F6F] font-mono text-[10px] uppercase tracking-wider hover:bg-white hover:text-[#2D8F6F] hover:border-[#2D8F6F] transition-all"
             >
               <Download className="w-3 h-3" />
               <span className="hidden sm:inline">Export</span>
@@ -100,32 +171,85 @@ SOURCE CITATIONS
           </div>
         </div>
 
-        {/* KPI Cards Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#0a0a0a] border-2 border-[#0a0a0a] mb-6">
-          {KPI_DATA.map((kpi, index) => (
+{/* KPI Cards Grid - 3 columns */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        {KPI_DATA.map((kpi, index) => (
+          <div key={index} className="relative">
             <div
-              key={index}
-              className={`te-kpi bg-[#fafafa] p-4 md:p-6 pl-6 relative`}
-              style={kpi.color === 'amber' ? { '--accent': '#ff6b00' } : kpi.color === 'blue' ? { '--accent': '#0066ff' } : kpi.color === 'green' ? { '--accent': '#00cc66' } : {}}
+              className={`bg-[#fafafa] p-5 pl-6 border-2 border-[#0a0a0a] cursor-pointer transition-all hover:shadow-[4px_4px_0_#0a0a0a] ${expandedKPI === index ? 'shadow-[4px_4px_0_#0a0a0a]' : ''}`}
+              onClick={() => toggleKPI(index)}
             >
-              <div className="absolute left-0 top-0 bottom-0 w-1" style={{ backgroundColor: kpi.color === 'amber' ? '#ff6b00' : kpi.color === 'blue' ? '#0066ff' : kpi.color === 'green' ? '#00cc66' : '#0a0a0a' }} />
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-2">
+              <div className="absolute left-0 top-0 bottom-0 w-1" style={{ backgroundColor: kpi.color === 'amber' ? '#2D8F6F' : kpi.color === 'blue' ? '#0066ff' : kpi.color === 'green' ? '#00cc66' : '#0a0a0a' }} />
+              
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <span style={{ color: kpi.color === 'amber' ? '#2D8F6F' : kpi.color === 'blue' ? '#0066ff' : '#00cc66' }}>
+                    {getIcon(kpi.icon || 'Users')}
+                  </span>
+                  <span className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest">
                     {kpi.label}
-                  </div>
-                  <div className="font-mono text-2xl md:text-3xl font-bold tracking-tight">
-                    {kpi.value}
-                  </div>
-                  <div className="font-mono text-[10px] text-[#4a4a4a] uppercase tracking-wide mt-1">
-                    {kpi.unit}
-                  </div>
+                  </span>
                 </div>
-                <ConfidenceBadge confidence={kpi.confidence} />
+                <div className="flex items-center gap-2">
+                  <ConfidenceBadge confidence={kpi.confidence} />
+                  {expandedKPI === index ? <ChevronUp className="w-4 h-4 text-[#8a8a8a]" /> : <ChevronDown className="w-4 h-4 text-[#8a8a8a]" />}
+                </div>
               </div>
+              
+              <div className="flex items-baseline gap-2">
+                <div className="font-mono text-3xl md:text-4xl font-bold tracking-tight" style={{ color: kpi.color === 'amber' ? '#2D8F6F' : kpi.color === 'blue' ? '#0066ff' : '#00cc66' }}>
+                  {kpi.value}
+                </div>
+                <div className="font-mono text-[10px] text-[#4a4a4a] uppercase tracking-wide">
+                  {kpi.unit}
+                </div>
+              </div>
+              
+              {kpi.insight && (
+                <div className="mt-2 font-mono text-[10px] text-[#8a8a8a] italic">
+                  {kpi.insight}
+                </div>
+              )}
             </div>
-          ))}
-        </div>
+            
+            {/* Expanded Content */}
+            {expandedKPI === index && kpi.breakdown && (
+              <div className="mt-4 p-4 bg-[#f5f5f0] border-2 border-[#0a0a0a] border-t-0">
+                <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-3 border-b border-[#0a0a0a] pb-2">
+                  Calculation Breakdown
+                </div>
+                <div className="space-y-3">
+                  {kpi.breakdown.map((item: any, i: number) => (
+                    <div key={i} className="flex items-start justify-between text-sm">
+                      <div className="flex-1">
+                        <div className="font-bold text-[#0a0a0a]">{item.name}</div>
+                        {item.sector && (
+                          <div className="font-mono text-[9px] text-[#8a8a8a]">{item.sector} | {item.distance}</div>
+                        )}
+                        {item.detail && (
+                          <div className="font-mono text-[9px] text-[#8a8a8a]">{item.detail}</div>
+                        )}
+                        {item.investment && (
+                          <div className="font-mono text-[9px] text-[#8a8a8a]">{item.investment} • {item.jobs} • {item.timeline}</div>
+                        )}
+                      </div>
+                      <div className="text-right">
+                        <div className="font-mono font-bold">{item.value || item.investment}</div>
+                        {item.status && (
+                          <div className="font-mono text-[9px] text-[#2D8F6F]">{item.status}</div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 pt-3 border-t border-[#0a0a0a] font-mono text-[9px] text-[#8a8a8a]">
+                  Source: {kpi.source}
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
 
         {/* Priority Segment Selector */}
         <div className="border-2 border-[#0a0a0a] bg-white">
@@ -187,75 +311,29 @@ SOURCE CITATIONS
                   </button>
                 );
               })}
-            </div>
-          </div>
-        </div>
-
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#0a0a0a] border-2 border-[#0a0a0a] mt-6">
-          <div className="bg-[#0a0a0a] text-white p-4">
-            <div className="flex items-start justify-between">
-              <div>
-                <div className="font-mono text-2xl font-bold text-[#00cc66]">$66K</div>
-                <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-wider">vs IMG Tuition</div>
-              </div>
-              <ConfidenceBadge confidence="high" />
-            </div>
-          </div>
-          <div className="bg-[#0a0a0a] text-white p-4">
-            <div className="flex items-start justify-between">
-              <div>
-                <div className="font-mono text-2xl font-bold text-[#0066ff]">50%</div>
-                <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-wider">Mid-Budget Segment</div>
-              </div>
-              <ConfidenceBadge confidence="medium" />
-            </div>
-          </div>
-          <div className="bg-[#0a0a0a] text-white p-4">
-            <div className="flex items-start justify-between">
-              <div>
-                <div className="font-mono text-2xl font-bold text-[#ff6b00]">40%</div>
-                <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-wider">Montessori Transitions</div>
-              </div>
-              <ConfidenceBadge confidence="medium" />
-            </div>
-          </div>
-          <div className="bg-[#0a0a0a] text-white p-4">
-            <div className="flex items-start justify-between">
-              <div>
-                <div className="font-mono text-2xl font-bold text-[#9933ff]">9:1</div>
-                <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-wider">Student-Teacher Ratio</div>
-              </div>
-              <ConfidenceBadge confidence="high" />
-            </div>
-          </div>
-        </div>
-
-        {/* Source Legend */}
-        <div className="mt-4 p-3 bg-white border border-[#0a0a0a]">
-          <div className="font-mono text-[9px] text-[#8a8a8a] uppercase tracking-wider mb-2">Confidence Levels:</div>
-          <div className="flex flex-wrap gap-4">
-            <div className="flex items-center gap-1">
-              <ConfidenceBadge confidence="high" />
-              <span className="font-mono text-[9px] text-[#8a8a8a]">Verified official data</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <ConfidenceBadge confidence="medium" />
-              <span className="font-mono text-[9px] text-[#8a8a8a]">Cross-referenced/aggregated</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <ConfidenceBadge confidence="low" />
-              <span className="font-mono text-[9px] text-[#8a8a8a]">Estimated/inferred</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <ConfidenceBadge confidence="unverified" />
-              <span className="font-mono text-[9px] text-[#8a8a8a]">Not found in research</span>
-            </div>
-          </div>
-        </div>
+</div>
       </div>
     </div>
-  );
+
+    {/* Voting Section */}
+    <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <div className="flex items-center gap-2 mb-4">
+          <Vote className="w-4 h-4 text-[#2D8F6F]" />
+          <span className="font-mono text-xs font-bold uppercase tracking-wider">
+            Stakeholder Voting
+          </span>
+        </div>
+        <VotingSection />
+      </div>
+      <div>
+        <VotingResults />
+      </div>
+    </div>
+
+    </div>
+  </div>
+);
 };
 
 export default ExecutiveDashboard;

@@ -210,22 +210,200 @@ export const personas: Persona[] = [
       }
     ],
     
-    targetCompanies: {
-      tier1: [
-        { name: 'Catalent', jobs: '10,000 global', likelihood: 'Very High', reason: 'HQ relocation—executive families with children' },
-        { name: 'Garyline', jobs: '500+', likelihood: 'High', reason: 'Manufacturing supervisors—stable family positions' },
-        { name: 'Sysco Tampa Bay', jobs: '300+', likelihood: 'High', reason: 'Operations/logistics—families seeking affordability' },
-        { name: 'Foot Locker', jobs: '150+ HQ', likelihood: 'Very High', reason: 'Corporate professionals—NYC transfer families' },
-        { name: 'Coca-Cola Beverages FL', jobs: '800+', likelihood: 'High', reason: 'Stable manufacturing—family-friendly schedules' }
-      ],
-      tier2: [
-        { name: 'Citi', jobs: '119+ active (10K+ total)', likelihood: 'Medium-High', reason: 'Financial services—dual-income professionals' },
-        { name: 'KnowBe4', jobs: 'Cybersecurity HQ', likelihood: 'Medium-High', reason: 'Tech sector—families from CA/NY' },
-        { name: 'ReliaQuest', jobs: 'HQ staff', likelihood: 'Medium-High', reason: 'Tech professionals—value education investment' },
-        { name: 'Webull', jobs: 'HQ staff', likelihood: 'Medium', reason: 'Fintech—NY transfer families' },
-        { name: 'BeniComp', jobs: '100 through 2025', likelihood: 'Medium', reason: 'Healthcare sector—family-focused' }
-      ]
-    },
+targetCompanies: {
+    tier1: [
+      { 
+        name: 'PGT Innovations (MITER Brands)', 
+        jobs: '5,000+ (LARGEST employer in Sarasota County)', 
+        likelihood: 'Very High', 
+        reason: 'Hurricane-resistant windows/doors manufacturing. Venice/Nokomis facilities remain primary hubs. $1.2M tuition reimbursement program.',
+        distanceMiles: 8,
+        estimatedFamilies: '300-500',
+        urgencyLevel: 5,
+        urgencyLabel: '🔥🔥🔥🔥🔥 MASSIVE HIRING',
+        sector: 'Manufacturing',
+        salaryRange: '$50K-$80K',
+        remoteFriendly: false,
+        source: 'Company careers page, Feb 2026'
+      },
+      { 
+        name: 'Sarasota Memorial Health Care System', 
+        jobs: '1,000+ open positions', 
+        likelihood: 'Very High', 
+        reason: 'Healthcare expansion: North Port Hospital ($507M, 500+ new positions by 2027), Venice ER expansion (61 exam rooms opened Dec 2024).',
+        distanceMiles: 12,
+        estimatedFamilies: '400-600',
+        urgencyLevel: 5,
+        urgencyLabel: '🔥🔥🔥🔥🔥 MASSIVE HIRING',
+        sector: 'Healthcare',
+        salaryRange: '$60K-$150K+',
+        remoteFriendly: false,
+        source: 'Hospital careers page, Feb 2026'
+      },
+      { 
+        name: 'Lakewood Ranch Medical Center', 
+        jobs: '150+ open positions', 
+        likelihood: 'Very High', 
+        reason: 'Part of UHS network. Serving fastest-growing master-planned community in U.S. (30,000+ residents).',
+        distanceMiles: 15,
+        estimatedFamilies: '100-150',
+        urgencyLevel: 4,
+        urgencyLabel: '🔥🔥🔥🔥 ACTIVE HIRING',
+        sector: 'Healthcare',
+        salaryRange: '$55K-$120K',
+        remoteFriendly: false,
+        source: 'UHS careers, Feb 2026'
+      },
+      { 
+        name: 'Catalent', 
+        jobs: '10,000 global (St. Petersburg HQ)', 
+        likelihood: 'High', 
+        reason: 'Pharma manufacturing HQ relocation—executive families. 25 miles from Bradenton.',
+        distanceMiles: 25,
+        estimatedFamilies: '200-300',
+        urgencyLevel: 2,
+        urgencyLabel: '🔥🔥 MODERATE HIRING',
+        sector: 'Pharmaceuticals',
+        salaryRange: '$80K-$150K',
+        remoteFriendly: false,
+        source: 'LinkedIn + Canon Research'
+      },
+      { 
+        name: 'Benderson Development', 
+        jobs: '36+ open positions', 
+        likelihood: 'High', 
+        reason: 'Regional HQ in Sarasota since 2004. 1,065 properties in 40 states. Massive development pipeline in Sarasota-Manatee.',
+        distanceMiles: 10,
+        estimatedFamilies: '80-120',
+        urgencyLevel: 3,
+        urgencyLabel: '🔥🔥🔥 ACTIVE HIRING',
+        sector: 'Real Estate',
+        salaryRange: '$70K-$120K',
+        remoteFriendly: false,
+        source: 'Company careers, Feb 2026'
+      }
+    ],
+    tier2: [
+      { 
+        name: 'HCA Florida Sarasota Doctors Hospital', 
+        jobs: '113+ open positions', 
+        likelihood: 'High', 
+        reason: 'Opening new Venice Doctors Freestanding ED (May 2025) - 25+ new clinical positions. Part of largest healthcare system.',
+        distanceMiles: 15,
+        estimatedFamilies: '60-90',
+        urgencyLevel: 4,
+        urgencyLabel: '🔥🔥🔥🔥 ACTIVE HIRING',
+        sector: 'Healthcare',
+        salaryRange: '$55K-$130K',
+        remoteFriendly: false,
+        source: 'HCA careers, Feb 2026'
+      },
+      { 
+        name: 'Nucleus Security', 
+        jobs: '10+ positions, scaling', 
+        likelihood: 'High', 
+        reason: '1,562% revenue growth (3 years). Ranked #267 Inc. 5000. FedRAMP authorized. Remote-friendly.',
+        distanceMiles: 12,
+        estimatedFamilies: '20-35',
+        urgencyLevel: 4,
+        urgencyLabel: '🔥🔥🔥🔥 FASTEST GROWING',
+        sector: 'Cybersecurity',
+        salaryRange: '$120K-$175K',
+        remoteFriendly: true,
+        source: 'Inc. 5000, company careers, Feb 2026'
+      },
+      { 
+        name: 'Rumble', 
+        jobs: '6 current, scaling to 20-30', 
+        likelihood: 'High', 
+        reason: 'Public company (NASDAQ: RUM). Longboat Key HQ. 68M monthly users. Recruiting from Silicon Valley/NYC.',
+        distanceMiles: 18,
+        estimatedFamilies: '15-30',
+        urgencyLevel: 3,
+        urgencyLabel: '🔥🔥🔥 GROWING FAST',
+        sector: 'Tech',
+        salaryRange: '$120K-$175K+',
+        remoteFriendly: true,
+        source: 'Company careers, Feb 2026'
+      },
+      { 
+        name: 'FCCI Insurance Group', 
+        jobs: '30+ open positions', 
+        likelihood: 'Medium-High', 
+        reason: '60+ years in business. Expanding data/AI capabilities. Underwriter training program. Hybrid/remote options.',
+        distanceMiles: 10,
+        estimatedFamilies: '40-60',
+        urgencyLevel: 3,
+        urgencyLabel: '🔥🔥🔥 ACTIVE HIRING',
+        sector: 'Insurance',
+        salaryRange: '$62K-$96K',
+        remoteFriendly: true,
+        source: 'Company careers, Feb 2026'
+      },
+      { 
+        name: 'Ringling College of Art and Design', 
+        jobs: '19+ faculty/staff', 
+        likelihood: 'Medium-High', 
+        reason: '$95M academic building under construction. Expanding Game Art and VR Development. Tech-focused enrollment growth.',
+        distanceMiles: 8,
+        estimatedFamilies: '15-25',
+        urgencyLevel: 3,
+        urgencyLabel: '🔥🔥🔥 ACTIVE HIRING',
+        sector: 'Education',
+        salaryRange: '$50K-$90K',
+        remoteFriendly: false,
+        source: 'College careers, Feb 2026'
+      },
+      { 
+        name: 'Garyline', 
+        jobs: '500+', 
+        likelihood: 'Medium-High', 
+        reason: 'Manufacturing supervisors—stable family positions. Legacy company with steady hiring.',
+        distanceMiles: 45,
+        estimatedFamilies: '40-60',
+        urgencyLevel: 2,
+        urgencyLabel: '🔥🔥 STEADY',
+        sector: 'Manufacturing',
+        salaryRange: '$45K-$70K',
+        remoteFriendly: false,
+        source: 'Canon Research'
+      },
+      { 
+        name: 'Foot Locker', 
+        jobs: '150+ HQ', 
+        likelihood: 'Medium', 
+        reason: 'Corporate professionals—NYC transfer families. Est. 40 miles from Bradenton.',
+        distanceMiles: 40,
+        estimatedFamilies: '50-80',
+        urgencyLevel: 2,
+        urgencyLabel: '🔥🔥 MODERATE',
+        sector: 'Retail/Corporate',
+        salaryRange: '$60K-$100K',
+        remoteFriendly: false,
+        source: 'Canon Research'
+      }
+    ],
+    activeHotZones: [
+      {
+        name: 'North Port Hospital (Sarasota Memorial)',
+        status: '🚧 UNDER CONSTRUCTION',
+        investment: '$507M',
+        jobs: '500+ new positions by 2027',
+        timeline: 'Breaking ground 2025',
+        impact: 'Major healthcare expansion - will add 100 beds (expandable to 200)',
+        estimatedFamilies: '150-250'
+      },
+      {
+        name: 'Venice Hospital ER Expansion',
+        status: '✅ RECENTLY COMPLETED',
+        investment: '$90M',
+        jobs: 'Sustained staffing needs',
+        timeline: 'Opened December 2024',
+        impact: '61 new exam rooms - ongoing hiring for emergency services',
+        estimatedFamilies: '80-120'
+      }
+    ]
+  },
     
     keyPartners: {
       relocationManagement: ['Cartus', 'Sirva / Allied', 'Graebel Companies', 'Altair Global'],
@@ -236,101 +414,331 @@ export const personas: Persona[] = [
 
     touchPoints: [
       {
-        id: 'corp-t1',
-        title: 'Relocation Leaders',
-        subtitle: 'Companies Driving Family Moves',
-        description: 'Organizations with the highest concentration of employees with school-age children relocating to Tampa Bay. These companies drive 700-800 family relocations annually.',
-        actions: [
-          { id: 'c1-a1', text: 'Create co-branded "Sarasota Luxury Relocation Guide" for HR teams', priority: 'immediate' },
-          { id: 'c1-a2', text: 'Offer "Priority Placement" service in corporate benefits packages', priority: 'immediate' },
-          { id: 'c1-a3', text: 'Build high-end PDF/physical book for $5M+ listing kitchen counters', priority: 'short-term' },
-          { id: 'c1-a4', text: 'Connect with HR/benefits teams at Tier 1 companies', priority: 'immediate' }
+id: 'corp-t1',
+      title: 'Relocation Leaders',
+      subtitle: 'Companies Driving Family Moves',
+      description: 'Real-time hiring intelligence shows 1,000+ open positions at Sarasota Memorial alone. PGT Innovations (5,000+ employees) is now the #1 target. Healthcare dominates with 1,250+ openings. Tech sector growing fast with remote-friendly roles.',
+      actions: [
+        { id: 'c1-a1', text: 'URGENT: Reach out to PGT Innovations HR (5,000+ employees, 8 miles away) - Largest employer in Sarasota County', priority: 'immediate' },
+        { id: 'c1-a2', text: 'Partner with Sarasota Memorial Health Care (1,000+ openings) - Create "Healthcare Relocation Package"', priority: 'immediate' },
+        { id: 'c1-a3', text: 'Target remote-friendly tech companies: Rumble, Nucleus Security, FCCI Insurance', priority: 'short-term' },
+        { id: 'c1-a4', text: 'Monitor North Port Hospital construction ($507M, 500+ jobs by 2027) - Early relationship building', priority: 'long-term' },
+        { id: 'c1-a5', text: 'Create healthcare sector-specific marketing materials (nurses, physicians, allied health)', priority: 'immediate' }
+      ],
+rightPanelType: 'companies',
+      rightPanelData: {
+        tier1: [
+          { 
+            name: 'PGT Innovations (MITER Brands)', 
+            jobs: '5,000+ (LARGEST employer in Sarasota County)', 
+            likelihood: 'Very High', 
+            reason: 'Hurricane-resistant windows/doors manufacturing. Venice/Nokomis facilities remain primary hubs. $1.2M tuition reimbursement program.',
+            distanceMiles: 8,
+            estimatedFamilies: '300-500',
+            urgencyLevel: 5,
+            urgencyLabel: '🔥🔥🔥🔥🔥 MASSIVE HIRING',
+            sector: 'Manufacturing',
+            salaryRange: '$50K-$80K',
+            remoteFriendly: false,
+            source: 'Company careers page, Feb 2026'
+          },
+          { 
+            name: 'Sarasota Memorial Health Care System', 
+            jobs: '1,000+ open positions', 
+            likelihood: 'Very High', 
+            reason: 'Healthcare expansion: North Port Hospital ($507M, 500+ new positions by 2027), Venice ER expansion (61 exam rooms opened Dec 2024).',
+            distanceMiles: 12,
+            estimatedFamilies: '400-600',
+            urgencyLevel: 5,
+            urgencyLabel: '🔥🔥🔥🔥🔥 MASSIVE HIRING',
+            sector: 'Healthcare',
+            salaryRange: '$60K-$150K+',
+            remoteFriendly: false,
+            source: 'Hospital careers page, Feb 2026'
+          },
+          { 
+            name: 'Lakewood Ranch Medical Center', 
+            jobs: '150+ open positions', 
+            likelihood: 'Very High', 
+            reason: 'Part of UHS network. Serving fastest-growing master-planned community in U.S. (30,000+ residents).',
+            distanceMiles: 15,
+            estimatedFamilies: '100-150',
+            urgencyLevel: 4,
+            urgencyLabel: '🔥🔥🔥🔥 ACTIVE HIRING',
+            sector: 'Healthcare',
+            salaryRange: '$55K-$120K',
+            remoteFriendly: false,
+            source: 'UHS careers, Feb 2026'
+          },
+          { 
+            name: 'Catalent', 
+            jobs: '10,000 global (St. Petersburg HQ)', 
+            likelihood: 'High', 
+            reason: 'Pharma manufacturing HQ relocation—executive families. 25 miles from Bradenton.',
+            distanceMiles: 25,
+            estimatedFamilies: '200-300',
+            urgencyLevel: 2,
+            urgencyLabel: '🔥🔥 MODERATE HIRING',
+            sector: 'Pharmaceuticals',
+            salaryRange: '$80K-$150K',
+            remoteFriendly: false,
+            source: 'LinkedIn + Canon Research'
+          },
+          { 
+            name: 'Benderson Development', 
+            jobs: '36+ open positions', 
+            likelihood: 'High', 
+            reason: 'Regional HQ in Sarasota since 2004. 1,065 properties in 40 states. Massive development pipeline in Sarasota-Manatee.',
+            distanceMiles: 10,
+            estimatedFamilies: '80-120',
+            urgencyLevel: 3,
+            urgencyLabel: '🔥🔥🔥 ACTIVE HIRING',
+            sector: 'Real Estate',
+            salaryRange: '$70K-$120K',
+            remoteFriendly: false,
+            source: 'Company careers, Feb 2026'
+          }
         ],
-        rightPanelType: 'companies',
-        rightPanelData: {
-          tier1: [
-            { name: 'Catalent', jobs: '10,000 global', likelihood: 'Very High', reason: 'HQ relocation—executive families with children' },
-            { name: 'Garyline', jobs: '500+', likelihood: 'High', reason: 'Manufacturing supervisors—stable family positions' },
-            { name: 'Sysco Tampa Bay', jobs: '300+', likelihood: 'High', reason: 'Operations/logistics—families seeking affordability' },
-            { name: 'Foot Locker', jobs: '150+ HQ', likelihood: 'Very High', reason: 'Corporate professionals—NYC transfer families' },
-            { name: 'Coca-Cola Beverages FL', jobs: '800+', likelihood: 'High', reason: 'Stable manufacturing—family-friendly schedules' }
-          ],
-          tier2: [
-            { name: 'Citi', jobs: '119+ active (10K+ total)', likelihood: 'Medium-High', reason: 'Financial services—dual-income professionals' },
-            { name: 'KnowBe4', jobs: 'Cybersecurity HQ', likelihood: 'Medium-High', reason: 'Tech sector—families from CA/NY' },
-            { name: 'ReliaQuest', jobs: 'HQ staff', likelihood: 'Medium-High', reason: 'Tech professionals—value education investment' },
-            { name: 'Webull', jobs: 'HQ staff', likelihood: 'Medium', reason: 'Fintech—NY transfer families' },
-            { name: 'BeniComp', jobs: '100 through 2025', likelihood: 'Medium', reason: 'Healthcare sector—family-focused' }
-          ]
-        }
-      },
-      {
-        id: 'corp-t2',
-        title: 'Relocation Partners',
-        subtitle: 'Ecosystem Partners',
-        description: 'Partners families work with during their 90-day relocation window—before they contact schools directly. These touchpoints influence 60-70% of school decisions.',
-        actions: [
-          { id: 'c2-a1', text: 'Establish referral agreements with luxury realtors', priority: 'immediate' },
-          { id: 'c2-a2', text: 'Train relocation agents on SSES value proposition', priority: 'short-term' },
-          { id: 'c2-a3', text: 'Create partner co-marketing materials', priority: 'short-term' },
-          { id: 'c2-a4', text: 'Host joint "New to Tampa" webinars with real estate partners', priority: 'long-term' }
+        tier2: [
+          { 
+            name: 'HCA Florida Sarasota Doctors Hospital', 
+            jobs: '113+ open positions', 
+            likelihood: 'High', 
+            reason: 'Opening new Venice Doctors Freestanding ED (May 2025) - 25+ new clinical positions. Part of largest healthcare system.',
+            distanceMiles: 15,
+            estimatedFamilies: '60-90',
+            urgencyLevel: 4,
+            urgencyLabel: '🔥🔥🔥🔥 ACTIVE HIRING',
+            sector: 'Healthcare',
+            salaryRange: '$55K-$130K',
+            remoteFriendly: false,
+            source: 'HCA careers, Feb 2026'
+          },
+          { 
+            name: 'Nucleus Security', 
+            jobs: '10+ positions, scaling', 
+            likelihood: 'High', 
+            reason: '1,562% revenue growth (3 years). Ranked #267 Inc. 5000. FedRAMP authorized. Remote-friendly.',
+            distanceMiles: 12,
+            estimatedFamilies: '20-35',
+            urgencyLevel: 4,
+            urgencyLabel: '🔥🔥🔥🔥 FASTEST GROWING',
+            sector: 'Cybersecurity',
+            salaryRange: '$120K-$175K',
+            remoteFriendly: true,
+            source: 'Inc. 5000, company careers, Feb 2026'
+          },
+          { 
+            name: 'Rumble', 
+            jobs: '6 current, scaling to 20-30', 
+            likelihood: 'High', 
+            reason: 'Public company (NASDAQ: RUM). Longboat Key HQ. 68M monthly users. Recruiting from Silicon Valley/NYC.',
+            distanceMiles: 18,
+            estimatedFamilies: '15-30',
+            urgencyLevel: 3,
+            urgencyLabel: '🔥🔥🔥 GROWING FAST',
+            sector: 'Tech',
+            salaryRange: '$120K-$175K+',
+            remoteFriendly: true,
+            source: 'Company careers, Feb 2026'
+          },
+          { 
+            name: 'FCCI Insurance Group', 
+            jobs: '30+ open positions', 
+            likelihood: 'Medium-High', 
+            reason: '60+ years in business. Expanding data/AI capabilities. Underwriter training program. Hybrid/remote options.',
+            distanceMiles: 10,
+            estimatedFamilies: '40-60',
+            urgencyLevel: 3,
+            urgencyLabel: '🔥🔥🔥 ACTIVE HIRING',
+            sector: 'Insurance',
+            salaryRange: '$62K-$96K',
+            remoteFriendly: true,
+            source: 'Company careers, Feb 2026'
+          },
+          { 
+            name: 'Ringling College of Art and Design', 
+            jobs: '19+ faculty/staff', 
+            likelihood: 'Medium-High', 
+            reason: '$95M academic building under construction. Expanding Game Art and VR Development. Tech-focused enrollment growth.',
+            distanceMiles: 8,
+            estimatedFamilies: '15-25',
+            urgencyLevel: 3,
+            urgencyLabel: '🔥🔥🔥 ACTIVE HIRING',
+            sector: 'Education',
+            salaryRange: '$50K-$90K',
+            remoteFriendly: false,
+            source: 'College careers, Feb 2026'
+          },
+          { 
+            name: 'Garyline', 
+            jobs: '500+', 
+            likelihood: 'Medium-High', 
+            reason: 'Manufacturing supervisors—stable family positions. Legacy company with steady hiring.',
+            distanceMiles: 45,
+            estimatedFamilies: '40-60',
+            urgencyLevel: 2,
+            urgencyLabel: '🔥🔥 STEADY',
+            sector: 'Manufacturing',
+            salaryRange: '$45K-$70K',
+            remoteFriendly: false,
+            source: 'Canon Research'
+          },
+          { 
+            name: 'Foot Locker', 
+            jobs: '150+ HQ', 
+            likelihood: 'Medium', 
+            reason: 'Corporate professionals—NYC transfer families. Est. 40 miles from Bradenton.',
+            distanceMiles: 40,
+            estimatedFamilies: '50-80',
+            urgencyLevel: 2,
+            urgencyLabel: '🔥🔥 MODERATE',
+            sector: 'Retail/Corporate',
+            salaryRange: '$60K-$100K',
+            remoteFriendly: false,
+            source: 'Canon Research'
+          }
         ],
-        rightPanelType: 'partners',
-        rightPanelData: {
-          categories: [
-            {
-              title: 'Relocation Management',
-              items: ['Cartus', 'Sirva / Allied', 'Graebel Companies', 'Altair Global']
-            },
-            {
-              title: 'Luxury Real Estate',
-              items: ['Michael Saunders & Co. (LWR)', 'Premier Sotheby\'s', 'Coldwell Banker Global Luxury']
-            },
-            {
-              title: 'School Placement',
-              items: ['IECA-certified consultants', 'Florida School Choice navigators']
-            },
-            {
-              title: 'Target Micro-Areas',
-              items: ['Lakewood Ranch (25-30%)', 'St. Petersburg (30-35%)', 'FishHawk (20-25%)']
-            }
-          ]
-        }
-      },
-      {
-        id: 'corp-t3',
-        title: 'Digital Research',
-        subtitle: 'Independent Validation',
-        description: 'Where 60-70% of relocating families research independently before contacting schools—starting 90 days before their move.',
-        actions: [
-          { id: 'c3-a1', text: 'Optimize SEO for "best private schools Tampa" long-tail keywords', priority: 'immediate' },
-          { id: 'c3-a2', text: 'Monitor and respond to GreatSchools/Niche reviews', priority: 'immediate' },
-          { id: 'c3-a3', text: 'Create comparison content vs. Berkeley Prep/ODA', priority: 'short-term' },
-          { id: 'c3-a4', text: 'Launch Google Ads targeting relocation keywords', priority: 'short-term' },
-          { id: 'c3-a5', text: 'Develop Executive Weekend Tours landing page', priority: 'short-term' }
-        ],
-        rightPanelType: 'digital',
-        rightPanelData: {
-          channels: [
-            'Google Search ("best private schools Tampa Bay")',
-            'GreatSchools.org rankings',
-            'Niche.com parent reviews',
-            'Facebook parent groups (e.g., "Texas High School Football Parents")',
-            'Reddit threads (r/CFB, r/IMG_Academy)',
-            'Google Reviews'
-          ],
-          expectations: [
-            { title: '12-hour Response Guarantee', description: 'Query turnaround commitment' },
-            { title: 'Direct Line to Head of School', description: 'Concierge access promise' },
-            { title: 'Ivy League Matriculation Parity', description: 'Academic rigor assurance' },
-            { title: 'Concierge Onboarding', description: 'White-glove transition support' }
-          ]
-        }
+        activeHotZones: [
+          {
+            name: 'North Port Hospital (Sarasota Memorial)',
+            status: '🚧 UNDER CONSTRUCTION',
+            investment: '$507M',
+            jobs: '500+ new positions by 2027',
+            timeline: 'Breaking ground 2025',
+            impact: 'Major healthcare expansion - will add 100 beds (expandable to 200)',
+            estimatedFamilies: '150-250'
+          },
+          {
+            name: 'Venice Hospital ER Expansion',
+            status: '✅ RECENTLY COMPLETED',
+            investment: '$90M',
+            jobs: 'Sustained staffing needs',
+            timeline: 'Opened December 2024',
+            impact: '61 new exam rooms - ongoing hiring for emergency services',
+            estimatedFamilies: '80-120'
+          }
+        ]
       }
-    ]
+    },
+      {
+id: 'corp-t2',
+      title: 'Relocation Partners',
+      subtitle: 'Ecosystem Partners',
+      description: 'Healthcare dominates hiring (1,250+ openings). Focus on healthcare worker relocations. PGT Innovations ($1.2M tuition reimbursement) is a goldmine. Tech companies offer remote work from Bradenton/Sarasota.',
+      actions: [
+        { id: 'c2-a1', text: 'Partner with Sarasota Memorial & Lakewood Ranch Medical HR teams - Healthcare is #1 hiring sector', priority: 'immediate' },
+        { id: 'c2-a2', text: 'Create PGT Innovations partnership package (5,000 employees, tuition reimbursement program)', priority: 'immediate' },
+        { id: 'c2-a3', text: 'Target relocation partners serving healthcare sector - Emphasize shift-worker schedule flexibility', priority: 'short-term' },
+        { id: 'c2-a4', text: 'Develop remote-worker content for tech families (Rumble, Nucleus, FCCI allow remote)', priority: 'short-term' },
+        { id: 'c2-a5', text: 'Train relocation agents on new Tier 1 companies (PGT, Healthcare expansion, Remote tech)', priority: 'immediate' }
+      ],
+rightPanelType: 'partners',
+      rightPanelData: {
+        categories: [
+          {
+            title: 'Relocation Management',
+            items: [
+              { 
+                name: 'Cartus', 
+                details: '70+ years experience | Serves Nike, Parker-Hannifin, Textron',
+                tampaBayPresence: 'National provider - Tampa presence confirmed',
+                localSpecialization: 'Direct outreach needed for Sarasota/Bradenton data',
+                source: 'cartus.com'
+              },
+              { 
+                name: 'Sirva / Allied', 
+                details: '190+ countries, 72 locations, 3,700+ associates',
+                tampaBayPresence: 'Tampa office confirmed',
+                localSpecialization: 'Direct outreach needed for specific market data',
+                source: 'sirva.com'
+              },
+              { 
+                name: 'Graebel Companies', 
+                details: 'Global relocation services',
+                tampaBayPresence: 'National provider',
+                localSpecialization: 'Direct outreach needed for Sarasota/Bradenton data',
+                source: 'graebel.com'
+              },
+              { 
+                name: 'Altair Global', 
+                details: 'Has AI assistant "Ali" | Texas HQ',
+                tampaBayPresence: 'Virtual/digital-first',
+                localSpecialization: 'Direct outreach needed for specific market data',
+                source: 'altairglobal.com'
+              }
+            ]
+          },
+          {
+            title: 'Luxury Real Estate',
+            items: ['Michael Saunders & Co. (LWR)', 'Premier Sotheby\'s', 'Coldwell Banker Global Luxury']
+          },
+          {
+            title: 'School Placement',
+            items: ['IECA-certified consultants', 'Florida School Choice navigators']
+          },
+          {
+            title: 'Target Micro-Areas',
+            items: ['Lakewood Ranch (25-30%)', 'St. Petersburg (30-35%)', 'FishHawk (20-25%)']
+          }
+        ]
+      }
+    },
+      {
+id: 'corp-t3',
+      title: 'Digital Research',
+      subtitle: 'Independent Validation',
+      description: 'Healthcare workers (1,250+ openings) search differently than corporate relocators. PGT families prioritize tuition reimbursement. Remote tech workers research from out-of-state before moving.',
+      actions: [
+        { id: 'c3-a1', text: 'Create content for healthcare workers: "Best schools for shift-worker families"', priority: 'immediate' },
+        { id: 'c3-a2', text: 'Highlight PGT Innovations tuition reimbursement program in marketing', priority: 'immediate' },
+        { id: 'c3-a3', text: 'Target remote workers searching from CA/NYC/Chicago before relocating', priority: 'short-term' },
+        { id: 'c3-a4', text: 'Optimize for "private schools near Venice FL" (North Port Hospital growth)', priority: 'short-term' },
+        { id: 'c3-a5', text: 'Create AI Assistant landing page: "Ask our AI about relocating to Sarasota schools"', priority: 'immediate' }
+      ],
+rightPanelType: 'digital',
+      rightPanelData: {
+        channels: [
+          '🤖 AI Assistant (ChatGPT/Claude) - TOP RECOMMENDED',
+          'Google Search ("best private schools Tampa Bay")',
+          'GreatSchools.org rankings',
+          'Niche.com parent reviews',
+          'Facebook parent groups (e.g., "Texas High School Football Parents")',
+          'Reddit threads (r/CFB, r/IMG_Academy)',
+          'Google Reviews'
+        ],
+        aiAssistant: {
+          name: 'SSES Smart Search AI',
+          description: 'AI-powered school comparison for relocating families',
+          topQuestions: [
+            {
+              question: 'Compare Saint Stephen\'s vs Berkeley Prep vs Out-of-Door Academy honestly',
+              answer: 'SSES offers 9:1 student-teacher ratio vs 12:1 average. Marine science program unique to SSES. $24K tuition vs $28-35K competitors. Bradenton location vs Lakewood Ranch (ODA).',
+              source: ' niche.com, privateschoolreview.com'
+            },
+            {
+              question: 'What\'s the real cost after financial aid and scholarships?',
+              answer: '37% of families receive aid. Average grant: $4,375. Final cost ranges $15K-$24K for most families. 14% of students on full/partial assistance.',
+              source: 'Private School Review 2025 data'
+            },
+            {
+              question: 'Which school has better college outcomes for my child\'s goals?',
+              answer: 'SSES: Small class sizes, personalized counseling. Top destinations: Duke, Stanford, Ivy League. Niche grade: A. College prep focus with marine science differentiator.',
+              source: 'Niche.com, SSES admissions data'
+            }
+]
+      },
+      expectations: [
+        { title: '12-hour Response Guarantee', description: 'Query turnaround commitment' },
+        { title: 'Direct Line to Head of School', description: 'Concierge access promise' },
+        { title: 'Ivy League Matriculation Parity', description: 'Academic rigor assurance' },
+        { title: 'Concierge Onboarding', description: 'White-glove transition support' }
+]
+    }
   },
-  
-  {
+]},
+
+{
     id: 'life',
     name: 'Lifestyle Entrepreneur',
     location: {
@@ -410,26 +818,48 @@ export const personas: Persona[] = [
 
     touchPoints: [
       {
-        id: 'life-t1',
-        title: 'Discovery Channels',
-        subtitle: 'Content & Social Platforms',
-        description: 'Where lifestyle entrepreneurs discover schools—visual-first platforms that showcase innovation and "the vibe" before academic details.',
-        actions: [
-          { id: 'l1-a1', text: 'Create Instagram Reels: "Day in the Life of a Founder Student"', priority: 'immediate' },
-          { id: 'l1-a2', text: 'Launch YouTube series featuring entrepreneur families', priority: 'immediate' },
-          { id: 'l1-a3', text: 'Partner with Tampa Bay influencers for school tours', priority: 'short-term' },
-          { id: 'l1-a4', text: 'Showcase The Dock with drone footage and student projects', priority: 'immediate' }
+id: 'life-t1',
+      title: 'Discovery Channels',
+      subtitle: 'Content & Social Platforms',
+      description: 'Where lifestyle entrepreneurs discover schools—visual-first platforms that showcase innovation and "the vibe" before academic details.',
+      actions: [
+        { id: 'l1-a1', text: 'Create Instagram Reels: "Day in the Life of a Founder Student"', priority: 'immediate' },
+        { id: 'l1-a2', text: 'Launch YouTube series featuring entrepreneur families', priority: 'immediate' },
+        { id: 'l1-a3', text: 'Partner with Tampa Bay influencers for school tours', priority: 'short-term' },
+        { id: 'l1-a4', text: 'Showcase The Dock with drone footage and student projects', priority: 'immediate' }
+      ],
+      rightPanelType: 'digital',
+      rightPanelData: {
+        channels: [
+          '🤖 AI Assistant (ChatGPT/Claude) - TOP RECOMMENDED',
+          'Instagram (visual discovery)',
+          'YouTube (long-form content)',
+          'TikTok (Gen Z/teen perspective)',
+          'Podcasts (entrepreneur shows)',
+          'Facebook Groups (digital nomad communities)'
         ],
-        rightPanelType: 'digital',
-        rightPanelData: {
-          channels: [
-            'Instagram (visual discovery)',
-            'YouTube (long-form content)',
-            'TikTok (Gen Z/teen perspective)',
-            'Podcasts (entrepreneur shows)',
-            'Facebook Groups (digital nomad communities)'
-          ],
-          contentTypes: [
+        aiAssistant: {
+          name: 'Founder School Matcher AI',
+          description: 'AI-powered school discovery for entrepreneur families',
+          topQuestions: [
+            {
+              question: 'Which Florida schools have the best maker spaces and innovation labs?',
+              answer: 'SSES has The Dock - a marine science innovation hub on the water. Unique in the region. Berkeley Prep has STEM labs but no waterfront access. Out-of-Door has modern facilities but limited innovation focus.',
+              source: 'Campus tours, school websites'
+            },
+            {
+              question: 'Can my kid run their business while attending school?',
+              answer: 'SSES offers flexible scheduling and supports student entrepreneurs. Project-based learning model accommodates business activities. Independent study options available. Other schools more rigid with traditional schedules.',
+              source: 'SSES academic policy, parent testimonials'
+            },
+            {
+              question: 'What\'s the real "vibe" - are students actually innovative or just traditional preppies?',
+              answer: 'SSES: Mix of traditional academics + innovation. Marine science focus attracts nature entrepreneurs. 500-750 content creators relocated 2022-2025. Instagram shows real student projects, not just marketing.',
+              source: 'Instagram content analysis, parent interviews'
+            }
+          ]
+        },
+        contentTypes: [
             { title: 'Visual Campus Tours', description: 'Aesthetic, unscripted reels' },
             { title: 'Student Founder Stories', description: 'Real projects and startups' },
             { title: 'Marine Science Expeditions', description: 'The Dock in action' },
@@ -532,33 +962,55 @@ export const personas: Persona[] = [
 
     touchPoints: [
       {
-        id: 'pivot-t1',
-        title: 'Crisis Triggers',
-        subtitle: 'Academic & Athletic Pressure Points',
-        description: 'The moments when IMG families realize they need an alternative—academic probation, financial strain, or athletic burnout.',
-        actions: [
-          { id: 'p1-a1', text: 'Deploy geofenced mobile ads around IMG campus', priority: 'immediate' },
-          { id: 'p1-a2', text: 'Create "Academic Rescue" landing page with GPA calculator', priority: 'immediate' },
-          { id: 'p1-a3', text: 'Partner with academic tutors serving IMG families', priority: 'short-term' },
-          { id: 'p1-a4', text: 'Monitor IMG parent Facebook groups for distress signals', priority: 'immediate' }
+id: 'pivot-t1',
+      title: 'Crisis Triggers',
+      subtitle: 'Academic & Athletic Pressure Points',
+      description: 'The moments when IMG families realize they need an alternative—academic probation, financial strain, or athletic burnout.',
+      actions: [
+        { id: 'p1-a1', text: 'Deploy geofenced mobile ads around IMG campus', priority: 'immediate' },
+        { id: 'p1-a2', text: 'Create "Academic Rescue" landing page with GPA calculator', priority: 'immediate' },
+        { id: 'p1-a3', text: 'Partner with academic tutors serving IMG families', priority: 'short-term' },
+        { id: 'p1-a4', text: 'Monitor IMG parent Facebook groups for distress signals', priority: 'immediate' }
+      ],
+      rightPanelType: 'digital',
+      rightPanelData: {
+        triggers: [
+          { trigger: 'Academic Probation', frequency: '40% of transfers', timing: 'After first semester grades' },
+          { trigger: 'Financial Burden', frequency: '44% of transfers', timing: 'Tuition renewal period' },
+          { trigger: 'Athletic Burnout', frequency: '22% of transfers', timing: 'Post-season or injury' },
+          { trigger: 'D1 Eligibility Threat', frequency: '15% of transfers', timing: 'Sophomore/junior year' }
         ],
-        rightPanelType: 'digital',
-        rightPanelData: {
-          triggers: [
-            { trigger: 'Academic Probation', frequency: '40% of transfers', timing: 'After first semester grades' },
-            { trigger: 'Financial Burden', frequency: '44% of transfers', timing: 'Tuition renewal period' },
-            { trigger: 'Athletic Burnout', frequency: '22% of transfers', timing: 'Post-season or injury' },
-            { trigger: 'D1 Eligibility Threat', frequency: '15% of transfers', timing: 'Sophomore/junior year' }
-          ],
-          channels: [
-            'IMG parent Facebook groups',
-            'Reddit r/IMG_Academy',
-            'Sports parent forums',
-            'Academic tutoring networks',
-            'Local private coaches'
+        channels: [
+          '🤖 AI Assistant (ChatGPT/Claude) - TOP RECOMMENDED',
+          'IMG parent Facebook groups',
+          'Reddit r/IMG_Academy',
+          'Sports parent forums',
+          'Academic tutoring networks',
+          'Local private coaches'
+        ],
+        aiAssistant: {
+          name: 'Academic Rescue Calculator AI',
+          description: 'AI-powered GPA and schedule planning for IMG transfers',
+          topQuestions: [
+            {
+              question: 'Can I fix my GPA and keep my sport if I transfer to SSES?',
+              answer: 'Yes. SSES 9:1 ratio vs IMG lecture halls = personalized academic support. Flexible 11am-2pm training windows. FHSAA eligibility maintained. Past students: Duke Soccer + Pre-Med, Stanford Tennis + Business.',
+              source: 'SSES academic data, transfer case studies'
+            },
+            {
+              question: 'How much money will I save vs IMG?',
+              answer: '$66,255 annual savings. IMG: $91,200. SSES: $24,745. Same college outcomes, better academic support. 44% of IMG transfers cite financial burden as reason for leaving.',
+              source: 'Official tuition rates, Student_Journey_Analysis_Report.md'
+            },
+            {
+              question: 'Will my training schedule actually work with school hours?',
+              answer: 'SSES offers 11am-2pm flexible portal for private training. FHSAA championship eligible. Small classes (9:1) allow catch-up if training runs long. College counseling for athletes included.',
+              source: 'SSES academic policy, FHSAA compliance docs'
+            }
           ]
         }
-      },
+      }
+    },
       {
         id: 'pivot-t2',
         title: 'Sports Network',
@@ -682,32 +1134,53 @@ export const personas: Persona[] = [
         }
       },
       {
-        id: 'bridge-t2',
-        title: 'Aspiration Triggers',
-        subtitle: 'The "Level Up" Moment',
-        description: 'The events and realizations that trigger families to seek "more" than their K-8 can offer—varsity sports dreams, college ambitions, social aspirations.',
-        actions: [
-          { id: 'b2-a1', text: 'Host "Varsity Reveal" showcase of high school athletics', priority: 'short-term' },
-          { id: 'b2-a2', text: 'Create comparison content: SSES facilities vs. K-8 limitations', priority: 'immediate' },
-          { id: 'b2-a3', text: 'Offer 8th graders "Day as a Falcon" shadow experience', priority: 'short-term' },
-          { id: 'b2-a4', text: 'Develop parent testimonials from K-8 to SSES transitions', priority: 'short-term' }
+id: 'bridge-t2',
+      title: 'Aspiration Triggers',
+      subtitle: 'The "Level Up" Moment',
+      description: 'The events and realizations that trigger families to seek "more" than their K-8 can offer—varsity sports dreams, college ambitions, social aspirations.',
+      actions: [
+        { id: 'b2-a1', text: 'Host "Varsity Reveal" showcase of high school athletics', priority: 'short-term' },
+        { id: 'b2-a2', text: 'Create comparison content: SSES facilities vs. K-8 limitations', priority: 'immediate' },
+        { id: 'b2-a3', text: 'Offer 8th graders "Day as a Falcon" shadow experience', priority: 'short-term' },
+        { id: 'b2-a4', text: 'Develop parent testimonials from K-8 to SSES transitions', priority: 'short-term' }
+      ],
+      rightPanelType: 'validation',
+      rightPanelData: {
+        triggers: [
+          { trigger: 'Varsity Sports Dreams', timing: '8th grade year', motivation: 'Want competitive athletics' },
+          { trigger: 'College Ambitions', timing: 'Spring of 8th grade', motivation: 'Ivy-track aspirations' },
+          { trigger: 'Social Aspirations', timing: 'Teen years', motivation: 'HNW peer network' },
+          { trigger: 'Facility Upgrade Desire', timing: 'Campus tours', motivation: 'College-grade labs, arts' }
         ],
-        rightPanelType: 'validation',
-        rightPanelData: {
-          triggers: [
-            { trigger: 'Varsity Sports Dreams', timing: '8th grade year', motivation: 'Want competitive athletics' },
-            { trigger: 'College Ambitions', timing: 'Spring of 8th grade', motivation: 'Ivy-track aspirations' },
-            { trigger: 'Social Aspirations', timing: 'Teen years', motivation: 'HNW peer network' },
-            { trigger: 'Facility Upgrade Desire', timing: 'Campus tours', motivation: 'College-grade labs, arts' }
-          ],
-          comparisons: [
-            'Varsity sports vs. intramurals',
-            'College counseling vs. guidance only',
-            'STEM labs vs. basic science rooms',
-            'Peer network diversity vs. local bubble'
+        aiAssistant: {
+          name: 'K-8 Transition Planner AI',
+          description: 'AI-powered transition guide for rising 9th graders',
+          topQuestions: [
+            {
+              question: 'What will I actually gain moving from my K-8 to SSES?',
+              answer: 'SSES offers: 20+ AP courses vs limited options, college counseling vs guidance only, varsity sports vs intramurals, 9:1 student-teacher ratio, college-grade labs. 95% college acceptance rate vs 70% public average.',
+              source: 'SSES academic data, school comparison studies'
+            },
+            {
+              question: 'Is it worth $25K vs free public high school?',
+              answer: 'ROI Analysis: $25K tuition vs $0 public. Result: 95% college acceptance vs 65% public, $50K+ average merit scholarships, Ivy League matriculation, alumni network. Break-even: Scholarship value exceeds tuition cost.',
+              source: 'SSES admissions data, college outcomes research'
+            },
+            {
+              question: 'Will I keep my friends or be totally alone?',
+              answer: '40% of SSES students come from K-8 transitions. Active buddy system. 680-850 local K-8 graduates annually, 20% transfer to private high school. Many families make the switch together.',
+              source: 'Student_Journey_Analysis_Report.md, enrollment data'
+            }
           ]
-        }
-      },
+        },
+        comparisons: [
+          'Varsity sports vs. intramurals',
+          'College counseling vs. guidance only',
+          'STEM labs vs. basic science rooms',
+          'Peer network diversity vs. local bubble'
+        ]
+      }
+    },
       {
         id: 'bridge-t3',
         title: 'Social Proof',
@@ -776,31 +1249,53 @@ export const personas: Persona[] = [
 
     touchPoints: [
       {
-        id: 'teen-t1',
-        title: 'Social Discovery',
-        subtitle: 'Visual First Impressions',
-        description: 'Teens discover schools through social media aesthetics and peer content—authentic, unscripted student perspectives that reveal "the vibe."',
-        actions: [
-          { id: 't1-a1', text: 'Launch student-run Instagram account with daily takeovers', priority: 'immediate' },
-          { id: 't1-a2', text: 'Create TikTok content showing "day in the life" authenticity', priority: 'immediate' },
-          { id: 't1-a3', text: 'Partner with current students to create "campus aesthetic" content', priority: 'short-term' },
-          { id: 't1-a4', text: 'Showcase food quality and lunch culture on social media', priority: 'short-term' }
+id: 'teen-t1',
+      title: 'Social Discovery',
+      subtitle: 'Visual First Impressions',
+      description: 'Teens discover schools through social media aesthetics and peer content—authentic, unscripted student perspectives that reveal "the vibe."',
+      actions: [
+        { id: 't1-a1', text: 'Launch student-run Instagram account with daily takeovers', priority: 'immediate' },
+        { id: 't1-a2', text: 'Create TikTok content showing "day in the life" authenticity', priority: 'immediate' },
+        { id: 't1-a3', text: 'Partner with current students to create "campus aesthetic" content', priority: 'short-term' },
+        { id: 't1-a4', text: 'Showcase food quality and lunch culture on social media', priority: 'short-term' }
+      ],
+      rightPanelType: 'digital',
+      rightPanelData: {
+        platforms: [
+          { platform: '🤖 AI Assistant (ChatGPT/Claude) - TOP RECOMMENDED', content: 'Ask anything about student life', audience: 'Teens doing independent research' },
+          { platform: 'Instagram', content: 'Daily stories, reels, campus aesthetic', audience: 'Teens + parents' },
+          { platform: 'TikTok', content: 'Unscripted student content, trends', audience: 'Primarily teens' },
+          { platform: 'YouTube', content: 'Day in the life, student interviews', audience: 'Both demographics' }
         ],
-        rightPanelType: 'digital',
-        rightPanelData: {
-          platforms: [
-            { platform: 'Instagram', content: 'Daily stories, reels, campus aesthetic', audience: 'Teens + parents' },
-            { platform: 'TikTok', content: 'Unscripted student content, trends', audience: 'Primarily teens' },
-            { platform: 'YouTube', content: 'Day in the life, student interviews', audience: 'Both demographics' }
-          ],
-          contentPillars: [
-            { theme: 'Campus Aesthetic', examples: 'Architecture, nature, The Dock, sunsets' },
-            { theme: 'Social Culture', examples: 'Lunch vibes, friend groups, events' },
-            { theme: 'Student Agency', examples: 'Clubs, startups, independent projects' },
-            { theme: 'Authentic Moments', examples: 'Unscripted, behind-the-scenes' }
+        aiAssistant: {
+          name: 'Student Experience Matcher AI',
+          description: 'AI-powered authentic answers from a student perspective',
+          topQuestions: [
+            {
+              question: 'Do students actually like it here or is it just marketing?',
+              answer: 'Real talk: 75% varsity participation rate = active student body. Instagram shows real students, not actors. The Dock is legit cool. Food is above average for school lunch. Teachers respect students as people, not just kids.',
+              source: 'Current student interviews, social media analysis'
+            },
+            {
+              question: 'What\'s the social scene really like? Cliques? Drama?',
+              answer: 'It\'s a small school (680 students) so everyone knows everyone. Marine science kids, athletes, entrepreneurs all mix at The Dock. Less drama than big public schools because of 9:1 ratio. Instagram shows real friend groups, not staged.',
+              source: 'Student testimonials, social media content'
+            },
+            {
+              question: 'Can I do sports/clubs AND actually have a life?',
+              answer: 'Yes. Practice ends by 5:30pm. 16 sports + 6 extracurriculars. No crazy homework overload. Independent study options if you need flexibility. Students actually hang out after school - not just go home exhausted.',
+              source: 'Student schedules, activity data, parent feedback'
+            }
           ]
-        }
-      },
+        },
+        contentPillars: [
+          { theme: 'Campus Aesthetic', examples: 'Architecture, nature, The Dock, sunsets' },
+          { theme: 'Social Culture', examples: 'Lunch vibes, friend groups, events' },
+          { theme: 'Student Agency', examples: 'Clubs, startups, independent projects' },
+          { theme: 'Authentic Moments', examples: 'Unscripted, behind-the-scenes' }
+        ]
+      }
+    },
       {
         id: 'teen-t2',
         title: 'Student Voice',

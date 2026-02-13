@@ -47,11 +47,30 @@ export interface TargetCompany {
   jobs: string;
   likelihood: 'Very High' | 'High' | 'Medium-High' | 'Medium' | 'Low';
   reason: string;
+  distanceMiles?: number;
+  estimatedFamilies?: string;
+  urgencyLevel?: number;
+  urgencyLabel?: string;
+  sector?: string;
+  salaryRange?: string;
+  remoteFriendly?: boolean;
+  source?: string;
+}
+
+export interface ActiveHotZone {
+  name: string;
+  status: string;
+  investment: string;
+  jobs: string;
+  timeline: string;
+  impact: string;
+  estimatedFamilies: string;
 }
 
 export interface TargetCompanies {
   tier1: TargetCompany[];
   tier2: TargetCompany[];
+  activeHotZones?: ActiveHotZone[];
 }
 
 export interface KeyPartners {

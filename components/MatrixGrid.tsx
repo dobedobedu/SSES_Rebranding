@@ -34,7 +34,7 @@ const MatrixGrid: React.FC<MatrixGridProps> = ({
 
   const getPriorityColor = (priorityType: PrioritySegmentType) => {
     switch (priorityType) {
-      case 'img-switcher': return '#ff6b00';
+      case 'img-switcher': return '#2D8F6F';
       case 'bridge-crosser': return '#0066ff';
       case 'teen-driver': return '#9933ff';
       default: return '#0a0a0a';
@@ -138,7 +138,7 @@ const MatrixGrid: React.FC<MatrixGridProps> = ({
                       {isActive && (
                         <div
                           className="absolute left-0 top-0 bottom-0 w-1"
-                          style={{ backgroundColor: priorityColor || '#ff6b00' }}
+                          style={{ backgroundColor: priorityColor || '#2D8F6F' }}
                         />
                       )}
                     </div>
@@ -168,7 +168,7 @@ const CellContent: React.FC<{
 }> = ({ persona, colIndex, isActive, priorityColor }) => {
   const textColor = isActive ? 'text-white' : 'text-[#0a0a0a]';
   const mutedColor = isActive ? 'text-[#8a8a8a]' : 'text-[#4a4a4a]';
-  const accentColor = priorityColor || (isActive ? '#ff6b00' : '#0a0a0a');
+  const accentColor = priorityColor || (isActive ? '#2D8F6F' : '#0a0a0a');
 
   switch (colIndex) {
     case 0:

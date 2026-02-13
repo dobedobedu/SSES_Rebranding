@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Persona, TouchPoint } from '../types';
-import { X, Check, Building2, Users, Globe, Lightbulb, Trophy, Heart, Sparkles, MapPin, Target } from 'lucide-react';
+import { X, Check, Building2, Users, Globe, Lightbulb, Trophy, Heart, Sparkles, MapPin, Target, ChevronDown, ChevronUp, Bot } from 'lucide-react';
 
 interface TouchPointModalProps {
   persona: Persona;
@@ -11,6 +11,9 @@ interface TouchPointModalProps {
 const TouchPointModal: React.FC<TouchPointModalProps> = ({ persona, isOpen, onClose }) => {
   const [activeTouchPointIndex, setActiveTouchPointIndex] = useState(0);
   const [selectedActions, setSelectedActions] = useState<Set<string>>(new Set());
+  const [expandedCompanies, setExpandedCompanies] = useState<Set<number>>(new Set());
+  const [expandedAIQuestions, setExpandedAIQuestions] = useState<Set<number>>(new Set());
+  const [expandedPartners, setExpandedPartners] = useState<Set<string>>(new Set());
 
   const touchPoints = persona.touchPoints || [];
   const activeTouchPoint = touchPoints[activeTouchPointIndex] || touchPoints[0];
@@ -27,9 +30,45 @@ const TouchPointModal: React.FC<TouchPointModalProps> = ({ persona, isOpen, onCl
     });
   };
 
+  const toggleCompany = (index: number) => {
+    setExpandedCompanies(prev => {
+      const next = new Set(prev);
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+      return next;
+    });
+  };
+
+  const toggleAIQuestion = (index: number) => {
+    setExpandedAIQuestions(prev => {
+      const next = new Set(prev);
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+      return next;
+    });
+  };
+
+  const togglePartner = (name: string) => {
+    setExpandedPartners(prev => {
+      const next = new Set(prev);
+      if (next.has(name)) {
+        next.delete(name);
+      } else {
+        next.add(name);
+      }
+      return next;
+    });
+  };
+
   const getPriorityStyles = (priority: string) => {
     switch (priority) {
-      case 'immediate': return { bg: '#ff6b00', text: 'white', border: '#ff6b00' };
+      case 'immediate': return { bg: '#2D8F6F', text: 'white', border: '#2D8F6F' };
       case 'short-term': return { bg: '#0066ff', text: 'white', border: '#0066ff' };
       case 'long-term': return { bg: '#4a4a4a', text: 'white', border: '#4a4a4a' };
       default: return { bg: '#f5f5f0', text: '#0a0a0a', border: '#0a0a0a' };
@@ -38,7 +77,7 @@ const TouchPointModal: React.FC<TouchPointModalProps> = ({ persona, isOpen, onCl
 
   const getPersonaColor = () => {
     switch (persona.priorityType) {
-      case 'img-switcher': return '#ff6b00';
+      case 'img-switcher': return '#2D8F6F';
       case 'bridge-crosser': return '#0066ff';
       case 'teen-driver': return '#9933ff';
       default: return '#0a0a0a';
@@ -195,13 +234,19 @@ const TouchPointModal: React.FC<TouchPointModalProps> = ({ persona, isOpen, onCl
                   type={activeTouchPoint.rightPanelType}
                   data={activeTouchPoint.rightPanelData}
                   accentColor={accentColor}
+                  expandedCompanies={expandedCompanies}
+                  expandedAIQuestions={expandedAIQuestions}
+                  expandedPartners={expandedPartners}
+                  onToggleCompany={toggleCompany}
+                  onToggleAIQuestion={toggleAIQuestion}
+                  onTogglePartner={togglePartner}
                 />
               </div>
 
               {/* Actions Section */}
               <div className="border-2 border-[#0a0a0a]">
                 <div className="border-b border-[#0a0a0a] px-4 py-2 bg-[#0a0a0a] flex items-center gap-2">
-                  <Target className="w-4 h-4 text-[#ff6b00]" />
+                  <Target className="w-4 h-4 text-[#2D8F6F]" />
                   <span className="font-mono text-[10px] text-white uppercase tracking-widest">Recommended Actions</span>
                 </div>
                 <div className="p-0 divide-y divide-[#e5e5e0]">
@@ -279,7 +324,29 @@ const TouchPointModal: React.FC<TouchPointModalProps> = ({ persona, isOpen, onCl
   );
 };
 
-const RightPanelContent: React.FC<{ type: string; data: any; accentColor: string }> = ({ type, data, accentColor }) => {
+interface RightPanelContentProps {
+  type: string;
+  data: any;
+  accentColor: string;
+  expandedCompanies: Set<number>;
+  expandedAIQuestions: Set<number>;
+  expandedPartners: Set<string>;
+  onToggleCompany: (index: number) => void;
+  onToggleAIQuestion: (index: number) => void;
+  onTogglePartner: (name: string) => void;
+}
+
+const RightPanelContent: React.FC<RightPanelContentProps> = ({ 
+  type, 
+  data, 
+  accentColor,
+  expandedCompanies,
+  expandedAIQuestions,
+  expandedPartners,
+  onToggleCompany,
+  onToggleAIQuestion,
+  onTogglePartner
+}) => {
   switch (type) {
     case 'companies':
       return (
@@ -291,18 +358,65 @@ const RightPanelContent: React.FC<{ type: string; data: any; accentColor: string
               <span className="font-mono text-[10px] text-white uppercase tracking-widest">Tier 1 — Very High Likelihood</span>
             </div>
             <div className="divide-y divide-[#e5e5e0]">
-              {data.tier1.map((company: any, i: number) => (
-                <div key={i} className="p-4 hover:bg-[#f5f5f0] transition-colors">
-                  <div className="flex justify-between items-start mb-2">
-                    <span className="font-bold text-sm uppercase tracking-wide">{company.name}</span>
-                    <span className="font-mono text-[9px] font-bold px-2 py-0.5 bg-[#00cc66] text-white">
-                      {company.likelihood}
-                    </span>
+              {data.tier1.map((company: any, i: number) => {
+                const isExpanded = expandedCompanies.has(i);
+                return (
+                  <div key={i} className="hover:bg-[#f5f5f0] transition-colors">
+                    <div 
+                      className="p-4 cursor-pointer"
+                      onClick={() => onToggleCompany(i)}
+                    >
+                      <div className="flex justify-between items-start mb-2">
+                        <div className="flex items-center gap-2 flex-1">
+                          <span className="font-bold text-sm uppercase tracking-wide">{company.name}</span>
+                          <span className="text-[#8a8a8a] flex-shrink-0">
+                            {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                          </span>
+                        </div>
+                        <span className="font-mono text-[9px] font-bold px-2 py-0.5 bg-[#00cc66] text-white flex-shrink-0">
+                          {company.likelihood}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="font-mono text-[10px] text-[#4a4a4a]">
+                          {company.urgencyLabel || '🔥 MODERATE'}
+                        </span>
+                        <span className="font-mono text-[10px] text-[#8a8a8a]">| {company.sector}</span>
+                      </div>
+                      <p className="font-mono text-[10px] text-[#8a8a8a] mb-1">{company.jobs}</p>
+                      <p className="text-xs text-[#4a4a4a]">{company.reason}</p>
+                    </div>
+                    {isExpanded && (
+                      <div className="px-4 pb-4 pt-0">
+                        <div className="bg-[#f5f5f0] border border-[#0a0a0a] p-3 mt-2">
+                          <div className="grid grid-cols-2 gap-2 text-xs">
+                            <div>
+                              <span className="font-mono text-[10px] text-[#8a8a8a]">Distance:</span>
+                              <p className="font-bold">{company.distanceMiles} miles from Bradenton</p>
+                            </div>
+                            <div>
+                              <span className="font-mono text-[10px] text-[#8a8a8a]">Est. Families/Year:</span>
+                              <p className="font-bold">{company.estimatedFamilies}</p>
+                            </div>
+                            <div>
+                              <span className="font-mono text-[10px] text-[#8a8a8a]">Salary Range:</span>
+                              <p className="font-bold">{company.salaryRange}</p>
+                            </div>
+                            <div>
+                              <span className="font-mono text-[10px] text-[#8a8a8a]">Remote Work:</span>
+                              <p className="font-bold">{company.remoteFriendly ? '💻 Yes - Flexible' : '🏢 On-site required'}</p>
+                            </div>
+                            <div className="col-span-2">
+                              <span className="font-mono text-[10px] text-[#8a8a8a]">Source:</span>
+                              <p className="font-mono text-[10px]">{company.source}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <p className="font-mono text-[10px] text-[#8a8a8a] mb-1">{company.jobs}</p>
-                  <p className="text-xs text-[#4a4a4a]">{company.reason}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -320,12 +434,61 @@ const RightPanelContent: React.FC<{ type: string; data: any; accentColor: string
                       {company.likelihood}
                     </span>
                   </div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="font-mono text-[10px] text-[#4a4a4a]">
+                      {company.urgencyLabel || '🔥 MODERATE'}
+                    </span>
+                    {company.remoteFriendly && (
+                      <span className="font-mono text-[9px] px-2 py-0.5 bg-[#9933ff] text-white">
+                        💻 REMOTE
+                      </span>
+                    )}
+                    <span className="font-mono text-[10px] text-[#8a8a8a]">| {company.sector}</span>
+                  </div>
                   <p className="font-mono text-[10px] text-[#8a8a8a] mb-1">{company.jobs}</p>
                   <p className="text-xs text-[#4a4a4a]">{company.reason}</p>
+                  {company.salaryRange && (
+                    <p className="font-mono text-[10px] text-[#4a4a4a] mt-2">💰 {company.salaryRange}</p>
+                  )}
                 </div>
               ))}
             </div>
           </div>
+
+          {/* Active Hot Zones */}
+          {data.activeHotZones && data.activeHotZones.length > 0 && (
+            <div className="border-2 border-[#2D8F6F]">
+              <div className="border-b border-[#2D8F6F] px-4 py-2 bg-[#2D8F6F] flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-white" />
+                <span className="font-mono text-[10px] text-white uppercase tracking-widest">Active Migration Zones — Major Expansions</span>
+              </div>
+              <div className="divide-y divide-[#e5e5e0]">
+                {data.activeHotZones.map((zone: any, i: number) => (
+                  <div key={i} className="p-4 hover:bg-[#f5f5f0] transition-colors">
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="font-bold text-sm uppercase tracking-wide">{zone.name}</span>
+                      <span className="font-mono text-[9px] font-bold px-2 py-0.5 bg-[#2D8F6F] text-white">
+                        {zone.status}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-xs mb-2">
+                      <div>
+                        <span className="font-mono text-[10px] text-[#8a8a8a]">Investment:</span>
+                        <p className="font-bold">{zone.investment}</p>
+                      </div>
+                      <div>
+                        <span className="font-mono text-[10px] text-[#8a8a8a]">Jobs:</span>
+                        <p className="font-bold">{zone.jobs}</p>
+                      </div>
+                    </div>
+                    <p className="font-mono text-[10px] text-[#8a8a8a] mb-1">Timeline: {zone.timeline}</p>
+                    <p className="text-xs text-[#4a4a4a]">{zone.impact}</p>
+                    <p className="font-mono text-[10px] text-[#4a4a4a] mt-2">👨‍👩‍👧‍👦 Est. relocating families: {zone.estimatedFamilies}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       );
 
@@ -338,9 +501,38 @@ const RightPanelContent: React.FC<{ type: string; data: any; accentColor: string
                 <span className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest">{category.title}</span>
               </div>
               <div className="p-3 space-y-1">
-                {category.items.map((item: string, j: number) => (
-                  <p key={j} className="text-xs font-medium">{item}</p>
-                ))}
+                {category.title === 'Relocation Management' ? (
+                  // New structure with collapsible details
+                  category.items.map((item: any, j: number) => {
+                    const isExpanded = expandedPartners.has(item.name);
+                    return (
+                      <div key={j} className="border border-[#e5e5e0] rounded">
+                        <div 
+                          className="p-2 cursor-pointer hover:bg-[#f5f5f0] flex items-center justify-between"
+                          onClick={() => onTogglePartner(item.name)}
+                        >
+                          <span className="text-xs font-medium">{item.name}</span>
+                          <span className="text-[#8a8a8a]">
+                            {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                          </span>
+                        </div>
+                        {isExpanded && (
+                          <div className="px-2 pb-2 text-[10px] text-[#4a4a4a] bg-[#fafafa]">
+                            <p className="mb-1"><strong>Details:</strong> {item.details}</p>
+                            <p className="mb-1"><strong>Tampa Bay:</strong> {item.tampaBayPresence}</p>
+                            <p className="mb-1 text-[#2D8F6F]"><strong>Local Data:</strong> {item.localSpecialization}</p>
+                            <p className="font-mono text-[9px] text-[#8a8a8a]">Source: {item.source}</p>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })
+                ) : (
+                  // Original string array structure
+                  category.items.map((item: string, j: number) => (
+                    <p key={j} className="text-xs font-medium">{item}</p>
+                  ))
+                )}
               </div>
             </div>
           ))}
@@ -350,6 +542,47 @@ const RightPanelContent: React.FC<{ type: string; data: any; accentColor: string
     case 'digital':
       return (
         <div className="space-y-4">
+          {data.aiAssistant && (
+            <div className="border-2 border-[#9933ff]">
+              <div className="border-b border-[#9933ff] px-4 py-2 bg-[#9933ff] flex items-center gap-2">
+                <Bot className="w-4 h-4 text-white" />
+                <span className="font-mono text-[10px] text-white uppercase tracking-widest">{data.aiAssistant.name}</span>
+              </div>
+              <div className="p-4">
+                <p className="text-xs text-[#4a4a4a] mb-3">{data.aiAssistant.description}</p>
+                <div className="space-y-2">
+                  <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-2">
+                    Top 3 AI Questions
+                  </div>
+                  {data.aiAssistant.topQuestions.map((qa: any, i: number) => {
+                    const isExpanded = expandedAIQuestions.has(i);
+                    return (
+                      <div key={i} className="border border-[#e5e5e0] rounded">
+                        <div 
+                          className="p-3 cursor-pointer hover:bg-[#f5f5f0] flex items-center justify-between bg-[#fafafa]"
+                          onClick={() => onToggleAIQuestion(i)}
+                        >
+                          <span className="text-xs font-medium flex-1 pr-2">{qa.question}</span>
+                          <span className="text-[#8a8a8a] flex-shrink-0">
+                            {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                          </span>
+                        </div>
+                        {isExpanded && (
+                          <div className="px-3 pb-3 pt-0 bg-[#fafafa]">
+                            <div className="border-t border-[#e5e5e0] pt-3">
+                              <p className="text-xs text-[#4a4a4a] mb-2 leading-relaxed">{qa.answer}</p>
+                              <p className="font-mono text-[9px] text-[#8a8a8a]">Source: {qa.source}</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
+          
           {data.channels && (
             <div>
               <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-2 border-b border-[#e5e5e0] pb-2">
@@ -357,7 +590,7 @@ const RightPanelContent: React.FC<{ type: string; data: any; accentColor: string
               </div>
               <div className="grid grid-cols-2 gap-1">
                 {data.channels.map((channel: string, i: number) => (
-                  <div key={i} className="px-3 py-2 bg-[#0a0a0a] text-white font-mono text-xs text-center">
+                  <div key={i} className={`px-3 py-2 font-mono text-xs text-center ${channel.includes('🤖') ? 'bg-[#9933ff] text-white' : 'bg-[#0a0a0a] text-white'}`}>
                     {channel}
                   </div>
                 ))}
@@ -404,10 +637,10 @@ const RightPanelContent: React.FC<{ type: string; data: any; accentColor: string
               </div>
               <div className="space-y-1">
                 {data.triggers.map((trigger: any, i: number) => (
-                  <div key={i} className="border-2 border-[#ff6b00] p-3 bg-[#f5f5f0]">
+                  <div key={i} className="border-2 border-[#2D8F6F] p-3 bg-[#f5f5f0]">
                     <div className="flex justify-between items-start">
                       <p className="font-bold text-sm text-[#0a0a0a]">{trigger.trigger}</p>
-                      <span className="font-mono text-[9px] font-bold px-2 py-0.5 bg-[#ff6b00] text-white">
+                      <span className="font-mono text-[9px] font-bold px-2 py-0.5 bg-[#2D8F6F] text-white">
                         {trigger.frequency}
                       </span>
                     </div>
@@ -496,7 +729,7 @@ const RightPanelContent: React.FC<{ type: string; data: any; accentColor: string
               <div className="space-y-1">
                 {data.successStories.map((story: string, i: number) => (
                   <div key={i} className="flex items-center gap-2 p-2 border border-[#0a0a0a] bg-[#f5f5f0]">
-                    <Trophy className="w-4 h-4 text-[#ff6b00]" />
+                    <Trophy className="w-4 h-4 text-[#2D8F6F]" />
                     <p className="text-xs">{story}</p>
                   </div>
                 ))}

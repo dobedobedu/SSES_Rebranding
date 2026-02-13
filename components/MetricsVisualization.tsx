@@ -6,7 +6,7 @@ export const ConfidenceBadge: React.FC<{ confidence: ConfidenceLevel }> = ({ con
   const styles = {
     high: { bg: '#00cc66', text: 'HIGH' },
     medium: { bg: '#0066ff', text: 'MED' },
-    low: { bg: '#ff6b00', text: 'LOW' },
+    low: { bg: '#2D8F6F', text: 'LOW' },
     unverified: { bg: '#dc2626', text: 'UNVERIFIED' }
   };
   const style = styles[confidence];
@@ -52,7 +52,7 @@ export const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
               className="h-full transition-all duration-500"
               style={{
                 width: `${(item.value / max) * 100}%`,
-                backgroundColor: item.color || '#ff6b00'
+                backgroundColor: item.color || '#2D8F6F'
               }}
             />
           </div>
@@ -71,7 +71,7 @@ interface IMGTransferVisualizationProps {
 
 export const IMGTransferVisualization: React.FC<IMGTransferVisualizationProps> = ({ metrics }) => {
   const reasonData = [
-    { label: 'Financial', value: metrics.reasons.financial.value, color: '#ff6b00', source: metrics.reasons.financial.source.document, confidence: metrics.reasons.financial.source.confidence },
+    { label: 'Financial', value: metrics.reasons.financial.value, color: '#2D8F6F', source: metrics.reasons.financial.source.document, confidence: metrics.reasons.financial.source.confidence },
     { label: 'Athletic', value: metrics.reasons.athletic.value, color: '#0066ff', source: metrics.reasons.athletic.source.document, confidence: metrics.reasons.athletic.source.confidence },
     { label: 'Academic', value: metrics.reasons.academic.value, color: '#00cc66', source: metrics.reasons.academic.source.document, confidence: metrics.reasons.academic.source.confidence },
     { label: 'Relocation', value: metrics.reasons.relocation.value, color: '#9933ff', source: metrics.reasons.relocation.source.document, confidence: metrics.reasons.relocation.source.confidence }
@@ -80,13 +80,13 @@ export const IMGTransferVisualization: React.FC<IMGTransferVisualizationProps> =
   const destinationData = [
     { label: 'Private School', value: metrics.destinations.privateSchool.value, color: '#00cc66' },
     { label: 'Public School', value: metrics.destinations.publicSchool.value, color: '#0066ff' },
-    { label: 'Out of State', value: metrics.destinations.outOfState.value, color: '#ff6b00' },
+    { label: 'Out of State', value: metrics.destinations.outOfState.value, color: '#2D8F6F' },
     { label: 'Other', value: metrics.destinations.other.value, color: '#4a4a4a' }
   ];
 
   return (
-    <div className="border-2 border-[#ff6b00] bg-white">
-      <div className="border-b border-[#ff6b00] px-4 py-2 bg-[#ff6b00] flex items-center justify-between">
+    <div className="border-2 border-[#2D8F6F] bg-white">
+      <div className="border-b border-[#2D8F6F] px-4 py-2 bg-[#2D8F6F] flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 bg-white" />
           <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">IMG Transfer Analysis</span>
@@ -99,7 +99,7 @@ export const IMGTransferVisualization: React.FC<IMGTransferVisualizationProps> =
         <div className="border-2 border-[#0a0a0a] p-6 bg-[#f5f5f0]">
           <div className="flex items-start justify-between mb-2">
             <div className="text-center flex-1">
-              <div className="font-mono text-4xl font-bold text-[#ff6b00]">
+              <div className="font-mono text-4xl font-bold text-[#2D8F6F]">
                 {metrics.totalTransfers.value.min}-{metrics.totalTransfers.value.max}
               </div>
               <div className="font-mono text-xs text-[#8a8a8a] uppercase tracking-widest mt-1">Annual Transfers</div>
@@ -175,7 +175,7 @@ export const K8TransitionVisualization: React.FC<K8TransitionVisualizationProps>
   ];
 
   const budgetData = [
-    { label: 'High ($40K+)', value: metrics.budgetSegments.high.value, color: '#ff6b00', confidence: metrics.budgetSegments.high.source.confidence },
+    { label: 'High ($40K+)', value: metrics.budgetSegments.high.value, color: '#2D8F6F', confidence: metrics.budgetSegments.high.source.confidence },
     { label: 'Mid ($25-40K)', value: metrics.budgetSegments.mid.value, color: '#0066ff', confidence: metrics.budgetSegments.mid.source.confidence },
     { label: 'Low (<$25K)', value: metrics.budgetSegments.low.value, color: '#4a4a4a', confidence: metrics.budgetSegments.low.source.confidence }
   ];

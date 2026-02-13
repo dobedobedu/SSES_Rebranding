@@ -16,7 +16,7 @@ interface QuickInsight {
 const SEGMENT_INSIGHTS: Record<Exclude<PrioritySegmentType, null>, { title: string; color: string; insights: QuickInsight[] }> = {
   'img-switcher': {
     title: 'IMG SWITCHER',
-    color: '#ff6b00',
+    color: '#2D8F6F',
     insights: [
       { icon: '01', label: 'ANNUAL TRANSFERS', value: '195-260 students' },
       { icon: '02', label: 'TOP REASON', value: '44% Financial burden' },

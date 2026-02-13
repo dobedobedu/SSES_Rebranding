@@ -96,12 +96,12 @@ const App: React.FC = () => {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             {/* Logo & Title */}
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-[#ff6b00] flex items-center justify-center">
+              <div className="w-12 h-12 bg-[#2D8F6F] flex items-center justify-center">
                 <span className="font-mono text-lg font-bold text-white">SSES</span>
               </div>
               <div>
                 <h1 className="font-mono text-xl md:text-2xl font-bold tracking-tight">
-                  GROWTH <span className="text-[#ff6b00]">MATRIX</span>
+                  GROWTH <span className="text-[#2D8F6F]">MATRIX</span>
                 </h1>
                 <p className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-[0.2em]">
                   Strategic Persona Intelligence / 2026
@@ -115,7 +115,7 @@ const App: React.FC = () => {
                 <span className="w-2 h-2 bg-[#00cc66] animate-pulse" />
                 <span className="font-mono text-[10px] uppercase tracking-wider text-[#8a8a8a]">Research-Backed</span>
               </div>
-              <div className="px-3 py-1.5 border border-[#ff6b00] text-[#ff6b00] font-mono text-[10px] uppercase tracking-wider">
+              <div className="px-3 py-1.5 border border-[#2D8F6F] text-[#2D8F6F] font-mono text-[10px] uppercase tracking-wider">
                 Confidential
               </div>
               <div className="hidden md:block font-mono text-[10px] text-[#8a8a8a]">

@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Vote {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id") @unique
+  segmentId String   @map("segment_id")
+  name      String
+  votedAt   DateTime @default(now()) @map("voted_at")
+
+  @@map("votes")
+}
+
+model AdminUser {
+  id    String @id @default(uuid())
+  email String @unique
+
+  @@map("admin_users")
+}

@@ -24,7 +24,7 @@ const DetailPanel: React.FC<DetailPanelProps> = ({
 }) => {
   const getPriorityColor = () => {
     switch (persona.priorityType) {
-      case 'img-switcher': return '#ff6b00';
+      case 'img-switcher': return '#2D8F6F';
       case 'bridge-crosser': return '#0066ff';
       case 'teen-driver': return '#9933ff';
       default: return '#0a0a0a';
@@ -55,7 +55,7 @@ const DetailPanel: React.FC<DetailPanelProps> = ({
           className="absolute left-4 top-1/2 -translate-y-1/2 p-4 bg-[#0a0a0a] hover:bg-[#2a2a2a] border-2 border-[#0a0a0a] z-[60] group transition-all"
           aria-label="Previous Column"
         >
-          <ChevronLeft className="w-6 h-6 text-white group-hover:text-[#ff6b00] transition-colors" />
+          <ChevronLeft className="w-6 h-6 text-white group-hover:text-[#2D8F6F] transition-colors" />
         </button>
 
         <button
@@ -63,7 +63,7 @@ const DetailPanel: React.FC<DetailPanelProps> = ({
           className="absolute right-4 top-1/2 -translate-y-1/2 p-4 bg-[#0a0a0a] hover:bg-[#2a2a2a] border-2 border-[#0a0a0a] z-[60] group transition-all"
           aria-label="Next Column"
         >
-          <ChevronRight className="w-6 h-6 text-white group-hover:text-[#ff6b00] transition-colors" />
+          <ChevronRight className="w-6 h-6 text-white group-hover:text-[#2D8F6F] transition-colors" />
         </button>
 
         {/* Header */}
@@ -133,7 +133,7 @@ const ContentRenderer: React.FC<{
           <div className="border-2 border-[#0a0a0a] bg-white">
             <div className="border-b border-[#0a0a0a] px-6 py-3 bg-[#0a0a0a]">
               <div className="flex items-center gap-3">
-                <Route className="w-5 h-5 text-[#ff6b00]" />
+                <Route className="w-5 h-5 text-[#2D8F6F]" />
                 <span className="font-mono text-sm font-bold text-white uppercase tracking-wider">Journey Map</span>
                 <span className="font-mono text-[10px] text-[#8a8a8a]">
                   {persona.touchPoints?.length || 0} touch points
@@ -147,7 +147,7 @@ const ContentRenderer: React.FC<{
               </p>
               <button
                 onClick={() => onOpenTouchPointModal(persona)}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-[#ff6b00] text-white border-2 border-[#ff6b00] font-mono text-xs uppercase tracking-wider hover:bg-white hover:text-[#ff6b00] transition-all"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-[#2D8F6F] text-white border-2 border-[#2D8F6F] font-mono text-xs uppercase tracking-wider hover:bg-white hover:text-[#2D8F6F] transition-all"
               >
                 Explore full journey map
                 <span>→</span>
@@ -190,7 +190,7 @@ const ContentRenderer: React.FC<{
           <div className="space-y-6">
             <section className="border-2 border-[#0a0a0a] bg-white">
               <div className="border-b border-[#0a0a0a] px-4 py-2 bg-[#0a0a0a] flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-[#ff6b00]" />
+                <MapPin className="w-4 h-4 text-[#2D8F6F]" />
                 <span className="font-mono text-[10px] text-white uppercase tracking-widest">Concrete Expectations</span>
               </div>
               <div className="divide-y divide-[#e5e5e0]">
@@ -217,8 +217,8 @@ const ContentRenderer: React.FC<{
           </div>
 
           <div className="space-y-6">
-            <div className="border-2 border-[#ff6b00] bg-white">
-              <div className="border-b border-[#ff6b00] px-4 py-2 bg-[#ff6b00]">
+            <div className="border-2 border-[#2D8F6F] bg-white">
+              <div className="border-b border-[#2D8F6F] px-4 py-2 bg-[#2D8F6F]">
                 <span className="font-mono text-[10px] text-white uppercase tracking-widest">Emotional Anchor</span>
               </div>
               <div className="p-6">
@@ -228,7 +228,7 @@ const ContentRenderer: React.FC<{
               </div>
             </div>
 
-            <div className="border-2 border-[#0a0a0a] bg-[#ff6b00]">
+            <div className="border-2 border-[#0a0a0a] bg-[#2D8F6F]">
               <div className="border-b border-[#0a0a0a] px-4 py-2">
                 <span className="font-mono text-[10px] text-white uppercase tracking-widest">Golden Nuggets</span>
               </div>
@@ -289,7 +289,7 @@ const ContentRenderer: React.FC<{
           <div className="flex items-center gap-3 mb-6">
             <div className="w-1 h-6 bg-[#0a0a0a]" />
             <h3 className="font-mono text-sm font-bold uppercase tracking-wider">Competitive Benchmarking</h3>
-            <Trophy className="w-5 h-5 text-[#ff6b00]" />
+            <Trophy className="w-5 h-5 text-[#2D8F6F]" />
           </div>
 
           <div className="border-2 border-[#0a0a0a]">
@@ -307,7 +307,7 @@ const ContentRenderer: React.FC<{
                       </span>
                       <h4 className="font-bold text-lg uppercase tracking-wide">{school.name}</h4>
                     </div>
-                    <div className="bg-[#f5f5f0] p-4 border-l-2 border-[#ff6b00]">
+                    <div className="bg-[#f5f5f0] p-4 border-l-2 border-[#2D8F6F]">
                       <p className="text-sm text-[#4a4a4a]">"{school.reason}"</p>
                     </div>
                   </div>
@@ -329,8 +329,8 @@ const ContentRenderer: React.FC<{
         <div className="max-w-4xl mx-auto">
           <div className="border-2 border-[#0a0a0a] bg-[#0a0a0a] text-white overflow-hidden">
             <div className="border-b border-[#2a2a2a] px-6 py-4 flex items-center gap-3">
-              <Zap className="w-5 h-5 text-[#ff6b00]" />
-              <span className="font-mono text-[10px] text-[#ff6b00] uppercase tracking-widest">2026 Strategic Blueprint</span>
+              <Zap className="w-5 h-5 text-[#2D8F6F]" />
+              <span className="font-mono text-[10px] text-[#2D8F6F] uppercase tracking-widest">2026 Strategic Blueprint</span>
             </div>
 
             <div className="p-8 md:p-12">
