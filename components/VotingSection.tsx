@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Check, LogIn, LogOut, AlertCircle } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useVoting } from '../hooks/useVoting';
