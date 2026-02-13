@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App';
 import SplashScreen from './components/SplashScreen';
+import ResearchPage from './components/ResearchPage';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -16,7 +17,7 @@ root.render(
       <Routes>
         <Route path="/" element={<SplashScreen />} />
         <Route path="/segmentation" element={<App />} />
-        <Route path="/research" element={<ComingSoonPage title="Research" />} />
+        <Route path="/research" element={<ResearchPage />} />
         <Route path="/heritage" element={<ComingSoonPage title="Heritage" />} />
         <Route path="/brand-id" element={<ComingSoonPage title="Brand ID" />} />
       </Routes>

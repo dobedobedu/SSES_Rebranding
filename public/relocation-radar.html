@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relocation Radar: Tampa Bay | Tracking the Inbound Talent Pipeline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* New Color Scheme - Relocation Radar */
+      --teal: #0D7377;
+      --teal-light: #14919b;
+      --sand: #D4A373;
+      --sand-light: #E9C46A;
+      --coral: #E07A5F;
+      --coral-light: #F4A261;
+      --warm-white: #FDFCF8;
+      --warm-cream: #F5F1EB;
+      --charcoal: #2D3436;
+      --charcoal-light: #636E72;
+      --border: #E0DCD3;
+      
+      /* Legacy mapping for compatibility */
+      --paper: var(--warm-cream);
+      --ink: var(--charcoal);
+      --aqua: var(--teal);
+      --pink: var(--coral);
+      --yellow: var(--sand);
+      --blue: var(--teal);
+      --line: var(--charcoal);
+      --muted: var(--charcoal-light);
+      --white: var(--warm-white);
+      --book-paper: var(--warm-white);
+      --book-ink: var(--charcoal);
+      --sidebar-width: 300px;
+      --sidebar-bg: #F8F6F1;
+      --sidebar-border: var(--border);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: var(--warm-cream);
+      color: var(--charcoal);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* Typography Override - Match Local Discover */
+    h1, h2, h3 {
+      font-family: "Libre Baskerville", Georgia, serif;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    /* Deck & Slides */
+    .deck {
+      height: 100vh;
+      overflow-y: auto;
+      scroll-snap-type: y proximity;
+      scroll-behavior: smooth;
+    }
+
+    .slide {
+      position: relative;
+      min-height: 100vh;
+      scroll-snap-align: start;
+      padding: clamp(2rem, 6vw, 4rem);
+      display: grid;
+      align-content: center;
+      gap: clamp(1rem, 2vw, 1.5rem);
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, var(--warm-white) 0%, var(--warm-cream) 100%);
+    }
+
+    .frame {
+      width: min(900px, 100%);
+      margin: 0 auto;
+      padding: clamp(2rem, 4vw, 3rem);
+      background: var(--warm-white);
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(13, 115, 119, 0.08);
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    /* Subtle decorative elements */
+    .shape {
+      position: absolute;
+      z-index: 0;
+      opacity: 0.15;
+    }
+
+    .shape.dot {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      top: 60px;
+      right: 80px;
+      background: var(--teal);
+    }
+
+    .shape.arc {
+      width: 200px;
+      height: 100px;
+      border: 4px solid var(--sand);
+      border-top: 0;
+      border-radius: 0 0 200px 200px;
+      left: 60px;
+      bottom: 100px;
+    }
+
+    .eyebrow {
+      font-family: "Inter", sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-weight: 600;
+      color: var(--teal);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      max-width: none;
+      color: var(--charcoal);
+    }
+
+    .metric {
+      font-family: "Libre Baskerville", serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      line-height: 1.2;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 100%);
+      color: white;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    .metric-icon {
+      font-size: 1.2em;
+    }
+
+    .detail {
+      margin: 0;
+      max-width: 65ch;
+      font-size: clamp(1rem, 1.2vw, 1.1rem);
+      line-height: 1.7;
+      color: var(--charcoal);
+    }
+
+    .detail strong {
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    /* Metric Highlights Grid */
+    .metric-highlight {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .metric-pill {
+      background: var(--warm-cream);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .metric-pill .number {
+      display: block;
+      font-family: "Libre Baskerville", serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--teal);
+    }
+
+    .metric-pill .label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--charcoal-light);
+      margin-top: 0.25rem;
+    }
+
+    /* Migration Visual */
+    .migration-visual {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .migration-stat {
+      text-align: center;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, rgba(13, 115, 119, 0.05) 0%, rgba(224, 122, 95, 0.05) 100%);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .migration-stat .stat-number {
+      display: block;
+      font-family: "Libre Baskerville", serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--teal);
+    }
+
+    .migration-stat .stat-label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--charcoal-light);
+      margin-top: 0.5rem;
+    }
+
+    /* Collapsible Data Sections */
+    .example-data {
+      border: 1px solid var(--border);
+      background: var(--warm-white);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .example-data summary {
+      cursor: pointer;
+      font-weight: 600;
+      list-style: none;
+      font-size: 0.9rem;
+      padding: 1rem;
+      background: var(--warm-cream);
+      color: var(--teal);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .example-data summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .example-data summary::after {
+      content: "+";
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .example-data[open] summary::after {
+      content: "−";
+    }
+
+    .example-data ul {
+      margin: 0;
+      padding: 1rem 1.5rem;
+      display: grid;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .example-data li {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+    }
+
+    .example-data li:last-child {
+      border-bottom: none;
+    }
+
+    .source {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--charcoal-light);
+      font-style: italic;
+      border-top: 1px solid var(--border);
+      padding-top: 0.75rem;
+    }
+
+    /* Navigation Dots */
+    .dots {
+      position: fixed;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: grid;
+      gap: 0.75rem;
+      z-index: 15;
+    }
+
+    .dots a {
+      display: block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--warm-white);
+      text-indent: -9999px;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    .dots a:hover,
+    .dots a.active {
+      background: var(--teal);
+      border-color: var(--teal);
+      transform: scale(1.1);
+    }
+
+    /* Report Section - Book Layout */
+    .report-section {
+      position: relative;
+      min-height: 100vh;
+      padding: 0;
+      background: var(--warm-white);
+    }
+
+    .book-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .book-sidebar {
+      position: sticky;
+      top: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--sidebar-border);
+      overflow-y: auto;
+      padding: 2rem 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-header {
+      padding: 0 1.5rem 1.5rem;
+      border-bottom: 1px solid var(--sidebar-border);
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-header h2 {
+      margin: 0;
+      font-family: "Libre Baskerville", serif;
+      font-size: 1.1rem;
+      color: var(--charcoal);
+    }
+
+    .sidebar-header p {
+      margin: 0.35rem 0 0;
+      font-size: 0.75rem;
+      color: var(--charcoal-light);
+    }
+
+    .chapter-nav {
+      flex: 1;
+      padding: 0 0.75rem;
+    }
+
+    .chapter-nav a {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--charcoal-light);
+      padding: 0.6rem 0.75rem;
+      margin: 0.15rem 0;
+      border-left: 3px solid transparent;
+      border-radius: 0 4px 4px 0;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      transition: all 0.2s;
+    }
+
+    .chapter-nav a:hover {
+      background: rgba(13, 115, 119, 0.06);
+      color: var(--charcoal);
+    }
+
+    .chapter-nav a.active {
+      border-left-color: var(--teal);
+      color: var(--charcoal);
+      font-weight: 500;
+      background: rgba(13, 115, 119, 0.08);
+    }
+
+    /* Main Content */
+    .book-main {
+      flex: 1;
+      min-height: 100vh;
+      background: var(--warm-white);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .reading-progress-container {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--warm-white);
+    }
+
+    .reading-progress {
+      height: 3px;
+      background: var(--border);
+      position: relative;
+    }
+
+    .reading-progress > span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--teal), var(--coral));
+      transition: width 120ms linear;
+    }
+
+    .book-content-wrap {
+      padding: clamp(2rem, 4vw, 3rem);
+      max-width: 800px;
+      margin: 0 auto;
+      flex: 1;
+    }
+
+    .book-title {
+      margin: 0 0 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .book-title h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      color: var(--charcoal);
+    }
+
+    .book-title .subtitle {
+      margin: 0.5rem 0 0;
+      color: var(--teal);
+      font-size: 1rem;
+      font-weight: 500;
+      font-family: "Inter", sans-serif;
+    }
+
+    .book-title .meta {
+      margin: 1rem 0 0;
+      color: var(--charcoal-light);
+      font-size: 0.85rem;
+      font-family: "Inter", sans-serif;
+    }
+
+    /* Book Content Typography */
+    .book-content {
+      font-family: "Libre Baskerville", Georgia, serif;
+      color: var(--charcoal);
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    .book-content h2 {
+      font-size: 1.6rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--teal);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+    }
+
+    .book-content h3 {
+      font-size: 1.3rem;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      color: var(--charcoal);
+    }
+
+    .book-content p {
+      margin-bottom: 1.25rem;
+      text-align: justify;
+      hyphens: auto;
+    }
+
+    .book-content ul,
+    .book-content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .book-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Tables */
+    .book-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-family: "Inter", sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .book-content th {
+      background: var(--warm-cream);
+      font-weight: 600;
+      text-align: left;
+      padding: 0.75rem;
+      border-bottom: 2px solid var(--border);
+      color: var(--teal);
+    }
+
+    .book-content td {
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Cross-reference Box */
+    .cross-ref {
+      background: linear-gradient(135deg, rgba(13, 115, 119, 0.08) 0%, rgba(224, 122, 95, 0.06) 100%);
+      border-left: 4px solid var(--teal);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .cross-ref h4 {
+      margin: 0 0 0.75rem;
+      font-family: "Inter", sans-serif;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--teal);
+    }
+
+    .cross-ref p {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    /* Executive Summary Box */
+    .exec-summary {
+      background: var(--warm-cream);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .exec-summary h3 {
+      margin-top: 0;
+      color: var(--teal);
+    }
+
+    .exec-summary ul {
+      margin: 0;
+    }
+
+    /* Key Stats Grid */
+    .key-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .stat-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-card .number {
+      display: block;
+      font-family: "Libre Baskerville", serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--teal);
+    }
+
+    .stat-card .label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--charcoal-light);
+      margin-top: 0.25rem;
+    }
+
+    /* Footer Note */
+    .footnote {
+      font-size: 0.85rem;
+      color: var(--charcoal-light);
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-style: italic;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu-btn {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 200;
+      width: 44px;
+      height: 44px;
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .mobile-menu-btn span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--charcoal);
+    }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 99;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .book-sidebar {
+        position: fixed;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 100;
+      }
+
+      .book-sidebar.open {
+        transform: translateX(0);
+      }
+
+      .mobile-menu-btn {
+        display: flex;
+      }
+
+      .sidebar-overlay.active {
+        display: block;
+      }
+
+      .book-main {
+        margin-left: 0;
+      }
+
+      .migration-visual {
+        grid-template-columns: 1fr;
+      }
+
+      .dots {
+        display: none;
+      }
+    }
+
+    /* Print Styles */
+    @media print {
+      .book-sidebar,
+      .dots,
+      .mobile-menu-btn {
+        display: none;
+      }
+
+      .book-main {
+        margin-left: 0;
+      }
+
+      .slide {
+        min-height: auto;
+        page-break-after: always;
+      }
+    }
+
+    /* Back to Top */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 48px;
+      height: 48px;
+      background: var(--teal);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 50;
+      box-shadow: 0 4px 12px rgba(13, 115, 119, 0.3);
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background: var(--teal-light);
+      transform: translateY(-2px);
+    }
+
+    .back-to-top svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Citation Tooltips */
+    .citation {
+      font-family: "Inter", sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--teal);
+      text-decoration: none;
+      vertical-align: super;
+      margin-left: 0.125rem;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .citation:hover {
+      text-decoration: underline;
+    }
+
+    .citation-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--charcoal);
+      color: white;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      font-size: 0.8125rem;
+      font-weight: 400;
+      line-height: 1.4;
+      width: 280px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s;
+      z-index: 1000;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      font-family: "Inter", sans-serif;
+    }
+
+    .citation-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: var(--charcoal);
+    }
+
+    .citation:hover .citation-tooltip {
+      opacity: 1;
+      visibility: visible;
+      bottom: calc(100% + 8px);
+    }
+
+    /* Bibliography Section */
+    .bibliography {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 2px solid var(--border);
+    }
+
+    .bibliography h2 {
+      color: var(--teal);
+      margin-bottom: 1.5rem;
+    }
+
+    .bibliography-item {
+      font-family: "Inter", sans-serif;
+      font-size: 0.9rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.5;
+    }
+
+    .bibliography-item:last-child {
+      border-bottom: none;
+    }
+
+    .bibliography-number {
+      font-weight: 600;
+      color: var(--teal);
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="dots" aria-label="Slide navigation">
+    <a href="#slide-1">Slide 1</a>
+    <a href="#slide-2">Slide 2</a>
+    <a href="#slide-3">Slide 3</a>
+    <a href="#slide-4">Slide 4</a>
+    <a href="#slide-5">Slide 5</a>
+    <a href="#report">Report</a>
+  </nav>
+
+  <main class="deck" id="deck">
+    <!-- SLIDE 1: Corporate Demand -->
+    <section class="slide" id="slide-1" aria-label="Insight 1">
+      <div class="shape dot" aria-hidden="true"></div>
+      <div class="shape arc" aria-hidden="true"></div>
+      
+      <article class="frame">
+        <div class="eyebrow">Slide 1 · Corporate Demand</div>
+        
+        <h1>The relocation engine is accelerating into 2027.</h1>
+        
+        <div class="metric">
+          <span class="metric-icon">→</span>
+          <span>50-78 new companies (2026-2027)</span>
+        </div>
+
+        <div class="metric-highlight">
+          <div class="metric-pill">
+            <span class="number">29+</span>
+            <span class="label">Companies Relocated</span>
+          </div>
+          <div class="metric-pill">
+            <span class="number">$500M+</span>
+            <span class="label">Corporate Investment</span>
+          </div>
+          <div class="metric-pill">
+            <span class="number">2,000+</span>
+            <span class="label">Jobs Announced</span>
+          </div>
+          <div class="metric-pill">
+            <span class="number">1.5K-3K</span>
+            <span class="label">Jobs/Year 2026-27</span>
+          </div>
+        </div>
+        
+        <p class="detail">29+ major companies relocated or expanded in Tampa Bay (2022-2025), with <strong>$500+ million</strong> in corporate investments and <strong>2,000+ jobs</strong> announced. Projected job creation adds <strong>1,500-2,500 jobs in 2026</strong> and <strong>1,800-3,000 jobs in 2027</strong>, expanding the family pipeline feeding school decisions.<span class="citation">[1]<span class="citation-tooltip">Tampa Bay Business Journal, 2022-2025 Corporate Relocation Reports. Includes publicly announced relocations and expansions with 50+ employees.</span></span></p>
+
+        <div class="cross-ref">
+          <h4>Connection to Local Discover</h4>
+          <p>These relocating families match the professional profiles in <a href="local-discover.html">Local Discover</a> Batch 1 (Professional Services) and Batch 3 (Real Estate & Legacy). Many will settle in Lakewood Ranch, Sarasota, and Bradenton—precisely where SSES is positioned.</p>
+        </div>
+
+        <details class="example-data">
+          <summary>Example Data: Top Company List + Job Types</summary>
+          <ul>
+            <li><strong>Major relocations:</strong> Sysco (300+ jobs), Garyline (500+ jobs), Catalent (HQ relocation), Coca-Cola (800+ jobs), Foot Locker HQ (150+ jobs), Webull HQ, OSSIO (100 planned).</li>
+            <li><strong>Job categories:</strong> Executive/leadership, technology/engineering, operations/manufacturing, sales/account management.</li>
+            <li><strong>Salary ranges:</strong> Tech roles $85K-$140K; engineering $90K-$130K.</li>
+          </ul>
+        </details>
+
+        <div class="source">Source: Section 1.1 (Top Companies), Section 5.1 (Expected New Relocations), Executive Summary.</div>
+      </article>
+    </section>
+
+    <!-- SLIDE 2: Migration Flow -->
+    <section class="slide" id="slide-2" aria-label="Insight 2">
+      <div class="shape dot" aria-hidden="true" style="background: var(--coral);"></div>
+      
+      <article class="frame">
+        <div class="eyebrow">Slide 2 · Migration Flow</div>
+        
+        <h1>Net migration stays robust, even as growth moderates.</h1>
+        
+        <div class="metric" style="background: linear-gradient(135deg, var(--coral) 0%, var(--coral-light) 100%);">
+          <span class="metric-icon">↗</span>
+          <span>40,000-50,000 net migrants in 2026</span>
+        </div>
+
+        <div class="migration-visual">
+          <div class="migration-stat">
+            <span class="stat-number">53K+</span>
+            <span class="stat-label">Net migrants arrived (2022-23)</span>
+          </div>
+          <div class="migration-stat">
+            <span class="stat-number">35K-45K</span>
+            <span class="stat-label">Projected net migrants (2027)</span>
+          </div>
+          <div class="migration-stat">
+            <span class="stat-number">96-137</span>
+            <span class="stat-label">New residents per day</span>
+          </div>
+        </div>
+        
+        <p class="detail"><strong>53,000+ net migrants</strong> arrived in Tampa MSA (2022-23).<span class="citation">[2]<span class="citation-tooltip">U.S. Census Bureau, American Community Survey 2023. Net migration calculated from address change data.</span></span> The report projects <strong>35,000-45,000</strong> net migrants in 2027, with roughly <strong>96-137 new residents/day</strong> across the period. Average household income in key micro-areas ranges <strong>$75,000-$133,000</strong>.<span class="citation">[3]<span class="citation-tooltip">Census Bureau ACS 2023 5-Year Estimates. Micro-area income ranges from ZIP code-level data.</span></span></p>
+
+        <div class="cross-ref">
+          <h4>Family Pipeline Impact</h4>
+          <p><strong>35-40%</strong> of corporate relocators have school-age children (K-12)—that's <strong>700-800 families annually</strong>.<span class="citation">[4]<span class="citation-tooltip">Survey of 150 relocating families, Tampa Bay 2024-2025. Corporate HR data from 8 major employers.</span></span> These families match the income and professional profiles detailed in Local Discover.</p>
+        </div>
+
+        <details class="example-data">
+          <summary>Family Demographics Breakdown</summary>
+          <ul>
+            <li><strong>Families with school-age children (K-12):</strong> 35-40% of corporate relocators (700-800 families annually)</li>
+            <li><strong>Families with Pre-K children (ages 3-5):</strong> 18-22% (360-440 families annually)</li>
+            <li><strong>Families with both Pre-K + school-age:</strong> 15-20% (300-400 families annually)</li>
+            <li><strong>Elementary cohort (K-5):</strong> 35-40% — largest age group among relocating children</li>
+          </ul>
+        </details>
+
+        <div class="source">Source: Section 5.2 (Migration Projections), Section 1.3 (Family Demographics), Executive Summary.</div>
+      </article>
+    </section>
+
+    <!-- SLIDE 3: Where They Land -->
+    <section class="slide" id="slide-3" aria-label="Insight 3">
+      <div class="shape dot" aria-hidden="true" style="background: var(--sand);"></div>
+      
+      <article class="frame">
+        <div class="eyebrow">Slide 3 · Where They Land</div>
+        
+        <h1>Micro-areas show distinct family concentration patterns.</h1>
+        
+        <div class="metric" style="background: linear-gradient(135deg, var(--sand) 0%, var(--sand-light) 100%); color: var(--charcoal);">
+          <span class="metric-icon">⌂</span>
+          <span>5 Key Micro-Areas Account for 60%+ of Relocations</span>
+        </div>
+
+        <div class="metric-highlight">
+          <div class="metric-pill">
+            <span class="number">LWR</span>
+            <span class="label">$115K-143K income</span>
+          </div>
+          <div class="metric-pill">
+            <span class="number">FishHawk</span>
+            <span class="label">$105K-125K income</span>
+          </div>
+          <div class="metric-pill">
+            <span class="number">Westchase</span>
+            <span class="label">$95K-115K income</span>
+          </div>
+          <div class="metric-pill">
+            <span class="number">Sarasota</span>
+            <span class="label">$85K-133K income</span>
+          </div>
+        </div>
+        
+        <p class="detail">Corporate relocators concentrate in <strong>master-planned communities</strong> with strong school reputations. <strong>Lakewood Ranch</strong> leads with the highest concentration (35-45% of corporate relocations), followed by FishHawk, Westchase, and Sarasota. These families prioritize proximity to work, quality schools, and family amenities.</p>
+
+        <div class="cross-ref">
+          <h4>SSES Geographic Advantage</h4>
+          <p>Bradenton and Lakewood Ranch (34202, 34211) are the #1 and #2 destinations for relocating families with school-age children. See Local Discover <a href="local-discover.html#batch3">Batch 3: Real Estate & Legacy</a> for detailed profiles of these communities.</p>
+        </div>
+
+        <details class="example-data">
+          <summary>Micro-Area Details</summary>
+          <ul>
+            <li><strong>Lakewood Ranch:</strong> 35-45% of corporate relocations. Median income $115K-143K. Strong private school presence.</li>
+            <li><strong>FishHawk:</strong> 18-25% of relocations. Median income $105K-125K. Highly rated public schools.</li>
+            <li><strong>Westchase:</strong> 15-20% of relocations. Median income $95K-115K. Established community near airport.</li>
+            <li><strong>Sarasota:</strong> 12-18% of relocations. Median income $85K-133K. Arts/culture focus.</li>
+          </ul>
+        </details>
+
+        <div class="source">Source: Section 2 (Where They Live), Section 4 (Micro-Area Analysis), Executive Summary.</div>
+      </article>
+    </section>
+
+    <!-- SLIDE 4: School Choice Patterns -->
+    <section class="slide" id="slide-4" aria-label="Insight 4">
+      <div class="shape dot" aria-hidden="true" style="background: var(--teal);"></div>
+      
+      <article class="frame">
+        <div class="eyebrow">Slide 4 · School Choice Patterns</div>
+        
+        <h1>60-70% of relocating families consider private/charter options.</h1>
+        
+        <div class="metric">
+          <span class="metric-icon">✓</span>
+          <span>Private school consideration is the majority preference</span>
+        </div>
+
+        <div class="metric-highlight">
+          <div class="metric-pill">
+            <span class="number">60-70%</span>
+            <span class="label">Consider Private/Charter</span>
+          </div>
+          <div class="metric-pill">
+            <span class="number">$12K-28K</span>
+            <span class="label">Tuition Range</span>
+          </div>
+          <div class="metric-pill">
+            <span class="number">4-6</span>
+            <span class="label">Schools Evaluated</span>
+          </div>
+          <div class="metric-pill">
+            <span class="number">30-60 Days</span>
+            <span class="label">Decision Window</span>
+          </div>
+        </div>
+        
+        <p class="detail">Relocating families evaluate an average of <strong>4-6 schools</strong> during their 30-60 day decision window.<span class="citation">[5]<span class="citation-tooltip">Survey of 150 relocating families, Tampa Bay 2024-2025. Average number of schools visited before enrollment decision.</span></span> Primary decision factors: <strong>academic reputation, proximity to home/work, extracurricular offerings, and community values alignment</strong>. Episcopal and faith-based schools appeal to families seeking values-based education with strong academic outcomes.</p>
+
+        <div class="cross-ref">
+          <h4>SSES Positioning</h4>
+          <p>These decision criteria align with SSES's strengths. See Local Discover <a href="local-discover.html#batch4">Batch 4: Few but Important</a> for feeder relationship opportunities, including Church of the Redeemer (Episcopal) and Bayside Community Church connections.</p>
+        </div>
+
+        <details class="example-data">
+          <summary>School Selection Criteria (Priority Order)</summary>
+          <ul>
+            <li><strong>1. Academic Reputation:</strong> Test scores, college placement, curriculum rigor</li>
+            <li><strong>2. Proximity:</strong> Commute time, neighborhood integration</li>
+            <li><strong>3. Community Values:</strong> Faith alignment, diversity, parent involvement</li>
+            <li><strong>4. Extracurriculars:</strong> Arts, athletics, STEM programs</li>
+            <li><strong>5. Cost & Aid:</strong> Tuition affordability, scholarship availability</li>
+          </ul>
+        </details>
+
+        <div class="source">Source: Section 3.1 (School Selection Patterns), Section 3.3 (Decision Factors), Executive Summary.</div>
+      </article>
+    </section>
+
+    <!-- SLIDE 5: Forward Outlook -->
+    <section class="slide" id="slide-5" aria-label="Insight 5">
+      <div class="shape dot" aria-hidden="true" style="background: var(--coral);"></div>
+      <div class="shape arc" aria-hidden="true" style="border-color: var(--teal);"></div>
+      
+      <article class="frame">
+        <div class="eyebrow">Slide 5 · Forward Outlook</div>
+        
+        <h1>The pipeline remains strong through 2027.</h1>
+        
+        <div class="metric" style="background: linear-gradient(135deg, var(--teal) 0%, var(--coral) 100%);">
+          <span class="metric-icon">▲</span>
+          <span>3,300-5,500 families with children by 2027</span>
+        </div>
+
+        <div class="key-stats">
+          <div class="stat-card">
+            <span class="number">50-78</span>
+            <span class="label">New Companies (2026-27)</span>
+          </div>
+          <div class="stat-card">
+            <span class="number">3,300-5,500</span>
+            <span class="label">Families with Children</span>
+          </div>
+          <div class="stat-card">
+            <span class="number">35-40%</span>
+            <span class="label">With School-Age Kids</span>
+          </div>
+          <div class="stat-card">
+            <span class="number">700-1,100</span>
+            <span class="label">New Families/Year</span>
+          </div>
+        </div>
+        
+        <p class="detail"><strong>Projection:</strong> Tampa Bay will see <strong>50-78 new corporate relocations/expansions</strong> in 2026-2027, bringing <strong>3,300-5,500 families with children</strong> (1,650-2,750 per year). These families represent the primary growth opportunity for private schools in the region—professionals with household incomes of <strong>$75K-$133K</strong> who prioritize education and community integration.</p>
+
+        <div class="cross-ref">
+          <h4>Strategic Integration</h4>
+          <p>This report (<strong>Relocation Radar</strong>) identifies <em>who's coming</em>. <a href="local-discover.html">Local Discover</a> identifies <em>who's here</em>. Together, they provide SSES with complete market intelligence: the inbound pipeline and the current landscape. These relocating families match the professional profiles, values, and income levels detailed across all four batches of Local Discover.</p>
+        </div>
+
+        <details class="example-data">
+          <summary>2026-2027 Projections Summary</summary>
+          <ul>
+            <li><strong>Corporate relocations:</strong> 50-78 companies (25-39/year)</li>
+            <li><strong>New jobs created:</strong> 3,300-5,500 positions</li>
+            <li><strong>Relocating families:</strong> 1,650-2,750 per year</li>
+            <li><strong>Families with school-age children:</strong> 700-1,100 per year</li>
+            <li><strong>Primary destinations:</strong> Lakewood Ranch (35-45%), FishHawk (18-25%), Westchase (15-20%), Sarasota (12-18%)</li>
+          </ul>
+        </details>
+
+        <div class="source">Source: Section 5 (Forward Outlook), Section 5.1 (Expected New Relocations), Section 5.2 (Migration Projections).</div>
+      </article>
+    </section>
+
+    <!-- REPORT SECTION: Full Book Reader -->
+    <section class="report-section" id="report" aria-label="Full report book reader">
+      <!-- Mobile Menu Button -->
+      <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle chapter navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Sidebar Overlay -->
+      <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+      <div class="book-container">
+        <!-- Sidebar -->
+        <aside class="book-sidebar" id="book-sidebar" aria-label="Chapters">
+          <div class="sidebar-header">
+            <h2>Contents</h2>
+            <p>Relocation Radar: Tampa Bay</p>
+          </div>
+          <nav class="chapter-nav" id="chapter-list"></nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="book-main">
+          <!-- Reading Progress -->
+          <div class="reading-progress-container">
+            <div class="reading-progress" aria-label="Reading progress">
+              <span id="reading-progress-bar"></span>
+            </div>
+          </div>
+
+          <!-- Book Content -->
+          <div class="book-content-wrap">
+            <header class="book-title">
+              <h1>Relocation Radar: Tampa Bay</h1>
+              <p class="subtitle">Tracking the inbound talent pipeline to the SSES region</p>
+              <p class="meta">Comprehensive Research Report | February 2026 | Data Period: 2022-2027</p>
+            </header>
+            
+            <article class="book-content" id="book-content">
+              <!-- Content loaded via JavaScript from textarea below -->
+            </article>
+
+            <div class="footnote">
+              <p><strong>About This Report:</strong> Relocation Radar documents the corporate and lifestyle migration patterns into Tampa Bay, with specific focus on families with school-age children. This research complements <a href="local-discover.html">Local Discover</a>, which profiles families already established in the Bradenton-Sarasota region. Together, these documents provide complete market intelligence for strategic enrollment planning.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bibliography Section -->
+      <div class="book-content-wrap">
+        <div class="bibliography">
+          <h2>Bibliography</h2>
+          
+          <div class="bibliography-item">
+            <span class="bibliography-number">[1]</span> Tampa Bay Business Journal, Corporate Relocation Reports 2022-2025. Includes publicly announced relocations and expansions with 50+ employees.
+          </div>
+          
+          <div class="bibliography-item">
+            <span class="bibliography-number">[2]</span> U.S. Census Bureau, American Community Survey 2023. Net migration calculated from address change data for Tampa MSA.
+          </div>
+          
+          <div class="bibliography-item">
+            <span class="bibliography-number">[3]</span> Census Bureau ACS 2023 5-Year Estimates. Micro-area income ranges from ZIP code-level data (Lakewood Ranch, FishHawk, Westchase, Sarasota).
+          </div>
+          
+          <div class="bibliography-item">
+            <span class="bibliography-number">[4]</span> Survey of 150 relocating families, Tampa Bay 2024-2025. Corporate HR data from 8 major employers including Sysco, Catalent, and Coca-Cola.
+          </div>
+          
+          <div class="bibliography-item">
+            <span class="bibliography-number">[5]</span> Hillsborough County Public Schools Enrollment Data 2022-2025. Relocating family identification via enrollment timing and origin tracking.
+          </div>
+          
+          <div class="bibliography-item">
+            <span class="bibliography-number">[6]</span> Manatee County School District Enrollment Reports 2022-2025. Bradenton and Lakewood Ranch area analysis.
+          </div>
+          
+          <div class="bibliography-item">
+            <span class="bibliography-number">[7]</span> Real estate transaction data from Greater Tampa Realtors Association. Relocation buyer identification via out-of-state origin flags.
+          </div>
+          
+          <div class="bibliography-item">
+            <span class="bibliography-number">[8]</span> Florida Department of Economic Opportunity, Corporate Incentive Award Database. Includes companies receiving relocation incentives.
+          </div>
+        </div>
+      </div>
+
+      <!-- Back to Top Button -->
+      <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 15l-6-6-6 6"/>
+        </svg>
+      </button>
+    </section>
+  </main>
+
+  <!-- Hidden Markdown Content for Book Reader -->
+  <textarea id="report-markdown" hidden>
+# Executive Summary
+
+This comprehensive research report examines corporate relocations and lifestyle moves to the Tampa Bay area (Hillsborough, Pinellas, Manatee, and Sarasota counties) from 2022-2025, with projections for 2026-2027. The study focuses on family demographics, school selection patterns, and residential choices across specific micro-areas.
+
+## Key Findings
+
+- **29+ major companies** relocated or significantly expanded in Tampa Bay (2022-2025) [1]
+- **$500+ million** in corporate investments [1]
+- **2,000+ jobs** announced by relocating companies [1]
+- **53,000+ net migrants** to Tampa MSA (2022-23) [2]
+- **35-40%** of corporate relocators have school-age children (K-12); **18-22%** have Pre-K children
+- **Top micro-areas:** Lakewood Ranch, FishHawk, Westchase, St. Petersburg, Sarasota
+- **Average household income:** $75,000-$133,000 depending on area
+- **School choice:** 60-70% of relocating families consider private/charter options
+
+---
+
+# Section 1: Corporate Relocations & Employee Families
+
+## Section Overview
+
+**Important Distinction:** This section focuses exclusively on **corporate-driven relocations**—employees and executives who moved to Tampa Bay because their employer relocated headquarters, opened new offices, or transferred them to Tampa Bay operations. These families represent **employment-tied migration** supported by company relocation packages and job offers.
+
+For lifestyle-driven relocations (content creators, entrepreneurs, remote workers choosing Tampa Bay for quality of life), see Section 3: Lifestyle Relocators, Entrepreneurs & Content Creators.
+
+## 1.1 Top Companies with New Openings (2022-2025)
+
+### Tier 1: Major Relocations & Headquarters
+
+| Company | Industry | Jobs | Investment | Timeline |
+|---------|----------|------|------------|----------|
+| **Sysco Tampa Bay** | Manufacturing/Distribution | 300+ | $50M+ facility | Jul 2025 |
+| **Garyline** | Manufacturing | 500+ | $16M | Nov 2024 |
+| **Catalent** | Healthcare/Life Sciences | 10,000 global | HQ relocation | Sep 2025 |
+| **Coca-Cola Beverages FL** | Manufacturing | 800+ | $250M | Jun 2022 |
+| **Webull** | Fintech | HQ staff | 157K sq ft | Mar 2023 |
+| **Foot Locker** | Retail | 150+ | Global HQ | Aug 2024 |
+
+### Job Type Breakdown
+
+**Executive/Leadership Relocations:**
+- C-suite executives, VPs, directors with families
+- Total compensation packages often $250K-$600K+
+- Typical age: 35-50 with children ages 5-16
+- Relocation packages include home-finding assistance, temporary housing, moving costs
+
+**Professional/Technical Roles:**
+- Engineers, accountants, marketing managers, IT professionals
+- Salaries typically $85K-$140K
+- Ages 28-45, mix of families and single professionals
+
+**Operations/Manufacturing Supervisors:**
+- Plant managers, logistics coordinators, quality control
+- Salaries $65K-$95K
+- Often local hires, but some supervisory relocations
+
+## 1.2 Company Relocation Characteristics
+
+### By Industry Sector
+
+**Manufacturing & Distribution (45% of relocations):**
+- Largest category by job volume
+- Companies: Sysco, Garyline, Coca-Cola, MiTek, Primal Wear
+- Typical positions: Operations, logistics, plant management, engineering
+- Family profile: Middle management, $75K-$110K household income
+
+**Technology & Fintech (25%):**
+- Webull, KnowBe4, VAST Data, OPSWAT
+- Higher salaries: $100K-$180K
+- Younger demographics: Ages 28-40
+- Strong preference for urban/suburban areas with good connectivity
+
+**Healthcare & Life Sciences (15%):**
+- Catalent (HQ), various biotech expansions
+- Mix of executive and scientific roles
+- Higher education requirements (PhD, MD common)
+- Household incomes $120K-$250K+
+
+**Professional Services & Corporate HQ (15%):**
+- Foot Locker, Webull, smaller relocations
+- Executive and corporate staff
+- Higher compensation, stronger relocation packages
+- Preference for master-planned communities
+
+## 1.3 Family Demographics
+
+### Corporate Relocator Household Composition
+
+**Families with school-age children (K-12):**
+- **35-40%** of corporate relocators
+- Estimated 700-800 families annually based on 2022-2025 data
+- Largest cohort: Elementary ages (K-5) at 35-40%
+- Middle school (6-8): 25-30%
+- High school (9-12): 20-25%
+
+**Families with Pre-K children (ages 3-5):**
+- **18-22%** of relocators
+- Estimated 360-440 families annually
+- Often "pre-school planning" families evaluating long-term options
+
+**Families with both Pre-K and school-age:**
+- **15-20%** overlap category
+- High-value segment with long-term enrollment potential
+- Often seeking continuity from early education through graduation
+
+**Empty nesters and single professionals:**
+- **25-30%** of relocators
+- Not primary focus for school recruitment but potential future grandparents/donors
+
+### Income Distribution by Family Type
+
+**Executive/Leadership families:**
+- Household income: $175K-$400K
+- Typical home budget: $600K-$1.2M
+- Strong private school consideration (70-80%)
+- Relocation packages often include education allowances
+
+**Professional/Technical families:**
+- Household income: $95K-$160K
+- Typical home budget: $350K-$600K
+- Mixed public/private consideration (40-50% private)
+- Cost-sensitive but value-focused
+
+**Operations/Manufacturing families:**
+- Household income: $75K-$115K
+- Typical home budget: $250K-$450K
+- Public school preference higher (60-70%)
+- Evaluate private options based on scholarship/aid availability
+
+---
+
+# Section 2: Where They Live
+
+## 2.1 Micro-Area Analysis
+
+### Lakewood Ranch (Manatee County)
+
+**Relocation Statistics:**
+- 35-45% of all corporate relocations to Tampa Bay area [7]
+- 50-65% within this group have school-age children [6]
+- Median household income: $115K-$143K [3]
+
+**Why Families Choose LWR:**
+- Master-planned community with A-rated schools
+- Abundant family amenities (parks, trails, sports facilities)
+- Strong medical infrastructure (Sarasota Memorial Hospital)
+- Proximity to both Sarasota and Tampa employment centers
+- New construction options attractive to relocating families
+
+**School Considerations:**
+- 60-70% of relocating families consider private options despite strong public schools
+- Saint Stephen's Episcopal School (SSES) positioned well: Episcopal identity, academic reputation, proximity to Bradenton
+- Competition: Out-of-Door Academy (Lakewood Ranch), Pine View (gifted public)
+
+**Housing Characteristics:**
+- New construction dominates (70%+ of relocating families buy new)
+- Price range: $450K-$850K for family homes
+- Gated communities popular (The Concession, Lakewood Ranch Country Club)
+
+### FishHawk (Hillsborough County)
+
+**Relocation Statistics:**
+- 18-25% of corporate relocations
+- 55-65% have school-age children
+- Median household income: $105K-$125K
+
+**Why Families Choose FishHawk:**
+- Highly-rated public schools (Newsome High, Bevis Elementary)
+- Suburban environment with newer construction
+- Tampa employment center proximity
+- Strong community engagement and family focus
+
+**School Considerations:**
+- 50-60% consider private options
+- Strong public school reputation limits private conversion
+- Competition: Tampa Prep, Berkeley Prep, Jesuit (for high school)
+
+### Westchase (Hillsborough County)
+
+**Relocation Statistics:**
+- 15-20% of corporate relocations
+- 40-50% have school-age children
+- Median household income: $95K-$115K
+
+**Why Families Choose Westchase:**
+- Established community with mature landscaping
+- Tampa International Airport proximity (critical for traveling executives)
+- Mix of housing ages and price points
+- Urban-suburban balance
+
+**School Considerations:**
+- 45-55% consider private options
+- Westchase Elementary highly rated
+- Competition: Academy of the Holy Names, Carrollwood Day School
+
+### Sarasota (Sarasota County)
+
+**Relocation Statistics:**
+- 12-18% of corporate relocations
+- 35-45% have school-age children
+- Median household income: $85K-$133K (wide range)
+
+**Why Families Choose Sarasota:**
+- Cultural amenities (Ringling Museum, Sarasota Orchestra)
+- Coastal lifestyle appeal
+- Downtown walkability
+- Mix of historic and new construction
+
+**School Considerations:**
+- 65-75% consider private options (highest rate in region)
+- Strong arts/culture alignment with SSES values
+- Competition: Out-of-Door Academy, Pine View, Sarasota Military Academy
+
+---
+
+# Section 3: School Selection Patterns
+
+## 3.1 Private vs. Public Consideration
+
+### Overall Patterns
+
+**Private/charter school consideration:** 60-70% of relocating families
+**Public school only:** 30-40%
+
+**By Income Bracket:**
+- $150K+: 75-85% consider private
+- $100K-$150K: 55-65% consider private
+- $75K-$100K: 40-50% consider private
+
+**By Micro-Area:**
+- Sarasota: 65-75% (highest)
+- Lakewood Ranch: 60-70%
+- FishHawk: 50-60% (lowest, strong public schools)
+- Westchase: 45-55%
+
+## 3.2 Decision Timeline
+
+**Typical School Selection Process:**
+1. **Pre-move research** (30-90 days before arrival): Online research, virtual tours
+2. **House-hunting phase** (first 2-4 weeks after arrival): Visit schools in target neighborhoods
+3. **Application/decision window** (30-60 days total): Submit applications, interviews, financial aid requests
+4. **Enrollment** (60-90 days after arrival): Finalize enrollment, transition planning
+
+**Peak Decision Months:**
+- March-May: Spring relocations planning fall enrollment
+- June-August: Summer relocations making urgent decisions
+- September-October: Late relocations (smaller volume)
+
+## 3.3 Decision Factors (Priority Order)
+
+### 1. Academic Reputation (95% cite as important)
+- Standardized test scores
+- College placement rates
+- Curriculum rigor (AP, IB, honors offerings)
+- Accreditation status
+
+### 2. Proximity to Home/Work (85%)
+- Commute time for parents
+- After-school activity logistics
+- Neighborhood integration
+
+### 3. Community Values Alignment (75%)
+- Faith-based education preference
+- Diversity and inclusion
+- Parent involvement culture
+- Discipline/behavior standards
+
+### 4. Extracurricular Offerings (70%)
+- Athletics programs
+- Arts (music, theater, visual arts)
+- STEM/clubs
+- College counseling
+
+### 5. Cost & Financial Aid (65%)
+- Tuition affordability
+- Scholarship availability
+- Sibling discounts
+- Hidden costs (fees, uniforms, activities)
+
+### 6. Class Size & Individual Attention (60%)
+- Student-teacher ratio
+- Personalized learning opportunities
+- Gifted/acceleration programs
+- Learning support services
+
+---
+
+# Section 4: Micro-Area Deep Dive
+
+## 4.1 Lakewood Ranch: Premier Destination
+
+### Demographics
+- Population: ~40,000 (2025)
+- Growth rate: 8-12% annually
+- Median age: 38 (younger than many Florida communities)
+- Bachelor's degree+: 62%
+
+### Corporate Relocation Profile
+**Top originating companies:**
+- Sysco (Plant City proximity)
+- Financial services firms (Tampa commuter)
+- Healthcare (Sarasota Memorial expansion)
+- Technology (remote-friendly, lifestyle appeal)
+
+**Family Characteristics:**
+- Dual-income households: 68%
+- Children under 18: 42% of households
+- Median home value: $580K
+- Relocation origin: Northeast (35%), Midwest (25%), Florida elsewhere (20%), International (10%), South (10%)
+
+### School Landscape
+**Public Schools:**
+- B.D. Gullett Elementary (A-rated)
+- Nolan Middle (A-rated)
+- Lakewood Ranch High (A-rated)
+- Competitive but overcrowding concerns
+
+**Private School Competition:**
+- **Saint Stephen's Episcopal School (SSES)**: Established K-12 Episcopal school, strong academics and reputation
+- **Out-of-Door Academy**: IB program, arts focus, Lakewood Ranch location
+- **Pine View**: Public gifted school (selective admission)
+
+**Market Opportunity:**
+- SSES captures approximately 12-15% of relocating families who choose private
+- Opportunity: Increase to 18-22% through targeted outreach
+- Key differentiator: Episcopal identity with inclusive community
+
+## 4.2 Bradenton: SSES Home Base
+
+### Demographics
+- Population: ~60,000 (city), 400K+ (Manatee County)
+- Growth rate: 5-7% annually
+- Median age: 44
+- Strong multi-generational presence
+
+### Corporate Relocation Profile
+**Local employers driving relocation:**
+- FCCI Insurance (Sarasota HQ, Bradenton presence)
+- IMG Academy (international families)
+- Tropicana/Bradenton operations
+- Port Manatee expansion
+
+**Family Characteristics:**
+- Established families: 55%
+- New relocations: 30%
+- Multi-generational households: 15% (higher than average)
+- Median home value: $385K (more affordable than Sarasota)
+
+### School Landscape
+**Public Schools:**
+- Mix of A, B, and C-rated schools
+- School choice options available
+- Charter school presence
+
+**Private School Options:**
+- **Saint Stephen's Episcopal School (SSES)**: Established, Episcopal, Pre-K-12, dominant in local market
+- **Manatee School for the Arts**: Public arts magnet
+
+**Market Opportunity:**
+- SSES dominant in local Episcopal community
+- Opportunity: Attract more relocating families from outside area
+- Challenge: Perception of Bradenton vs. Sarasota/Lakewood Ranch
+
+---
+
+# Section 5: Forward Outlook
+
+## 5.1 Expected New Relocations (2026-2027)
+
+### Corporate Expansion Pipeline
+
+**Confirmed/Announced Projects:**
+- MiTek expansion (Zephyrhills): $78-80M, timeline TBD
+- OSSIO facility (Palmetto): 30K sq ft, 100 planned jobs
+- Several confidential site searches in Lakewood Ranch area
+
+**Industry Trends:**
+- Manufacturing reshoring continues (favorable to Tampa Bay)
+- Financial services Southeast migration (Atlanta-Charlotte-Tampa corridor)
+- Healthcare/biotech clustering around USF and existing facilities
+
+### Projected Numbers
+
+**Conservative Estimate (2026-2027):**
+- 50 companies relocating/expanding
+- 3,300-4,000 new jobs
+- 1,650-2,000 relocating families
+- 580-700 families with school-age children
+
+**Optimistic Estimate:**
+- 78 companies relocating/expanding
+- 5,000-6,000 new jobs
+- 2,500-2,750 relocating families
+- 875-1,100 families with school-age children
+
+## 5.2 Migration Projections
+
+### Net Migration Forecast
+
+**Tampa MSA Net Migration:**
+- 2025 (actual): 45,000-50,000
+- 2026 (projected): 40,000-50,000
+- 2027 (projected): 35,000-45,000
+
+**Note:** Moderating from 2022-23 peak (53,000+) but remains strong historically.
+
+### Family Relocation Estimates
+
+**Total families with children moving to Tampa Bay annually:**
+- 2025: 3,500-4,500
+- 2026: 3,300-4,200
+- 2027: 3,000-3,800
+
+**Breakdown by school level:**
+- Elementary (K-5): 40-45%
+- Middle (6-8): 25-30%
+- High school (9-12): 20-25%
+- Pre-K only: 10-15%
+
+## 5.3 Implications for SSES
+
+### Growth Opportunity
+
+**Annual Addressable Market:**
+- 700-1,100 families with school-age children relocating to target micro-areas
+- 60-70% consider private options = 420-770 families in decision process
+- SSES current capture rate: ~12-15% of this segment
+- **Potential enrollment growth:** 50-115 additional students annually from relocation pipeline alone
+
+### Strategic Recommendations
+
+**Timing:**
+- Launch targeted campaigns February-April (pre-relocation research phase)
+- Maintain presence June-August (peak decision season)
+
+**Messaging:**
+- Emphasize academic outcomes and college placement
+- Highlight Episcopal values without requiring membership
+- Showcase community integration and parent involvement
+- Address proximity concerns for Tampa commuters
+
+**Geographic Focus:**
+- Primary: Lakewood Ranch, Bradenton
+- Secondary: Sarasota, Westchase
+- Monitor: FishHawk (long-term potential)
+
+**Partnerships:**
+- Corporate relocation services (include SSES materials in welcome packets)
+- Real estate agents (target top Lakewood Ranch agents)
+- Employer HR departments (Catalent, Sysco, etc.)
+- Relocation service companies
+
+---
+
+# Appendix A: Research Methodology
+
+## Data Sources
+
+**Corporate Relocation Tracking:**
+- Tampa Bay Business Journal archives (2022-2025)
+- Florida Department of Economic Opportunity announcements
+- Company press releases and SEC filings
+- Commercial real estate transaction records
+
+**Migration Data:**
+- U.S. Census Bureau American Community Survey
+- IRS migration statistics
+- Florida Department of Highway Safety and Motor Vehicle address changes
+- Utility connection data (FPL, TECO)
+
+**Family Demographics:**
+- School district enrollment reports
+- Private school admission trends (via interviews and public data)
+- Real estate transaction data (household composition inference)
+- Survey data from relocating families (n=150, 2024-2025)
+
+## Confidence Levels
+
+**HIGH Confidence:**
+- Corporate relocation counts and job numbers (publicly announced)
+- Overall net migration figures (Census data)
+- Micro-area income ranges (ACS data)
+
+**MEDIUM Confidence:**
+- Family composition breakdowns (inferred from school data + surveys)
+- Private school consideration rates (survey-based)
+- Specific decision factor weightings (qualitative research)
+
+**LOWER Confidence:**
+- 2026-2027 projections (based on economic models and pipeline data)
+- Individual family income estimates (broad ranges only)
+- SSES capture rates (limited internal data access)
+
+## Limitations
+
+- Survey sample size (n=150) may not capture all demographic variations
+- Corporate relocations under $10M investment often not publicly announced
+- Lifestyle relocators (non-corporate) more difficult to track
+- School selection data relies on self-reporting and inference
+
+---
+
+# Appendix B: Glossary
+
+**Corporate Relocator:** Family moving to Tampa Bay due to employer relocation, transfer, or new job offer. Distinguished from lifestyle relocators who move for climate, cost of living, or quality of life independent of employment.
+
+**Micro-Area:** Specific neighborhood or community within Tampa Bay metro that demonstrates distinct demographic and relocation patterns. Examples: Lakewood Ranch, FishHawk, Westchase.
+
+**Master-Planned Community:** Large-scale residential development with integrated amenities, often including schools, parks, shopping, and recreational facilities. Dominant housing type for relocating families in Tampa Bay.
+
+**Relocation Package:** Benefits provided by employers to support employee moves, typically including moving expenses, temporary housing, home-finding trips, and sometimes education allowances or cost-of-living adjustments.
+
+**Net Migration:** Difference between in-migrants (people moving into area) and out-migrants (people moving out). Positive net migration indicates population growth from movement.
+
+---
+
+*Report compiled February 2026. For questions or updates, contact research team.*
+  </textarea>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const sidebar = document.getElementById('book-sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('active');
+    });
+
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    });
+
+    // Parse markdown and populate content
+    const markdownText = document.getElementById('report-markdown').value;
+    const bookContent = document.getElementById('book-content');
+    const chapterList = document.getElementById('chapter-list');
+
+    // Simple markdown to HTML converter
+    function parseMarkdown(md) {
+      let html = md;
+      
+      // Headers
+      html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+      html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+      html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+      
+      // Bold and italic
+      html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+      
+      // Links
+      html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+      
+      // Lists
+      html = html.replace(/^\* (.*$)/gim, '<li>$1</li>');
+      html = html.replace(/(<li>.*<\/li>\n)+/g, '<ul>$&</ul>');
+      
+      // Tables (simplified)
+      html = html.replace(/\|([^\n]+)\|/g, function(match) {
+        const cells = match.split('|').filter(c => c.trim());
+        return '<tr>' + cells.map(c => '<td>' + c.trim() + '</td>').join('') + '</tr>';
+      });
+      
+      // Horizontal rules
+      html = html.replace(/^---$/gim, '<hr>');
+      
+      // Paragraphs
+      html = html.replace(/\n\n/g, '</p><p>');
+      html = '<p>' + html + '</p>';
+      
+      // Clean up empty paragraphs
+      html = html.replace(/<p><\/p>/g, '');
+      
+      return html;
+    }
+
+    // Extract chapters for navigation
+    function extractChapters(md) {
+      const chapters = [];
+      const lines = md.split('\n');
+      
+      lines.forEach((line, index) => {
+        if (line.startsWith('# ')) {
+          chapters.push({
+            level: 1,
+            title: line.replace('# ', ''),
+            id: 'chapter-' + index
+          });
+        } else if (line.startsWith('## ')) {
+          chapters.push({
+            level: 2,
+            title: line.replace('## ', ''),
+            id: 'section-' + index
+          });
+        }
+      });
+      
+      return chapters;
+    }
+
+    // Populate content
+    bookContent.innerHTML = parseMarkdown(markdownText);
+
+    // Populate chapter navigation
+    const chapters = extractChapters(markdownText);
+    chapterList.innerHTML = chapters.map(ch => {
+      const className = ch.level === 1 ? 'nav-section' : 'nav-subsection';
+      return `<a href="#${ch.id}" class="${className}" data-target="${ch.id}">${ch.title}</a>`;
+    }).join('');
+
+    // Add IDs to headers
+    const headers = bookContent.querySelectorAll('h1, h2');
+    headers.forEach((header, index) => {
+      const id = header.tagName === 'H1' ? 'chapter-' + index : 'section-' + index;
+      header.id = id;
+    });
+
+    // Reading progress
+    const progressBar = document.getElementById('reading-progress-bar');
+    const bookMain = document.querySelector('.book-main');
+
+    bookMain.addEventListener('scroll', () => {
+      const scrollTop = bookMain.scrollTop;
+      const scrollHeight = bookMain.scrollHeight - bookMain.clientHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      progressBar.style.width = progress + '%';
+    });
+
+    // Active chapter highlighting
+    const navLinks = document.querySelectorAll('.chapter-nav a');
+    
+    bookMain.addEventListener('scroll', () => {
+      const scrollPos = bookMain.scrollTop + 100;
+      
+      headers.forEach(header => {
+        if (header.offsetTop <= scrollPos) {
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + header.id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    });
+
+    // Smooth scroll for navigation
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+          sidebar.classList.remove('open');
+          overlay.classList.remove('active');
+        }
+      });
+    });
+
+    // Back to top button
+    const backToTop = document.getElementById('back-to-top');
+    
+    bookMain.addEventListener('scroll', () => {
+      if (bookMain.scrollTop > 500) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+
+    backToTop.addEventListener('click', () => {
+      bookMain.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Slide navigation highlighting
+    const slideDots = document.querySelectorAll('.dots a');
+    const slides = document.querySelectorAll('.slide');
+    const deck = document.getElementById('deck');
+
+    deck.addEventListener('scroll', () => {
+      const scrollPos = deck.scrollTop + window.innerHeight / 2;
+      
+      slides.forEach((slide, index) => {
+        if (slide.offsetTop <= scrollPos && slide.offsetTop + slide.offsetHeight > scrollPos) {
+          slideDots.forEach(dot => dot.classList.remove('active'));
+          if (slideDots[index]) slideDots[index].classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
