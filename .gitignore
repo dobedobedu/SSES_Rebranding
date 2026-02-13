@@ -28,3 +28,6 @@ dist-ssr
 !.env.example
 
 /lib/generated/prisma
+prisma/migrations
+supabase
+dist
