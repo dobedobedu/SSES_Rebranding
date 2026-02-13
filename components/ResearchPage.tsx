@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { ArrowLeft, FileText, MapPin, Users } from 'lucide-react';
+import { ArrowLeft, Users, MapPin } from 'lucide-react';
 
 const RESEARCH_TABS = [
-  { id: 'discovery', label: 'Customer Discovery', src: '/local-discover.html', icon: FileText },
-  { id: 'local', label: 'Local Family', src: '/relocation-radar.html', icon: Users },
-  { id: 'migration', label: 'Migration Family', src: '/relocation-radar.html', icon: MapPin },
+  { id: 'local', label: 'Local Family', src: '/local-discover.html', icon: Users },
+  { id: 'migration', label: 'Migration Family', src: '/Relocation Research.html', icon: MapPin },
 ];
 
 const ResearchPage: React.FC = () => {
