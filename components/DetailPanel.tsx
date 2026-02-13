@@ -94,37 +94,69 @@ const DetailPanel: React.FC<DetailPanelProps> = ({
         ${isOpen ? 'translate-y-0' : 'translate-y-full'}
       `}>
 
-        {/* Navigation Arrows */}
+        {/* Navigation Arrows - Middle Y Position */}
         <button
           onClick={(e) => { e.stopPropagation(); onNavigate('left'); }}
-          className="absolute left-4 top-1/2 -translate-y-1/2 p-4 bg-[#0a0a0a] hover:bg-[#2a2a2a] border-2 border-[#0a0a0a] z-[60] group transition-all"
+          disabled={colIndex === MatrixColumn.SEGMENT}
+          className={`absolute left-4 top-1/2 -translate-y-1/2 p-4 border-2 z-[60] transition-all ${
+            colIndex === MatrixColumn.SEGMENT
+              ? 'border-[#e5e5e0] opacity-30 cursor-not-allowed'
+              : 'bg-[#0a0a0a] border-[#0a0a0a] hover:bg-[#2D8F6F] hover:border-[#2D8F6F]'
+          }`}
           aria-label="Previous Column"
         >
-          <ChevronLeft className="w-6 h-6 text-white group-hover:text-[#2D8F6F] transition-colors" />
+          <ChevronLeft className={`w-6 h-6 ${colIndex === MatrixColumn.SEGMENT ? 'text-[#e5e5e0]' : 'text-white group-hover:text-white'}`} />
         </button>
 
         <button
           onClick={(e) => { e.stopPropagation(); onNavigate('right'); }}
-          className="absolute right-4 top-1/2 -translate-y-1/2 p-4 bg-[#0a0a0a] hover:bg-[#2a2a2a] border-2 border-[#0a0a0a] z-[60] group transition-all"
+          disabled={colIndex === MatrixColumn.STRATEGY}
+          className={`absolute right-4 top-1/2 -translate-y-1/2 p-4 border-2 z-[60] transition-all ${
+            colIndex === MatrixColumn.STRATEGY
+              ? 'border-[#e5e5e0] opacity-30 cursor-not-allowed'
+              : 'bg-[#0a0a0a] border-[#0a0a0a] hover:bg-[#2D8F6F] hover:border-[#2D8F6F]'
+          }`}
           aria-label="Next Column"
         >
-          <ChevronRight className="w-6 h-6 text-white group-hover:text-[#2D8F6F] transition-colors" />
+          <ChevronRight className={`w-6 h-6 ${colIndex === MatrixColumn.STRATEGY ? 'text-[#e5e5e0]' : 'text-white group-hover:text-white'}`} />
         </button>
 
-        {/* Header - Simplified */}
-        <div className="px-6 py-3 border-b-2 border-[#0a0a0a] flex items-center justify-between bg-[#0a0a0a] text-white">
-          <div className="flex items-center gap-4">
-            <span
-              className="font-mono text-[10px] font-bold px-3 py-1.5 uppercase tracking-wider text-white"
-              style={{ backgroundColor: getPriorityColor() }}
-            >
-              {COLUMNS[colIndex]}
-            </span>
-          </div>
+        {/* Header with Horizontal Tab Navigation */}
+        <div className="px-6 py-3 border-b-2 border-[#0a0a0a] bg-[#0a0a0a]">
+          {/* Tab Navigation Row */}
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-1">
+              {[
+                { key: MatrixColumn.SEGMENT, label: persona.name },
+                { key: MatrixColumn.LOCATION, label: 'Location' },
+                { key: MatrixColumn.SPENDING, label: 'Budget' },
+                { key: MatrixColumn.COMPETITION, label: 'Competition' },
+                { key: MatrixColumn.STRATEGY, label: 'Strategy' }
+              ].map((tab, idx) => (
+                <React.Fragment key={tab.key}>
+                  <button
+                    onClick={() => {
+                      if (tab.key !== colIndex) {
+                        onNavigate(tab.key > colIndex ? 'right' : 'left');
+                      }
+                    }}
+                    className={`px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider border transition-all ${
+                      colIndex === tab.key
+                        ? 'border-[#2D8F6F] bg-[#2D8F6F] text-white'
+                        : 'border-[#4a4a4a] text-[#8a8a8a] hover:border-[#2D8F6F] hover:text-[#2D8F6F]'
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                  {idx < 4 && <span className="text-[#4a4a4a] mx-1">|</span>}
+                </React.Fragment>
+              ))}
+            </div>
 
-          <button onClick={onClose} className="p-2 border-2 border-white hover:bg-white hover:text-[#0a0a0a] transition-all">
-            <X className="w-5 h-5" />
-          </button>
+            <button onClick={onClose} className="p-2 border-2 border-white hover:bg-white hover:text-[#0a0a0a] transition-all">
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Scrollable Content Area */}
