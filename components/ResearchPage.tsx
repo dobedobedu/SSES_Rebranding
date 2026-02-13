@@ -3,11 +3,11 @@ import { ArrowLeft, Users, MapPin } from 'lucide-react';
 
 const RESEARCH_TABS = [
   { id: 'local', label: 'Local Family', src: '/local-discover.html', icon: Users },
-  { id: 'migration', label: 'Migration Family', src: '/relocation-radar.html', icon: MapPin },
+  { id: 'relocation', label: 'Relocation Family', src: '/relocation-radar.html', icon: MapPin },
 ];
 
 const ResearchPage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('discovery');
+  const [activeTab, setActiveTab] = useState('relocation');
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
