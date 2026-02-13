@@ -53,7 +53,7 @@ const KPI_DATA = [
     insight: '#1 hiring sector by volume'
   },
   { 
-    label: 'IMG SWITCHER TRANSFERS', 
+    label: 'LOCAL SWITCHER TRANSFERS', 
     value: '195-260', 
     unit: 'students/yr', 
     color: 'green', 
@@ -62,7 +62,11 @@ const KPI_DATA = [
     icon: 'Users',
     isSankey: true,
     sankeySrc: '/sankey_img_transfers.html',
-    sankeySrc2: '/sankey_k8_transitions.html'
+    sankeySrc2: '/sankey_k8_transitions.html',
+    breakdown: [
+      { name: 'IMG Academy Transfers', value: '195-260', detail: 'Sports-focused boarding school', status: '●●●●● High priority' },
+      { name: 'Local K-8 Transitions', value: '680-850', detail: 'K-8 graduates staying in area', status: '●●●● Bridge segment' }
+    ]
   }
 ];
 
@@ -211,35 +215,39 @@ SOURCE CITATIONS
             </div>
             
             {/* Expanded Content */}
-            {expandedKPI === index && kpi.breakdown && (
+            {expandedKPI === index && (kpi.breakdown || kpi.isSankey) && (
               <div className="mt-4 p-4 bg-[#f5f5f0] border-2 border-[#0a0a0a] border-t-0">
-                <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-3 border-b border-[#0a0a0a] pb-2">
-                  Calculation Breakdown
-                </div>
-                <div className="space-y-3">
-                  {kpi.breakdown.map((item: any, i: number) => (
-                    <div key={i} className="flex items-start justify-between text-sm">
-                      <div className="flex-1">
-                        <div className="font-bold text-[#0a0a0a]">{item.name}</div>
-                        {item.sector && (
-                          <div className="font-mono text-[9px] text-[#8a8a8a]">{item.sector} | {item.distance}</div>
-                        )}
-                        {item.detail && (
-                          <div className="font-mono text-[9px] text-[#8a8a8a]">{item.detail}</div>
-                        )}
-                        {item.investment && (
-                          <div className="font-mono text-[9px] text-[#8a8a8a]">{item.investment} • {item.jobs} • {item.timeline}</div>
-                        )}
-                      </div>
-                      <div className="text-right">
-                        <div className="font-mono font-bold">{item.value || item.investment}</div>
-                        {item.status && (
-                          <div className="font-mono text-[9px] text-[#2D8F6F]">{item.status}</div>
-                        )}
-                      </div>
+                {kpi.breakdown && (
+                  <>
+                    <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-3 border-b border-[#0a0a0a] pb-2">
+                      Calculation Breakdown
                     </div>
-                  ))}
-                </div>
+                    <div className="space-y-3">
+                      {kpi.breakdown.map((item: any, i: number) => (
+                        <div key={i} className="flex items-start justify-between text-sm">
+                          <div className="flex-1">
+                            <div className="font-bold text-[#0a0a0a]">{item.name}</div>
+                            {item.sector && (
+                              <div className="font-mono text-[9px] text-[#8a8a8a]">{item.sector} | {item.distance}</div>
+                            )}
+                            {item.detail && (
+                              <div className="font-mono text-[9px] text-[#8a8a8a]">{item.detail}</div>
+                            )}
+                            {item.investment && (
+                              <div className="font-mono text-[9px] text-[#8a8a8a]">{item.investment} • {item.jobs} • {item.timeline}</div>
+                            )}
+                          </div>
+                          <div className="text-right">
+                            <div className="font-mono font-bold">{item.value || item.investment}</div>
+                            {item.status && (
+                              <div className="font-mono text-[9px] text-[#2D8F6F]">{item.status}</div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
                 <div className="mt-4 pt-3 border-t border-[#0a0a0a] font-mono text-[9px] text-[#8a8a8a]">
                   Source: {kpi.source}
                 </div>
@@ -255,7 +263,7 @@ SOURCE CITATIONS
                         rel="noopener noreferrer"
                         className="block border-2 border-[#0a0a0a] p-4 bg-white hover:bg-[#f5f5f0] transition-colors"
                       >
-                        <div className="font-mono text-[10px] font-bold uppercase mb-2">IMG Transfers → SSES</div>
+                        <div className="font-mono text-[10px] font-bold uppercase mb-2">Local Switcher Transfers</div>
                         <div className="font-mono text-[9px] text-[#8a8a8a]">Click to view Sankey diagram</div>
                         <div className="mt-2 text-[#2D8F6F] font-mono text-xs">Open in new tab →</div>
                       </a>
