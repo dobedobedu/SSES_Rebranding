@@ -193,7 +193,7 @@ export const personas: Persona[] = [
         { name: 'Pine View School', reason: 'FREE gifted public, #1 in Florida.', recommendationSource: 'Parent forums' }
       ]
     },
-    strategy: 'White-Glove Corporate Concierge: 12-hour response guarantee. Partner with top 10 relocation management companies to embed SSES into corporate relocation packages. Target 700-800 relocating families annually with school-age children.',
+    strategy: 'Corporate Relocator families bring diverse professional networks from major metropolitan areas, Ivy League connections and college counseling expertise, full-tuition payment without scholarship dependency, career mentorship opportunities for students through parent professional networks, and exposure to different educational approaches that enrich classroom discussions.',
     
     steps: [
       { 
@@ -765,7 +765,7 @@ rightPanelType: 'digital',
         { name: 'Asher (New Models)', reason: 'Total freedom/self-directed models.', recommendationSource: 'Progressive parent circles' }
       ]
     },
-    strategy: 'Position SSES as the "Founder-Friendly Flex School" for content creators and digital entrepreneurs. Showcase The Dock + Marine Science programs as differentiators from traditional college-prep.',
+    strategy: 'Lifestyle Entrepreneur families bring creative and innovative energy to the student body, real-world business mentors through parent entrepreneurial ventures, unique project partnerships with marine science and technology, diverse perspectives that challenge traditional academic approaches, and connections to innovation ecosystems in Florida and beyond.',
     
     successStories: [
       { 
@@ -953,7 +953,7 @@ id: 'life-t1',
         { name: 'Lakewood Ranch High', reason: 'FREE public with strong athletics.', recommendationSource: 'FHSAA records' }
       ]
     },
-    strategy: 'Deploy "Hybrid Academic-Athlete" schedule with 11am-2pm Training Portals. Target families experiencing IMG burnout or financial strain.',
+    strategy: 'IMG Switcher students bring exceptional athletic excellence and competitive sports experience, discipline and work ethic developed through elite training, national and international geographic diversity to the student body, college recruitment visibility through athletic scholarships, and a culture of perseverance and goal-oriented mindset that inspires peers.',
     steps: [
       { id: 'p1', stage: 'Crisis', text: '10th grade GPA threatens D1 eligibility.', tactic: 'Geofenced ads around IMG: "Fix the GPA, Keep the Sport."' },
       { id: 'p2', stage: 'Check', text: 'Can schedule actually work?', tactic: '"30-Minute Athlete Schedule Builder" consultation.' },
@@ -1097,7 +1097,7 @@ id: 'pivot-t1',
         { name: 'Lakewood Ranch High', reason: 'FREE, A-rated, newer facilities.', recommendationSource: 'Public school marketing' }
       ]
     },
-    strategy: '"The Varsity Reveal" campaign—highlight high-end facilities and peer networks local K-8s cannot offer.',
+    strategy: 'Bridge Crosser families bring loyal local community roots with deep ties to the Sarasota-Bradenton area, strong word-of-mouth referral networks that build enrollment, stable multi-year enrollment commitments from families investing in the local option, diverse athletic talent from local youth sports programs, and long-term family engagement through siblings and community events.',
     steps: [
       { id: 'b1', stage: 'Aspiration', text: '8th grade graduation nears; need for "more."', tactic: 'Direct Mail: "The SSES Level-Up Guide for Rising 9th Graders."' },
       { id: 'b2', stage: 'Shadow', text: 'Does the kid feel "cool" on campus?', tactic: '"VIP Shadow Day" with Varsity Athlete Buddy.' },
@@ -1240,7 +1240,7 @@ id: 'bridge-t2',
         { name: 'Asher (New Models)', reason: 'Total freedom/self-directed models.', recommendationSource: 'Progressive parent circles' }
       ]
     },
-    strategy: '"Student Agency Charter"—guarantee independent project time and dedicated "Founder Space" for student-led startups.',
+    strategy: 'Teen Advocate students bring authentic peer-to-peer recruitment influence that resonates more than adult marketing, social media presence and digital content creation skills, strong friend group retention that improves student satisfaction, diverse interests from arts to athletics that enrich extracurricular programs, and genuine school pride that builds positive campus culture.',
     steps: [
       { id: 't1', stage: 'Discovery', text: 'Stalking SSES Instagram for "the vibe."', tactic: 'Student Takeover Reels: "Real Life at SSES, Unscripted."' },
       { id: 't2', stage: 'Trial', text: 'Shadow day focus on peer "normality."', tactic: '"No-Cringe" Shadow Lunch + High-quality food experience.' },

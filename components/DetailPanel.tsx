@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Persona, MatrixColumn, COLUMNS } from '../types';
-import { ChevronLeft, ChevronRight, X, MapPin, DollarSign, Trophy, Zap, Route } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, MapPin, DollarSign, Trophy, Zap, Route, Check, Target, Building2, Users, Globe, Lightbulb, Heart, Sparkles } from 'lucide-react';
 import { IMGTransferVisualization, K8TransitionVisualization, TeenInfluenceVisualization } from './MetricsVisualization';
 
 interface DetailPanelProps {
@@ -22,12 +22,57 @@ const DetailPanel: React.FC<DetailPanelProps> = ({
   onNavigate,
   onOpenTouchPointModal
 }) => {
+  const [activeTouchPointIndex, setActiveTouchPointIndex] = useState(0);
+  const [selectedActions, setSelectedActions] = useState<Set<string>>(new Set());
+
   const getPriorityColor = () => {
     switch (persona.priorityType) {
       case 'img-switcher': return '#2D8F6F';
       case 'bridge-crosser': return '#0066ff';
       case 'teen-driver': return '#9933ff';
       default: return '#0a0a0a';
+    }
+  };
+
+  const touchPoints = persona.touchPoints || [];
+  const activeTouchPoint = touchPoints[activeTouchPointIndex] || touchPoints[0];
+
+  const getTouchPointIcon = (index: number) => {
+    const icons = [Building2, Users, Globe, Lightbulb, Trophy, Heart, Sparkles];
+    const Icon = icons[index % icons.length];
+    return <Icon className="w-4 h-4" />;
+  };
+
+  const getPriorityBadgeColor = (priority: string) => {
+    switch (priority) {
+      case 'immediate': return 'bg-[#2D8F6F] text-white';
+      case 'short-term': return 'bg-[#0066ff] text-white';
+      case 'long-term': return 'bg-[#4a4a4a] text-white';
+      default: return 'bg-[#e5e5e0] text-[#4a4a4a]';
+    }
+  };
+
+  const toggleAction = (actionId: string) => {
+    setSelectedActions(prev => {
+      const next = new Set(prev);
+      if (next.has(actionId)) {
+        next.delete(actionId);
+      } else {
+        next.add(actionId);
+      }
+      return next;
+    });
+  };
+
+  const nextTouchPoint = () => {
+    if (activeTouchPointIndex < touchPoints.length - 1) {
+      setActiveTouchPointIndex(prev => prev + 1);
+    }
+  };
+
+  const prevTouchPoint = () => {
+    if (activeTouchPointIndex > 0) {
+      setActiveTouchPointIndex(prev => prev - 1);
     }
   };
 
@@ -66,24 +111,15 @@ const DetailPanel: React.FC<DetailPanelProps> = ({
           <ChevronRight className="w-6 h-6 text-white group-hover:text-[#2D8F6F] transition-colors" />
         </button>
 
-        {/* Header */}
-        <div className="px-6 py-4 border-b-2 border-[#0a0a0a] flex items-center justify-between bg-[#0a0a0a] text-white relative">
+        {/* Header - Simplified */}
+        <div className="px-6 py-3 border-b-2 border-[#0a0a0a] flex items-center justify-between bg-[#0a0a0a] text-white">
           <div className="flex items-center gap-4">
-            <div className="w-1 h-10" style={{ backgroundColor: getPriorityColor() }} />
-            <div>
-              <div className="flex items-center gap-3">
-                <span
-                  className="font-mono text-[10px] font-bold px-2 py-1 uppercase tracking-wider text-white"
-                  style={{ backgroundColor: getPriorityColor() }}
-                >
-                  {COLUMNS[colIndex]}
-                </span>
-                <h2 className="font-mono text-lg font-bold uppercase tracking-wide">{persona.name}</h2>
-              </div>
-              <p className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mt-1">
-                Persona Strategy Matrix
-              </p>
-            </div>
+            <span
+              className="font-mono text-[10px] font-bold px-3 py-1.5 uppercase tracking-wider text-white"
+              style={{ backgroundColor: getPriorityColor() }}
+            >
+              {COLUMNS[colIndex]}
+            </span>
           </div>
 
           <button onClick={onClose} className="p-2 border-2 border-white hover:bg-white hover:text-[#0a0a0a] transition-all">
@@ -116,71 +152,202 @@ const ContentRenderer: React.FC<{
     case MatrixColumn.SEGMENT:
       return (
         <div className="space-y-6">
-          {/* Research Metrics Visualizations for Priority Segments */}
-          {persona.imgTransferMetrics && (
-            <IMGTransferVisualization metrics={persona.imgTransferMetrics} />
-          )}
-
-          {persona.k8TransitionMetrics && (
-            <K8TransitionVisualization metrics={persona.k8TransitionMetrics} />
-          )}
-
-          {persona.teenInfluenceMetrics && (
-            <TeenInfluenceVisualization metrics={persona.teenInfluenceMetrics} />
-          )}
-
-          {/* Journey Map Section */}
-          <div className="border-2 border-[#0a0a0a] bg-white">
-            <div className="border-b border-[#0a0a0a] px-6 py-3 bg-[#0a0a0a]">
-              <div className="flex items-center gap-3">
-                <Route className="w-5 h-5 text-[#2D8F6F]" />
-                <span className="font-mono text-sm font-bold text-white uppercase tracking-wider">Journey Map</span>
-                <span className="font-mono text-[10px] text-[#8a8a8a]">
-                  {persona.touchPoints?.length || 0} touch points
-                </span>
+          {/* Inline Journey Map with Navigation */}
+          {touchPoints.length > 0 && (
+            <div className="border-2 border-[#0a0a0a] bg-white">
+              {/* Journey Map Header */}
+              <div className="border-b border-[#0a0a0a] px-6 py-3 bg-[#0a0a0a] flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Route className="w-5 h-5 text-[#2D8F6F]" />
+                  <span className="font-mono text-sm font-bold text-white uppercase tracking-wider">Journey Map</span>
+                  <span className="font-mono text-[10px] text-[#8a8a8a]">
+                    {activeTouchPointIndex + 1} / {touchPoints.length}
+                  </span>
+                </div>
+                
+                {/* Touch Point Navigation */}
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={prevTouchPoint}
+                    disabled={activeTouchPointIndex === 0}
+                    className={`px-3 py-1 font-mono text-xs uppercase tracking-wider border transition-all ${
+                      activeTouchPointIndex === 0
+                        ? 'border-[#4a4a4a] text-[#4a4a4a] cursor-not-allowed'
+                        : 'border-white text-white hover:bg-white hover:text-[#0a0a0a]'
+                    }`}
+                  >
+                    ← Prev
+                  </button>
+                  <button
+                    onClick={nextTouchPoint}
+                    disabled={activeTouchPointIndex === touchPoints.length - 1}
+                    className={`px-3 py-1 font-mono text-xs uppercase tracking-wider border transition-all ${
+                      activeTouchPointIndex === touchPoints.length - 1
+                        ? 'border-[#4a4a4a] text-[#4a4a4a] cursor-not-allowed'
+                        : 'border-white text-white hover:bg-white hover:text-[#0a0a0a]'
+                    }`}
+                  >
+                    Next →
+                  </button>
+                </div>
               </div>
-            </div>
-            <div className="p-6">
-              <p className="text-sm text-[#4a4a4a] mb-6">
-                This persona has {persona.touchPoints?.length || 0} touch points with detailed actions,
-                partner information, and progressive disclosure of data.
-              </p>
-              <button
-                onClick={() => onOpenTouchPointModal(persona)}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-[#2D8F6F] text-white border-2 border-[#2D8F6F] font-mono text-xs uppercase tracking-wider hover:bg-white hover:text-[#2D8F6F] transition-all"
-              >
-                Explore full journey map
-                <span>→</span>
-              </button>
 
-              {/* Touch Point Grid */}
-              {persona.touchPoints && persona.touchPoints.length > 0 && (
-                <div className="mt-8 grid gap-px bg-[#0a0a0a] border-2 border-[#0a0a0a]">
-                  <div className="bg-[#f0f0eb] px-4 py-2">
-                    <span className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest">
-                      Touch Points Overview
+              {/* Step Indicators */}
+              <div className="px-6 py-4 bg-[#f5f5f0] border-b border-[#0a0a0a]">
+                <div className="flex items-center justify-center gap-2">
+                  {touchPoints.map((tp, index) => (
+                    <React.Fragment key={tp.id}>
+                      <button
+                        onClick={() => setActiveTouchPointIndex(index)}
+                        className={`w-8 h-8 flex items-center justify-center font-mono text-xs font-bold transition-all border-2 ${
+                          index === activeTouchPointIndex
+                            ? 'bg-[#2D8F6F] border-[#2D8F6F] text-white'
+                            : index < activeTouchPointIndex
+                            ? 'bg-[#2D8F6F]/20 border-[#2D8F6F] text-[#2D8F6F]'
+                            : 'bg-white border-[#0a0a0a] text-[#8a8a8a]'
+                        }`}
+                      >
+                        {index < activeTouchPointIndex ? <Check className="w-4 h-4" /> : String(index + 1)}
+                      </button>
+                      {index < touchPoints.length - 1 && (
+                        <div className={`w-8 h-0.5 ${index < activeTouchPointIndex ? 'bg-[#2D8F6F]' : 'bg-[#e5e5e0]'}`} />
+                      )}
+                    </React.Fragment>
+                  ))}
+                </div>
+              </div>
+
+              {/* Journey Map Content */}
+              <div className="flex">
+                {/* Left: Touch Point Details */}
+                <div className="w-1/2 p-6 border-r border-[#e5e5e0]">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-8 h-8 flex items-center justify-center bg-[#0a0a0a] text-white">
+                      {getTouchPointIcon(activeTouchPointIndex)}
+                    </div>
+                    <span className="font-mono text-[10px] text-[#8a8a8a] uppercase">
+                      Touch Point {activeTouchPointIndex + 1}
                     </span>
                   </div>
-                  <div className={`grid ${persona.touchPoints.length <= 3 ? 'grid-cols-3' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'}`}>
-                    {persona.touchPoints.map((tp, i) => (
-                      <div key={i} className="bg-white p-4 border-r border-b border-[#e5e5e0]">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span
-                            className="w-6 h-6 flex items-center justify-center font-mono text-xs font-bold text-white bg-[#0a0a0a]"
-                          >
-                            {String(i + 1).padStart(2, '0')}
+                  
+                  <h3 className="font-mono text-lg font-bold uppercase mb-2">{activeTouchPoint.title}</h3>
+                  <p className="font-mono text-sm text-[#2D8F6F] mb-4">{activeTouchPoint.subtitle}</p>
+                  
+                  <p className="text-sm text-[#4a4a4a] mb-6 leading-relaxed">
+                    {activeTouchPoint.description}
+                  </p>
+
+                  {/* Recommended Actions */}
+                  <div className="border-t border-[#e5e5e0] pt-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Target className="w-4 h-4 text-[#2D8F6F]" />
+                      <span className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest">Recommended Actions</span>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      {activeTouchPoint.actions.map((action) => (
+                        <label key={action.id} className="flex items-start gap-3 cursor-pointer group">
+                          <input
+                            type="checkbox"
+                            checked={selectedActions.has(action.id)}
+                            onChange={() => toggleAction(action.id)}
+                            className="mt-1 w-4 h-4 accent-[#2D8F6F]"
+                          />
+                          <span className={`text-sm flex-1 ${selectedActions.has(action.id) ? 'line-through text-[#8a8a8a]' : 'text-[#0a0a0a]'}`}>
+                            {action.text}
                           </span>
-                          <h4 className="font-mono text-xs font-bold uppercase tracking-wide truncate">{tp.title}</h4>
-                        </div>
-                        <p className="text-xs text-[#4a4a4a] mb-2">{tp.subtitle}</p>
-                        <p className="font-mono text-[10px] text-[#8a8a8a]">{tp.actions.length} actions</p>
-                      </div>
-                    ))}
+                          <span className={`font-mono text-[9px] px-2 py-0.5 ${getPriorityBadgeColor(action.priority)}`}>
+                            {action.priority}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              )}
+
+                {/* Right: Dynamic Content Preview */}
+                <div className="w-1/2 p-6 bg-[#fafafa]">
+                  <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-4">
+                    Data & Insights
+                  </div>
+                  
+                  {activeTouchPoint.rightPanelType === 'companies' && activeTouchPoint.rightPanelData && (
+                    <div className="space-y-4">
+                      {activeTouchPoint.rightPanelData.tier1?.slice(0, 3).map((company: any, i: number) => (
+                        <div key={i} className="border border-[#0a0a0a] p-3 bg-white">
+                          <div className="font-bold text-sm mb-1">{company.name}</div>
+                          <div className="font-mono text-[10px] text-[#8a8a8a]">{company.jobs}</div>
+                          <div className="font-mono text-[9px] text-[#2D8F6F] mt-1">{company.urgencyLabel}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {activeTouchPoint.rightPanelType === 'partners' && activeTouchPoint.rightPanelData && (
+                    <div className="space-y-3">
+                      {activeTouchPoint.rightPanelData.feederSchools?.slice(0, 3).map((school: any, i: number) => (
+                        <div key={i} className="border border-[#0a0a0a] p-3 bg-white">
+                          <div className="font-bold text-sm">{school.name}</div>
+                          <div className="font-mono text-[10px] text-[#8a8a8a]">{school.students} / year</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {activeTouchPoint.rightPanelType === 'digital' && activeTouchPoint.rightPanelData && (
+                    <div className="space-y-3">
+                      {activeTouchPoint.rightPanelData.channels?.slice(0, 4).map((channel: string, i: number) => (
+                        <div key={i} className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-[#2D8F6F]" />
+                          <span className="font-mono text-xs">{channel}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {activeTouchPoint.rightPanelType === 'validation' && activeTouchPoint.rightPanelData && (
+                    <div className="space-y-3">
+                      {activeTouchPoint.rightPanelData.triggers?.slice(0, 3).map((trigger: any, i: number) => (
+                        <div key={i} className="border border-[#0a0a0a] p-3 bg-white">
+                          <div className="font-bold text-sm">{trigger.trigger}</div>
+                          <div className="font-mono text-[10px] text-[#8a8a8a]">{trigger.timing}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {activeTouchPoint.rightPanelType === 'social' && activeTouchPoint.rightPanelData && (
+                    <div className="space-y-3">
+                      {activeTouchPoint.rightPanelData.testimonials?.slice(0, 3).map((testimonial: any, i: number) => (
+                        <div key={i} className="border border-[#0a0a0a] p-3 bg-white">
+                          <div className="font-bold text-sm">{testimonial.family}</div>
+                          <div className="font-mono text-[10px] text-[#8a8a8a]">{testimonial.from}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Navigation Hint */}
+              <div className="border-t border-[#0a0a0a] px-6 py-3 bg-[#0a0a0a]">
+                <button
+                  onClick={() => onNavigate('right')}
+                  className="w-full flex items-center justify-center gap-2 text-white hover:text-[#2D8F6F] transition-colors"
+                >
+                  <span className="font-mono text-xs uppercase tracking-wider">Continue to Location</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* Fallback if no touch points */}
+          {touchPoints.length === 0 && (
+            <div className="border-2 border-[#0a0a0a] bg-white p-6">
+              <p className="text-sm text-[#4a4a4a]">No journey map available for this segment.</p>
+            </div>
+          )}
         </div>
       );
 
@@ -330,11 +497,11 @@ const ContentRenderer: React.FC<{
           <div className="border-2 border-[#0a0a0a] bg-[#0a0a0a] text-white overflow-hidden">
             <div className="border-b border-[#2a2a2a] px-6 py-4 flex items-center gap-3">
               <Zap className="w-5 h-5 text-[#2D8F6F]" />
-              <span className="font-mono text-[10px] text-[#2D8F6F] uppercase tracking-widest">2026 Strategic Blueprint</span>
+              <span className="font-mono text-[10px] text-[#2D8F6F] uppercase tracking-widest">Strategic Value to SSES</span>
             </div>
 
             <div className="p-8 md:p-12">
-              <p className="text-xl md:text-2xl font-light leading-relaxed text-white/90">
+              <p className="text-lg md:text-xl font-light leading-relaxed text-white/90">
                 {persona.strategy}
               </p>
             </div>
@@ -342,15 +509,15 @@ const ContentRenderer: React.FC<{
             <div className="grid grid-cols-2 border-t border-[#2a2a2a]">
               <div className="p-6 border-r border-[#2a2a2a]">
                 <span className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest block mb-2">
-                  Primary Objective
+                  Key Contribution
                 </span>
-                <span className="font-mono text-lg font-bold text-white">Segment Capture</span>
+                <span className="font-mono text-lg font-bold text-white">Community Diversity</span>
               </div>
               <div className="p-6">
                 <span className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest block mb-2">
-                  Success Metric
+                  Long-term Impact
                 </span>
-                <span className="font-mono text-lg font-bold text-white">Conversion ROI</span>
+                <span className="font-mono text-lg font-bold text-white">Enrollment Stability</span>
               </div>
             </div>
           </div>

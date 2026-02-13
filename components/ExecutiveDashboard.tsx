@@ -178,10 +178,10 @@ SOURCE CITATIONS
         {KPI_DATA.map((kpi, index) => (
           <div key={index} className="relative">
             <div
-              className={`bg-[#fafafa] p-5 pl-6 border-2 border-[#0a0a0a] cursor-pointer transition-all hover:shadow-[4px_4px_0_#0a0a0a] ${expandedKPI === index ? 'shadow-[4px_4px_0_#0a0a0a]' : ''}`}
+              className={`bg-[#fafafa] p-5 pl-6 border-2 border-l-4 border-[#0a0a0a] cursor-pointer transition-all hover:shadow-[4px_4px_0_#0a0a0a] ${expandedKPI === index ? 'shadow-[4px_4px_0_#0a0a0a]' : ''}`}
               onClick={() => toggleKPI(index)}
+              style={{ borderLeftColor: kpi.color === 'amber' ? '#2D8F6F' : kpi.color === 'blue' ? '#0066ff' : kpi.color === 'green' ? '#00cc66' : '#0a0a0a' }}
             >
-              <div className="absolute left-0 top-0 bottom-0 w-1" style={{ backgroundColor: kpi.color === 'amber' ? '#2D8F6F' : kpi.color === 'blue' ? '#0066ff' : kpi.color === 'green' ? '#00cc66' : '#0a0a0a' }} />
               
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
