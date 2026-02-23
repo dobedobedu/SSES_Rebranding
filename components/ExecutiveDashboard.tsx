@@ -28,6 +28,7 @@ const KPI_DATA = [
     confidence: 'medium' as ConfidenceLevel, 
     source: 'Aggregated from Tier 1 hiring intelligence, Feb 2026',
     icon: 'Users',
+    trend: '↑ Growing',
     breakdown: [
       { name: 'PGT Innovations', value: '300-500', sector: 'Manufacturing', distance: '8 miles' },
       { name: 'Sarasota Memorial Health', value: '400-600', sector: 'Healthcare', distance: '12 miles' },
@@ -45,6 +46,7 @@ const KPI_DATA = [
     confidence: 'high' as ConfidenceLevel, 
     source: 'Real-time job postings, Feb 2026',
     icon: 'Heart',
+    trend: '#1 Sector',
     breakdown: [
       { name: 'Sarasota Memorial Health', value: '1,000+', detail: 'Largest healthcare system', status: '●●●●● Massive hiring' },
       { name: 'Lakewood Ranch Medical', value: '150+', detail: 'Part of UHS network', status: '●●●● Active hiring' },
@@ -60,6 +62,7 @@ const KPI_DATA = [
     confidence: 'medium' as ConfidenceLevel, 
     source: 'Internal enrollment data & feeder school analysis',
     icon: 'Users',
+    trend: 'Stable',
     isSankey: true,
     sankeySrc: '/sankey_img_transfers.html',
     sankeySrc2: '/sankey_k8_transitions.html',
@@ -191,6 +194,11 @@ SOURCE CITATIONS
                   <span className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest">
                     {kpi.label}
                   </span>
+                  {kpi.trend && (
+                    <span className="ml-2 px-2 py-0.5 bg-[#e5e5e0] text-[#0a0a0a] text-[9px] font-mono font-bold uppercase">
+                      {kpi.trend}
+                    </span>
+                  )}
                 </div>
                 <div className="flex items-center gap-2">
                   <ConfidenceBadge confidence={kpi.confidence} />
