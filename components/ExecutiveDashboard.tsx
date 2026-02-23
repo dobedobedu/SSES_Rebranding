@@ -39,7 +39,7 @@ const KPI_DATA = [
     ],
     commuterBreakdown: [
       { name: 'Raymond James Financial', value: '452', sector: 'Financial Services', distance: '20 miles (St. Pete)', url: 'https://www.raymondjames.com/careers', note: 'Fortune 500, hybrid remote' },
-      { name: 'Jabil', value: '1,416', sector: 'Manufacturing/Tech', distance: '20 miles (St. Pete)', url: 'https://www.jabil.com/careers', note: 'Global manufacturing, $29.8B revenue' },
+      { name: 'Jabil', value: '89', sector: 'Manufacturing/Tech', distance: '20 miles (St. Pete)', url: 'https://careers.jabil.com/jobs.html?country=United%20States%20of%20America&location=St.%20Petersburg%2FTampa', note: 'St. Pete/Tampa area openings' },
       { name: 'Tampa General Hospital', value: '430', sector: 'Healthcare', distance: '45 miles (Tampa)', url: 'https://www.tgh.org/careers', note: '#1 Hospital Tampa Bay' },
       { name: 'Moffitt Cancer Center', value: '771', sector: 'Healthcare', distance: '50 miles (Tampa)', url: 'https://www.moffitt.org/careers', note: 'NCI Comprehensive Cancer Center' },
       { name: 'Tech Data / TD SYNNEX', value: '56', sector: 'Tech Distribution', distance: '35 miles (Clearwater)', url: 'https://careers.tdsynnex.com', note: 'Remote-friendly, $59B revenue' },
