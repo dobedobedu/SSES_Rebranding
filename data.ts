@@ -726,17 +726,120 @@ rightPanelType: 'digital',
               answer: 'SSES: Small class sizes, personalized counseling. Top destinations: Duke, Stanford, Ivy League. Niche grade: A. College prep focus with marine science differentiator.',
               source: 'Niche.com, SSES admissions data'
             }
-]
+          ]
+        }
       },
       expectations: [
         { title: '12-hour Response Guarantee', description: 'Query turnaround commitment' },
         { title: 'Direct Line to Head of School', description: 'Concierge access promise' },
         { title: 'Ivy League Matriculation Parity', description: 'Academic rigor assurance' },
         { title: 'Concierge Onboarding', description: 'White-glove transition support' }
-]
+      ]
+    },
+    {
+      id: 'corp-t4',
+      title: 'Accelerated Validation',
+      subtitle: 'Virtual Meet-the-Dean + Parent Matching',
+      description: 'Northeast and California families need to validate academic rigor and overcome "Florida schools are terrible" objections. Virtual connections with families from same origin who chose SSES.',
+      actions: [
+        { id: 'c4-a1', text: 'Create "Meet the Dean" virtual sessions for relocating families (weekly)', priority: 'immediate' },
+        { id: 'c4-a2', text: 'Build parent ambassador network: Match relocating families with ex-Pingry/Exeter/Andover parents', priority: 'immediate' },
+        { id: 'c4-a3', text: 'Develop Northeast comparison guide: SSES vs. NY/NJ/CA private schools (apples-to-apples)', priority: 'immediate' },
+        { id: 'c4-a4', text: 'Host virtual "College Matriculation Deep Dive" showcasing Ivy League placements', priority: 'short-term' },
+        { id: 'c4-a5', text: 'Create video testimonials from recent NY/NJ/CA transplant families', priority: 'short-term' }
+      ],
+      rightPanelType: 'validation',
+      rightPanelData: {
+        triggers: [
+          { trigger: 'House hunting begins in Lakewood Ranch/St. Petersburg', timing: '60-90 days pre-arrival', source: 'Canon Research' },
+          { trigger: 'Corporate HR provides school research materials', timing: 'Company relocation package', source: 'HR Surveys' },
+          { trigger: 'Northeast friends say "Florida schools are terrible"', timing: 'Word-of-mouth objection', source: 'Parent Interviews' }
+        ],
+        comparisonData: [
+          { metric: 'Student-Teacher Ratio', sses: '9:1', competitors: '12:1 average' },
+          { metric: 'Ivy League Matriculation', sses: '52 Merit Scholars since 2005', competitors: 'Comparable to Northeast privates' },
+          { metric: 'Niche Grade', sses: 'A (College Prep)', competitors: 'A- to A range' },
+          { metric: 'Tuition', sses: '$24,745', competitors: '$28K-$35K' }
+        ],
+        parentAmbassadors: [
+          { family: 'Former Pingry School (NJ) family', children: '2 enrolled at SSES', testimonial: 'Academic rigor matched our expectations from Northeast' },
+          { family: 'Former Exeter area (NH) family', children: '1 at SSES, 1 graduated', testimonial: 'Personal attention exceeded our previous school' },
+          { family: 'Former Chicago (IL) family', children: '3 enrolled at SSES', testimonial: 'Marine Science program unique opportunity' }
+        ]
+      }
+    },
+    {
+      id: 'corp-t5',
+      title: 'Priority Placement',
+      subtitle: 'Fast-Track Enrollment + Concierge Onboarding',
+      description: 'Corporate relocators face compressed 90-day timelines. Remove friction with expedited application, flexible deadlines, and white-glove transition support.',
+      actions: [
+        { id: 'c5-a1', text: 'Create "Corporate Relocator Fast Track" application (streamlined, rolling admissions)', priority: 'immediate' },
+        { id: 'c5-a2', text: 'Guarantee 48-hour preliminary decision for relocating families', priority: 'immediate' },
+        { id: 'c5-a3', text: 'Assign dedicated enrollment coordinator for each relocating family', priority: 'short-term' },
+        { id: 'c5-a4', text: 'Create "Family Ambassador" match program (same origin city/industry)', priority: 'short-term' },
+        { id: 'c5-a5', text: 'Host monthly "New to Florida" social gatherings for relocating families', priority: 'long-term' }
+      ],
+      rightPanelType: 'partners',
+      rightPanelData: {
+        fastTrackTimeline: [
+          { step: 'Application submitted', timeline: 'Day 1' },
+          { step: 'Document review', timeline: 'Day 2-3' },
+          { step: 'Virtual family interview', timeline: 'Day 4-5' },
+          { step: 'Preliminary decision', timeline: 'Day 6-7' },
+          { step: 'Enrollment confirmation', timeline: 'Day 8-14' }
+        ],
+        conciergeServices: [
+          { service: 'Family Ambassador match', description: 'Current SSES family from same origin city' },
+          { service: 'Real estate agent referrals', description: 'Lakewood Ranch, Sarasota, St. Petersburg specialists' },
+          { service: 'Physician/dentist recommendations', description: 'Local healthcare provider network' },
+          { service: 'Activity/sports connections', description: 'Youth sports, arts, clubs in area' },
+          { service: 'Religious community connections', description: 'Episcopal and interfaith congregations' }
+        ],
+        onboardingElements: [
+          'Pre-arrival video call with Head of School',
+          'Student buddy assignment before first day',
+          'Summer meet-and-greet events',
+          'Private parent Facebook group for relocating families',
+          'Monthly "Sarasota 101" sessions (utilities, doctors, activities)'
+        ]
+      }
+    },
+  ],
+  
+  steps: [
+    { 
+      id: 'c1', 
+      stage: 'Awareness', 
+      text: 'Panic peaks during move logistics—school search begins 90 days pre-arrival.', 
+      tactic: 'Partner Outreach: Cartus, Sirva, Graebel embed SSES "Priority Placement" into relocation packages.' 
+    },
+    { 
+      id: 'c2', 
+      stage: 'Consideration', 
+      text: 'Auditing academic rigor, teacher credentials, Ivy lists.', 
+      tactic: 'Virtual "Meet-the-Dean" + VIP Parent Match: Connect with ex-Pingry/Exeter families who chose SSES.' 
+    },
+    { 
+      id: 'c3', 
+      stage: 'Evaluation', 
+      text: 'Overcoming "Florida schools are terrible" objections from Northeast friends.', 
+      tactic: 'Northeast Comparison Guide + Parent Ambassador Network: Show Ivy League parity with NY/NJ/CA schools.' 
+    },
+    { 
+      id: 'c4', 
+      stage: 'Decision', 
+      text: 'Final validation before committing from out-of-state with tight timeline.', 
+      tactic: '"Fly-In Friday" VIP virtual experience + 48-hour fast-track admission decision.' 
+    },
+    { 
+      id: 'c5', 
+      stage: 'Transition', 
+      text: 'Post-enrollment integration and concierge onboarding support.', 
+      tactic: 'Family Ambassador match + "New to Florida" social gatherings + local professional networking.' 
     }
-  },
-]},
+  ]
+},
 
 {
     id: 'life',

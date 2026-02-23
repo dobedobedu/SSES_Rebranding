@@ -22,37 +22,45 @@ const SEGMENTS = [
 const KPI_DATA = [
   { 
     label: 'TOTAL RELOCATING FAMILIES', 
-    value: '1,080-1,670', 
+    value: '650-850', 
     unit: 'families/yr', 
     color: 'green', 
-    confidence: 'medium' as ConfidenceLevel, 
-    source: 'Aggregated from Tier 1 hiring intelligence, Feb 2026',
+    confidence: 'high' as ConfidenceLevel, 
+    source: 'Validated hiring data (BLS, LinkedIn, company career portals), Feb 2026',
     icon: 'Users',
     trend: '↑ Growing',
     breakdown: [
-      { name: 'PGT Innovations', value: '300-500', sector: 'Manufacturing', distance: '8 miles' },
-      { name: 'Sarasota Memorial Health', value: '400-600', sector: 'Healthcare', distance: '12 miles' },
-      { name: 'Lakewood Ranch Medical', value: '100-150', sector: 'Healthcare', distance: '15 miles' },
-      { name: 'Benderson Development', value: '80-120', sector: 'Real Estate', distance: '10 miles' },
-      { name: 'Catalent', value: '200-300', sector: 'Pharmaceuticals', distance: '25 miles' },
-      { name: 'Tier 2 Companies', value: '150-250', sector: 'Mixed', distance: 'Various' }
+      { name: 'Sarasota Memorial Health', value: '421', sector: 'Healthcare', distance: '12 miles', url: 'https://careers.smh.com', note: '421 active postings - largest employer' },
+      { name: 'MITER Brands (PGT)', value: '245', sector: 'Manufacturing', distance: '8 miles', url: 'https://careers.miterbrands.com', note: 'Acquired PGT March 2024' },
+      { name: 'Lakewood Ranch Medical', value: '92', sector: 'Healthcare', distance: '15 miles', url: 'https://careers.uhs.com', note: 'Part of UHS network' },
+      { name: 'Benderson Development', value: '29', sector: 'Real Estate', distance: '10 miles', url: 'https://www.benderson.com/careers', note: 'HQ in Bradenton' },
+      { name: 'HCA Florida Sarasota', value: '42', sector: 'Healthcare', distance: '15 miles', url: 'https://careers.hcahealthcare.com', note: 'Venice ED expansion' },
+      { name: 'Tier 2 Companies', value: '150-200', sector: 'Mixed', distance: 'Various' }
+    ],
+    commuterBreakdown: [
+      { name: 'Raymond James Financial', value: '452', sector: 'Financial Services', distance: '20 miles (St. Pete)', url: 'https://www.raymondjames.com/careers', note: 'Fortune 500, hybrid remote' },
+      { name: 'Jabil', value: '1,416', sector: 'Manufacturing/Tech', distance: '20 miles (St. Pete)', url: 'https://www.jabil.com/careers', note: 'Global manufacturing, $29.8B revenue' },
+      { name: 'Tampa General Hospital', value: '430', sector: 'Healthcare', distance: '45 miles (Tampa)', url: 'https://www.tgh.org/careers', note: '#1 Hospital Tampa Bay' },
+      { name: 'Moffitt Cancer Center', value: '771', sector: 'Healthcare', distance: '50 miles (Tampa)', url: 'https://www.moffitt.org/careers', note: 'NCI Comprehensive Cancer Center' },
+      { name: 'Tech Data / TD SYNNEX', value: '56', sector: 'Tech Distribution', distance: '35 miles (Clearwater)', url: 'https://careers.tdsynnex.com', note: 'Remote-friendly, $59B revenue' },
+      { name: 'USAA', value: '72', sector: 'Financial Services', distance: '50 miles (Tampa)', url: 'https://www.usaa.com/careers', note: 'Military financial services, remote options' }
     ]
   },
   { 
     label: 'HEALTHCARE HIRING', 
-    value: '1,250+', 
+    value: '630-750', 
     unit: 'openings', 
     color: 'blue', 
     confidence: 'high' as ConfidenceLevel, 
-    source: 'Real-time job postings, Feb 2026',
+    source: 'Validated job postings (LinkedIn, company portals), Feb 2026',
     icon: 'Heart',
     trend: '#1 Sector',
     breakdown: [
-      { name: 'Sarasota Memorial Health', value: '1,000+', detail: 'Largest healthcare system', status: '●●●●● Massive hiring' },
-      { name: 'Lakewood Ranch Medical', value: '150+', detail: 'Part of UHS network', status: '●●●● Active hiring' },
-      { name: 'HCA Florida Sarasota', value: '113+', detail: 'Opening new Venice ED', status: '●●●● Active hiring' }
-    ],
-    insight: '#1 hiring sector by volume'
+      { name: 'Sarasota Memorial Health', value: '421', detail: '421 active postings (careers.smh.com)', url: 'https://careers.smh.com' },
+      { name: 'Lakewood Ranch Medical', value: '92', detail: '92 active postings (UHS network)', url: 'https://careers.uhs.com' },
+      { name: 'HCA Florida Sarasota', value: '42', detail: '42 active postings (Venice ED)', url: 'https://careers.hcahealthcare.com' },
+      { name: 'Manatee Memorial Hospital', value: '75-100', detail: 'Estimated openings', url: 'https://www.blakemedicalcenter.com/careers' }
+    ]
   },
   { 
     label: 'LOCAL SWITCHER TRANSFERS', 
@@ -67,8 +75,8 @@ const KPI_DATA = [
     sankeySrc: '/sankey_img_transfers.html',
     sankeySrc2: '/sankey_k8_transitions.html',
     breakdown: [
-      { name: 'IMG Academy Transfers', value: '195-260', detail: 'Sports-focused boarding school', status: '●●●●● High priority' },
-      { name: 'Local K-8 Transitions', value: '680-850', detail: 'K-8 graduates staying in area', status: '●●●● Bridge segment' }
+      { name: 'IMG Academy Transfers', value: '195-260', detail: 'Sports-focused boarding school' },
+      { name: 'Local K-8 Transitions', value: '680-850', detail: 'K-8 graduates staying in area' }
     ]
   }
 ];
@@ -181,27 +189,22 @@ SOURCE CITATIONS
         {KPI_DATA.map((kpi, index) => (
           <div key={index} className="relative">
             <div
-              className={`bg-[#fafafa] p-5 pl-6 border-2 border-l-4 border-[#0a0a0a] cursor-pointer transition-all hover:shadow-[4px_4px_0_#0a0a0a] ${expandedKPI === index ? 'shadow-[4px_4px_0_#0a0a0a]' : ''}`}
+              className={`bg-[#fafafa] p-5 pl-6 border-2 border-[#0a0a0a] cursor-pointer transition-all hover:shadow-[4px_4px_0_#0a0a0a] ${expandedKPI === index ? 'shadow-[4px_4px_0_#0a0a0a]' : ''}`}
               onClick={() => toggleKPI(index)}
-              style={{ borderLeftColor: kpi.color === 'amber' ? '#2D8F6F' : kpi.color === 'blue' ? '#0066ff' : kpi.color === 'green' ? '#00cc66' : '#0a0a0a' }}
             >
               
               <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <span style={{ color: kpi.color === 'amber' ? '#2D8F6F' : kpi.color === 'blue' ? '#0066ff' : '#00cc66' }}>
-                    {getIcon(kpi.icon || 'Users')}
-                  </span>
+                <div className="flex flex-col gap-1">
                   <span className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest">
                     {kpi.label}
                   </span>
                   {kpi.trend && (
-                    <span className="ml-2 px-2 py-0.5 bg-[#e5e5e0] text-[#0a0a0a] text-[9px] font-mono font-bold uppercase">
+                    <span className="px-2 py-0.5 bg-[#e5e5e0] text-[#0a0a0a] text-[9px] font-mono font-bold uppercase w-fit">
                       {kpi.trend}
                     </span>
                   )}
                 </div>
                 <div className="flex items-center gap-2">
-                  <ConfidenceBadge confidence={kpi.confidence} />
                   {expandedKPI === index ? <ChevronUp className="w-4 h-4 text-[#8a8a8a]" /> : <ChevronDown className="w-4 h-4 text-[#8a8a8a]" />}
                 </div>
               </div>
@@ -234,7 +237,18 @@ SOURCE CITATIONS
                       {kpi.breakdown.map((item: any, i: number) => (
                         <div key={i} className="flex items-start justify-between text-sm">
                           <div className="flex-1">
-                            <div className="font-bold text-[#0a0a0a]">{item.name}</div>
+                            {item.url ? (
+                              <a 
+                                href={item.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-bold text-[#0a0a0a] hover:text-[#0066ff] hover:underline cursor-pointer"
+                              >
+                                {item.name} ↗
+                              </a>
+                            ) : (
+                              <div className="font-bold text-[#0a0a0a]">{item.name}</div>
+                            )}
                             {item.sector && (
                               <div className="font-mono text-[9px] text-[#8a8a8a]">{item.sector} | {item.distance}</div>
                             )}
@@ -247,15 +261,54 @@ SOURCE CITATIONS
                           </div>
                           <div className="text-right">
                             <div className="font-mono font-bold">{item.value || item.investment}</div>
-                            {item.status && (
-                              <div className="font-mono text-[9px] text-[#2D8F6F]">{item.status}</div>
-                            )}
                           </div>
                         </div>
                       ))}
                     </div>
                   </>
                 )}
+                
+                {/* Tampa Bay Commuter Section */}
+                {kpi.commuterBreakdown && kpi.commuterBreakdown.length > 0 && (
+                  <>
+                    <div className="my-4 border-t-2 border-[#0a0a0a] pt-3">
+                      <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-3">
+                        Tampa Bay Commuter Opportunities
+                        <span className="block text-[8px] text-[#666] normal-case mt-1">20-50 miles from Bradenton - Remote/Hybrid Friendly</span>
+                      </div>
+                      <div className="space-y-3">
+                        {kpi.commuterBreakdown.map((item: any, i: number) => (
+                          <div key={i} className="flex items-start justify-between text-sm">
+                            <div className="flex-1">
+                              {item.url ? (
+                                <a 
+                                  href={item.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="font-bold text-[#0a0a0a] hover:text-[#0066ff] hover:underline cursor-pointer"
+                                >
+                                  {item.name} ↗
+                                </a>
+                              ) : (
+                                <div className="font-bold text-[#0a0a0a]">{item.name}</div>
+                              )}
+                              {item.sector && (
+                                <div className="font-mono text-[9px] text-[#8a8a8a]">{item.sector} | {item.distance}</div>
+                              )}
+                              {item.note && (
+                                <div className="font-mono text-[9px] text-[#8a8a8a]">{item.note}</div>
+                              )}
+                            </div>
+                            <div className="text-right">
+                              <div className="font-mono font-bold">{item.value}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                )}
+                
                 <div className="mt-4 pt-3 border-t border-[#0a0a0a] font-mono text-[9px] text-[#8a8a8a]">
                   Source: {kpi.source}
                 </div>
