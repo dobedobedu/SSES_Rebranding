@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Search } from 'lucide-react';
 
 interface DiscoveryChapter {
@@ -6,6 +6,7 @@ interface DiscoveryChapter {
   title: string;
   href: string;
   excavation: string;
+  heroText: string;
   status: 'active' | 'in-progress' | 'coming-soon';
 }
 
@@ -15,6 +16,7 @@ const DISCOVERY_CHAPTERS: DiscoveryChapter[] = [
     title: 'Who are they?',
     href: '/segmentation',
     excavation: '1800+ AI simulations → 5 family segments',
+    heroText: '1800+ AI simulations, 5 family segments, 300+ pages of research',
     status: 'active',
   },
   {
@@ -22,6 +24,7 @@ const DISCOVERY_CHAPTERS: DiscoveryChapter[] = [
     title: 'What do they want?',
     href: '/research',
     excavation: '300+ pages • 120 sources • 4 reports',
+    heroText: '4 research reports, 120 trusted sources, 40+ hours invested',
     status: 'active',
   },
   {
@@ -29,6 +32,7 @@ const DISCOVERY_CHAPTERS: DiscoveryChapter[] = [
     title: 'Where do we come from?',
     href: '#',
     excavation: 'Heritage & legacy',
+    heroText: '14 historical artifacts, 5 decades of legacy',
     status: 'coming-soon',
   },
   {
@@ -36,6 +40,7 @@ const DISCOVERY_CHAPTERS: DiscoveryChapter[] = [
     title: 'Who are we?',
     href: '#',
     excavation: 'Brand identity',
+    heroText: '3 brand directions, 12 iterations explored',
     status: 'coming-soon',
   },
   {
@@ -43,6 +48,7 @@ const DISCOVERY_CHAPTERS: DiscoveryChapter[] = [
     title: 'How might we reach them?',
     href: '#prototypes',
     excavation: '3 prototypes • 15+ iterations',
+    heroText: '3 live prototypes, 15+ design iterations',
     status: 'active',
   },
   {
@@ -50,6 +56,7 @@ const DISCOVERY_CHAPTERS: DiscoveryChapter[] = [
     title: 'What do we need?',
     href: '#assets',
     excavation: 'Asset toolkit',
+    heroText: 'Photos, videos, logos, guidelines, templates',
     status: 'coming-soon',
   },
 ];
@@ -60,73 +67,71 @@ const PROTOTYPES = [
   { name: 'Bounce', href: 'https://bounce-sand-gamma.vercel.app', description: 'Rounded Sans' },
 ];
 
-const HERO_QUESTIONS = [
-  'How might we meet the next generation of Falcons where they are?',
-  'Where will the next 100 families come from?',
-  'What do families really want from a school?',
-  'How do we become the obvious choice?',
-];
+const DEFAULT_HERO = 'How might we meet the next generation of Falcons where they are?';
 
-// Text scramble effect hook
-const useScramble = (text: string, isActive: boolean) => {
+// Fast scramble effect
+const ScrambleText: React.FC<{ text: string; speed?: number }> = ({ text, speed = 20 }) => {
   const [displayText, setDisplayText] = useState(text);
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789•→';
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (!isActive) {
-      setDisplayText(text);
-      return;
+    setDisplayText(text);
+    
+    // Clear any existing animation
+    if (timeoutRef.current) {
+      clearInterval(timeoutRef.current);
     }
 
     let iteration = 0;
-    const interval = setInterval(() => {
+    const maxIterations = text.length;
+    
+    timeoutRef.current = setInterval(() => {
       setDisplayText(
         text
           .split('')
           .map((char, index) => {
-            if (char === ' ') return ' ';
-            if (index < iteration) return text[index];
+            if (char === ' ' || char === ',' || char === '+' || char === '?') return char;
+            if (iteration > index * 0.8) return text[index];
             return chars[Math.floor(Math.random() * chars.length)];
           })
           .join('')
       );
 
-      iteration += 1 / 3;
-
-      if (iteration >= text.length) {
-        clearInterval(interval);
+      iteration++;
+      
+      if (iteration >= maxIterations * 1.5) {
+        if (timeoutRef.current) clearInterval(timeoutRef.current);
         setDisplayText(text);
       }
-    }, 30);
+    }, speed);
 
-    return () => clearInterval(interval);
-  }, [text, isActive]);
+    return () => {
+      if (timeoutRef.current) clearInterval(timeoutRef.current);
+    };
+  }, [text, speed]);
 
-  return displayText;
+  return <>{displayText}</>;
 };
 
 export const SplashScreen: React.FC = () => {
   const [mounted, setMounted] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<number | null>(null);
   const [expandPrototypes, setExpandPrototypes] = useState(false);
-  const [heroIndex, setHeroIndex] = useState(0);
-  const [isScrambling, setIsScrambling] = useState(false);
-
-  const currentQuestion = HERO_QUESTIONS[heroIndex];
-  const scrambledText = useScramble(currentQuestion, isScrambling);
+  const [heroText, setHeroText] = useState(DEFAULT_HERO);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const handleHeroHover = useCallback(() => {
-    setIsScrambling(true);
-    setHeroIndex((prev) => (prev + 1) % HERO_QUESTIONS.length);
-  }, []);
-
-  const handleHeroLeave = useCallback(() => {
-    setIsScrambling(false);
-  }, []);
+  // Update hero text when hovering chapters
+  useEffect(() => {
+    if (hoveredItem !== null && DISCOVERY_CHAPTERS[hoveredItem]) {
+      setHeroText(DISCOVERY_CHAPTERS[hoveredItem].heroText);
+    } else {
+      setHeroText(DEFAULT_HERO);
+    }
+  }, [hoveredItem]);
 
   const totalExcavation = {
     simulations: '1800+',
@@ -168,12 +173,8 @@ export const SplashScreen: React.FC = () => {
             
             {/* Hero Question with scramble effect */}
             <div className="mb-8">
-              <h2 
-                className="font-serif text-3xl md:text-4xl lg:text-5xl font-normal mb-4 tracking-tight leading-tight cursor-pointer select-none"
-                onMouseEnter={handleHeroHover}
-                onMouseLeave={handleHeroLeave}
-              >
-                "{scrambledText}"
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-normal mb-4 tracking-tight leading-tight">
+                "<ScrambleText text={heroText} speed={15} />"
               </h2>
               <p className="font-mono text-sm text-[#8a8a8a] max-w-xl">
                 In 6 months, we excavated the answers.
@@ -225,6 +226,8 @@ export const SplashScreen: React.FC = () => {
                     <div
                       key={chapter.number}
                       className="group cursor-default opacity-40"
+                      onMouseEnter={() => setHoveredItem(index)}
+                      onMouseLeave={() => setHoveredItem(null)}
                     >
                       {content}
                     </div>
