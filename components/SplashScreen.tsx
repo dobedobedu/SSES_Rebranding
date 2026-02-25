@@ -171,8 +171,8 @@ export const SplashScreen: React.FC = () => {
         <main className="flex-1 flex flex-col justify-center px-8 md:px-12 lg:px-24">
           <div className={`max-w-3xl transition-all duration-1000 delay-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             
-            {/* Hero Question with scramble effect */}
-            <div className="mb-8">
+            {/* Hero Question with scramble effect - fixed height to prevent layout shift */}
+            <div className="mb-8 min-h-[120px] md:min-h-[140px] lg:min-h-[160px]">
               <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-normal mb-4 tracking-tight leading-tight">
                 "<ScrambleText text={heroText} speed={15} />"
               </h2>
