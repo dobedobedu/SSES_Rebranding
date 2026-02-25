@@ -766,7 +766,7 @@ rightPanelType: 'digital',
         { id: 'c5-a4', text: 'Create "Family Ambassador" match program (same origin city/industry)', priority: 'short-term' },
         { id: 'c5-a5', text: 'Host monthly "New to Florida" social gatherings for relocating families', priority: 'long-term' }
       ],
-      rightPanelType: 'partners',
+      rightPanelType: 'priority-placement',
       rightPanelData: {
         fastTrackTimeline: [
           { step: 'Application submitted', timeline: 'Day 1' },
@@ -1111,7 +1111,7 @@ id: 'pivot-t1',
           { id: 'p2-a3', text: 'Create "Hybrid Schedule" visual one-pager for coaches', priority: 'immediate' },
           { id: 'p2-a4', text: 'Host coaches clinic showing SSES athletic facilities', priority: 'long-term' }
         ],
-        rightPanelType: 'partners',
+        rightPanelType: 'sports-network',
         rightPanelData: {
           partners: [
             { category: 'Private Coaches', examples: 'Tennis, golf, soccer trainers', influence: 'High' },
@@ -1205,7 +1205,7 @@ id: 'pivot-t1',
           { id: 'b1-a3', text: 'Create co-branded "Transition Guide" with K-8s', priority: 'short-term' },
           { id: 'b1-a4', text: 'Offer early application incentives for continuing students', priority: 'long-term' }
         ],
-        rightPanelType: 'partners',
+        rightPanelType: 'k8-networks',
         rightPanelData: {
           feederSchools: [
             { name: 'Center Montessori', students: '45-55/year', type: 'Montessori', priority: 'High' },
