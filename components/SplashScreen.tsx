@@ -16,7 +16,7 @@ const DISCOVERY_CHAPTERS: DiscoveryChapter[] = [
     title: 'Who are they?',
     href: '/segmentation',
     excavation: '1800+ AI simulations → 5 family segments',
-    heroText: '1800+ AI simulations, 5 family segments, 300+ pages of research',
+    heroText: '1800 simulations, 5 segments',
     status: 'active',
   },
   {
@@ -24,7 +24,7 @@ const DISCOVERY_CHAPTERS: DiscoveryChapter[] = [
     title: 'What do they want?',
     href: '/research',
     excavation: '300+ pages • 120 sources • 4 reports',
-    heroText: '4 research reports, 120 trusted sources, 40+ hours invested',
+    heroText: '4 reports, 120 sources',
     status: 'active',
   },
   {
@@ -32,7 +32,7 @@ const DISCOVERY_CHAPTERS: DiscoveryChapter[] = [
     title: 'Where do we come from?',
     href: '#',
     excavation: 'Heritage & legacy',
-    heroText: '14 historical artifacts, 5 decades of legacy',
+    heroText: '14 artifacts, 5 decades',
     status: 'coming-soon',
   },
   {
@@ -40,7 +40,7 @@ const DISCOVERY_CHAPTERS: DiscoveryChapter[] = [
     title: 'Who are we?',
     href: '#',
     excavation: 'Brand identity',
-    heroText: '3 brand directions, 12 iterations explored',
+    heroText: '3 directions, 12 iterations',
     status: 'coming-soon',
   },
   {
@@ -48,7 +48,7 @@ const DISCOVERY_CHAPTERS: DiscoveryChapter[] = [
     title: 'How might we reach them?',
     href: '#prototypes',
     excavation: '3 prototypes • 15+ iterations',
-    heroText: '3 live prototypes, 15+ design iterations',
+    heroText: '3 prototypes, 15 iterations',
     status: 'active',
   },
   {
@@ -56,7 +56,7 @@ const DISCOVERY_CHAPTERS: DiscoveryChapter[] = [
     title: 'What do we need?',
     href: '#assets',
     excavation: 'Asset toolkit',
-    heroText: 'Photos, videos, logos, guidelines, templates',
+    heroText: 'Photos, videos, logos',
     status: 'coming-soon',
   },
 ];
@@ -196,15 +196,12 @@ export const SplashScreen: React.FC = () => {
                   <>
                     <div className="flex items-start justify-between py-4 border-b border-[#1a1a1a] group-hover:border-[#2a2a2a] transition-colors">
                       <div className="flex-1">
-                        <div className="flex items-center gap-4 mb-1">
+                        <div className="flex items-center gap-4">
                           <span className="font-mono text-[10px] text-[#4a4a4a] w-6">{chapter.number}</span>
                           <h3 className="font-serif text-lg md:text-xl text-white group-hover:text-[#2D8F6F] transition-colors">
                             {chapter.title}
                           </h3>
                         </div>
-                        <p className="font-mono text-[11px] text-[#5a5a5a] ml-10">
-                          {chapter.excavation}
-                        </p>
                       </div>
                       <div className="flex items-center gap-3">
                         {chapter.status === 'coming-soon' ? (
