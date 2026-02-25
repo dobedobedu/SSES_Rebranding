@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ArrowRight, Search } from 'lucide-react';
 
 interface DiscoveryChapter {
   number: string;
-  question: string;
   title: string;
   href: string;
   excavation: string;
@@ -13,50 +12,44 @@ interface DiscoveryChapter {
 const DISCOVERY_CHAPTERS: DiscoveryChapter[] = [
   {
     number: '01',
-    question: 'Who are they?',
-    title: 'We discovered who they are',
+    title: 'Who are they?',
     href: '/segmentation',
     excavation: '1800+ AI simulations → 5 family segments',
     status: 'active',
   },
   {
     number: '02',
-    question: 'What do they want?',
-    title: 'We discovered what they want',
+    title: 'What do they want?',
     href: '/research',
     excavation: '300+ pages • 120 sources • 4 reports',
     status: 'active',
   },
   {
     number: '03',
-    question: 'Where do we come from?',
-    title: 'We discovered where we come from',
+    title: 'Where do we come from?',
     href: '#',
-    excavation: 'Heritage & legacy excavation',
+    excavation: 'Heritage & legacy',
     status: 'coming-soon',
   },
   {
     number: '04',
-    question: 'Who are we?',
-    title: 'We discovered who we are',
+    title: 'Who are we?',
     href: '#',
-    excavation: 'Brand identity crystallization',
+    excavation: 'Brand identity',
     status: 'coming-soon',
   },
   {
     number: '05',
-    question: 'How might we reach them?',
-    title: 'We discovered how to reach them',
+    title: 'How might we reach them?',
     href: '#prototypes',
     excavation: '3 prototypes • 15+ iterations',
     status: 'active',
   },
   {
     number: '06',
-    question: 'What do we need?',
-    title: 'We discovered what we need',
+    title: 'What do we need?',
     href: '#assets',
-    excavation: 'Asset toolkit assembly',
+    excavation: 'Asset toolkit',
     status: 'coming-soon',
   },
 ];
@@ -67,13 +60,72 @@ const PROTOTYPES = [
   { name: 'Bounce', href: 'https://bounce-sand-gamma.vercel.app', description: 'Rounded Sans' },
 ];
 
+const HERO_QUESTIONS = [
+  'How might we meet the next generation of Falcons where they are?',
+  'Where will the next 100 families come from?',
+  'What do families really want from a school?',
+  'How do we become the obvious choice?',
+];
+
+// Text scramble effect hook
+const useScramble = (text: string, isActive: boolean) => {
+  const [displayText, setDisplayText] = useState(text);
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  useEffect(() => {
+    if (!isActive) {
+      setDisplayText(text);
+      return;
+    }
+
+    let iteration = 0;
+    const interval = setInterval(() => {
+      setDisplayText(
+        text
+          .split('')
+          .map((char, index) => {
+            if (char === ' ') return ' ';
+            if (index < iteration) return text[index];
+            return chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join('')
+      );
+
+      iteration += 1 / 3;
+
+      if (iteration >= text.length) {
+        clearInterval(interval);
+        setDisplayText(text);
+      }
+    }, 30);
+
+    return () => clearInterval(interval);
+  }, [text, isActive]);
+
+  return displayText;
+};
+
 export const SplashScreen: React.FC = () => {
   const [mounted, setMounted] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<number | null>(null);
   const [expandPrototypes, setExpandPrototypes] = useState(false);
+  const [heroIndex, setHeroIndex] = useState(0);
+  const [isScrambling, setIsScrambling] = useState(false);
+
+  const currentQuestion = HERO_QUESTIONS[heroIndex];
+  const scrambledText = useScramble(currentQuestion, isScrambling);
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  const handleHeroHover = useCallback(() => {
+    setIsScrambling(true);
+    setHeroIndex((prev) => (prev + 1) % HERO_QUESTIONS.length);
+  }, []);
+
+  const handleHeroLeave = useCallback(() => {
+    setIsScrambling(false);
   }, []);
 
   const totalExcavation = {
@@ -114,22 +166,23 @@ export const SplashScreen: React.FC = () => {
         <main className="flex-1 flex flex-col justify-center px-8 md:px-12 lg:px-24">
           <div className={`max-w-3xl transition-all duration-1000 delay-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             
-            {/* Hero Question */}
-            <div className="mb-16">
-              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal mb-6 tracking-tight leading-tight">
-                "Where will <span className="text-[#2D8F6F] italic">growth</span> come from?"
+            {/* Hero Question with scramble effect */}
+            <div className="mb-8">
+              <h2 
+                className="font-serif text-3xl md:text-4xl lg:text-5xl font-normal mb-4 tracking-tight leading-tight cursor-pointer select-none"
+                onMouseEnter={handleHeroHover}
+                onMouseLeave={handleHeroLeave}
+              >
+                "{scrambledText}"
               </h2>
-              <p className="font-mono text-base text-[#8a8a8a] max-w-xl">
-                We didn't assume. We excavated.
+              <p className="font-mono text-sm text-[#8a8a8a] max-w-xl">
+                In 6 months, we excavated the answers.
               </p>
             </div>
 
-            {/* We Discovered... */}
+            {/* Divider */}
             <div className="mb-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-[1px] bg-[#2D8F6F]" />
-                <span className="font-mono text-xs text-[#2D8F6F] uppercase tracking-widest">We discovered...</span>
-              </div>
+              <div className="w-full h-[1px] bg-[#2a2a2a]" />
             </div>
 
             {/* Discovery Chapters */}
@@ -140,26 +193,26 @@ export const SplashScreen: React.FC = () => {
                 
                 const content = (
                   <>
-                    <div className="flex items-start justify-between py-5 border-b border-[#2a2a2a] group-hover:border-[#4a4a4a] transition-colors">
+                    <div className="flex items-start justify-between py-4 border-b border-[#1a1a1a] group-hover:border-[#2a2a2a] transition-colors">
                       <div className="flex-1">
                         <div className="flex items-center gap-4 mb-1">
-                          <span className="font-mono text-[10px] text-[#4a4a4a]">{chapter.number}</span>
-                          <h3 className="font-serif text-xl md:text-2xl text-white group-hover:text-[#2D8F6F] transition-colors">
+                          <span className="font-mono text-[10px] text-[#4a4a4a] w-6">{chapter.number}</span>
+                          <h3 className="font-serif text-lg md:text-xl text-white group-hover:text-[#2D8F6F] transition-colors">
                             {chapter.title}
                           </h3>
                         </div>
-                        <p className="font-mono text-[11px] text-[#6a6a6a] ml-10">
+                        <p className="font-mono text-[11px] text-[#5a5a5a] ml-10">
                           {chapter.excavation}
                         </p>
                       </div>
                       <div className="flex items-center gap-3">
                         {chapter.status === 'coming-soon' ? (
-                          <span className="font-mono text-[9px] text-[#4a4a4a] uppercase tracking-wider px-2 py-1 border border-[#2a2a2a]">
-                            Coming
+                          <span className="font-mono text-[9px] text-[#3a3a3a] uppercase tracking-wider">
+                            soon
                           </span>
                         ) : (
                           <ArrowRight
-                            className={`w-4 h-4 transition-all duration-300 ${hoveredItem === index ? 'translate-x-1 text-[#2D8F6F]' : 'text-[#4a4a4a]'}`}
+                            className={`w-4 h-4 transition-all duration-300 ${hoveredItem === index ? 'translate-x-1 text-[#2D8F6F]' : 'text-[#3a3a3a]'}`}
                           />
                         )}
                       </div>
@@ -171,7 +224,7 @@ export const SplashScreen: React.FC = () => {
                   return (
                     <div
                       key={chapter.number}
-                      className="group cursor-default opacity-50"
+                      className="group cursor-default opacity-40"
                     >
                       {content}
                     </div>
@@ -198,14 +251,14 @@ export const SplashScreen: React.FC = () => {
                               href={proto.href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="p-4 border border-[#2a2a2a] hover:border-white transition-all group/proto"
+                              className="p-3 border border-[#2a2a2a] hover:border-white transition-all group/proto"
                               onClick={(e) => e.stopPropagation()}
                             >
                               <div className="flex items-center justify-between mb-1">
-                                <span className="font-mono text-sm font-bold uppercase">{proto.name}</span>
+                                <span className="font-mono text-xs font-bold uppercase">{proto.name}</span>
                                 <ArrowRight className="w-3 h-3 text-[#4a4a4a] group-hover/proto:text-white transition-colors" />
                               </div>
-                              <p className="font-mono text-[10px] text-[#6a6a6a]">{proto.description}</p>
+                              <p className="font-mono text-[9px] text-[#5a5a5a]">{proto.description}</p>
                             </a>
                           ))}
                         </div>
@@ -232,22 +285,22 @@ export const SplashScreen: React.FC = () => {
 
         {/* Excavation Footer */}
         <footer className={`border-t border-[#1a1a1a] transition-all duration-1000 delay-700 ${mounted ? 'opacity-100' : 'opacity-0'}`}>
-          <div className="px-8 md:px-12 lg:px-24 py-6">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-              <div className="flex items-center gap-6">
-                <span className="font-mono text-[10px] text-[#4a4a4a] uppercase tracking-wider">Excavation</span>
-                <div className="flex items-center gap-4 font-mono text-[10px] text-[#6a6a6a]">
+          <div className="px-8 md:px-12 lg:px-24 py-5">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+              <div className="flex items-center gap-5">
+                <span className="font-mono text-[9px] text-[#3a3a3a] uppercase tracking-wider">6 months</span>
+                <div className="flex items-center gap-3 font-mono text-[10px] text-[#5a5a5a]">
                   <span>{totalExcavation.simulations} simulations</span>
-                  <span className="text-[#2a2a2a]">|</span>
+                  <span className="text-[#2a2a2a]">·</span>
                   <span>{totalExcavation.pages} pages</span>
-                  <span className="text-[#2a2a2a]">|</span>
+                  <span className="text-[#2a2a2a]">·</span>
                   <span>{totalExcavation.sources} sources</span>
-                  <span className="text-[#2a2a2a]">|</span>
+                  <span className="text-[#2a2a2a]">·</span>
                   <span>{totalExcavation.iterations} iterations</span>
                 </div>
               </div>
-              <div className="font-mono text-[10px] text-[#4a4a4a]">
-                © 2026 Fosfeen — Bradenton, FL
+              <div className="font-mono text-[9px] text-[#3a3a3a]">
+                Fosfeen · Bradenton, FL · 2026
               </div>
             </div>
           </div>
