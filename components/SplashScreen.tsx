@@ -1,338 +1,254 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Search } from 'lucide-react';
 
-interface NavItem {
-  label: string;
+interface DiscoveryChapter {
+  number: string;
+  question: string;
+  title: string;
   href: string;
-  description: string;
-  comingSoon?: boolean;
+  excavation: string;
+  status: 'active' | 'in-progress' | 'coming-soon';
 }
 
-const NAV_ITEMS: NavItem[] = [
-  { label: 'Segmentation', href: '/segmentation', description: 'Based on 1800+ AI simulations' },
-  { label: 'Research', href: '/research', description: '300+ pages, 120 trusted sources' },
-  { label: 'Heritage', href: '#', description: '14 historical artifacts', comingSoon: true },
-  { label: 'Brand ID', href: '#', description: 'Visual Identity', comingSoon: true },
+const DISCOVERY_CHAPTERS: DiscoveryChapter[] = [
+  {
+    number: '01',
+    question: 'Who are they?',
+    title: 'We discovered who they are',
+    href: '/segmentation',
+    excavation: '1800+ AI simulations → 5 family segments',
+    status: 'active',
+  },
+  {
+    number: '02',
+    question: 'What do they want?',
+    title: 'We discovered what they want',
+    href: '/research',
+    excavation: '300+ pages • 120 sources • 4 reports',
+    status: 'active',
+  },
+  {
+    number: '03',
+    question: 'Where do we come from?',
+    title: 'We discovered where we come from',
+    href: '#',
+    excavation: 'Heritage & legacy excavation',
+    status: 'coming-soon',
+  },
+  {
+    number: '04',
+    question: 'Who are we?',
+    title: 'We discovered who we are',
+    href: '#',
+    excavation: 'Brand identity crystallization',
+    status: 'coming-soon',
+  },
+  {
+    number: '05',
+    question: 'How might we reach them?',
+    title: 'We discovered how to reach them',
+    href: '#prototypes',
+    excavation: '3 prototypes • 15+ iterations',
+    status: 'active',
+  },
+  {
+    number: '06',
+    question: 'What do we need?',
+    title: 'We discovered what we need',
+    href: '#assets',
+    excavation: 'Asset toolkit assembly',
+    status: 'coming-soon',
+  },
+];
+
+const PROTOTYPES = [
+  { name: 'Classic', href: 'https://classic-eta.vercel.app', description: 'Georgia serif' },
+  { name: 'Swiss', href: 'https://swiss-chi.vercel.app', description: 'Helvetica' },
+  { name: 'Bounce', href: 'https://bounce-sand-gamma.vercel.app', description: 'Rounded Sans' },
 ];
 
 export const SplashScreen: React.FC = () => {
   const [mounted, setMounted] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<number | null>(null);
-  const [activeSection, setActiveSection] = useState<'prototypes' | 'assets' | null>(null);
+  const [expandPrototypes, setExpandPrototypes] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  const totalExcavation = {
+    simulations: '1800+',
+    pages: '300+',
+    sources: 120,
+    iterations: '15+',
+  };
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col">
-      {/* Animated background */}
+      {/* Subtle gradient background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div 
-          className={`absolute inset-0 opacity-20 transition-opacity duration-2000 ${mounted ? 'opacity-20' : 'opacity-0'}`}
+        <div
+          className={`absolute inset-0 opacity-10 transition-opacity duration-2000 ${mounted ? 'opacity-10' : 'opacity-0'}`}
           style={{
             background: `
               radial-gradient(circle at 20% 80%, #2D8F6F 0%, transparent 50%),
-              radial-gradient(circle at 80% 20%, #3B7DD8 0%, transparent 50%),
-              radial-gradient(circle at 40% 40%, #4AA89D 0%, transparent 40%),
-              radial-gradient(circle at 60% 60%, #2D8F6F 0%, transparent 40%)
-            `
+              radial-gradient(circle at 80% 20%, #3B7DD8 0%, transparent 50%)
+            `,
           }}
         />
       </div>
 
-      {/* Content */}
       <div className="relative z-10 flex flex-col min-h-screen">
-        {/* Logo / Brand */}
-        <header className={`p-8 transition-all duration-1000 delay-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-          <div>
-            <h1 className="font-mono text-sm uppercase tracking-widest">Saint Stephen's</h1>
-            <p className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-wider">Episcopal School</p>
+        {/* Header */}
+        <header className={`p-8 md:p-12 transition-all duration-1000 delay-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
+          <div className="flex items-center gap-3">
+            <Search className="w-4 h-4 text-[#2D8F6F]" />
+            <div>
+              <h1 className="font-mono text-sm uppercase tracking-widest">Saint Stephen's Episcopal School</h1>
+              <p className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-wider">A Strategic Rebranding</p>
+            </div>
           </div>
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 flex flex-col justify-center items-center px-8">
-          <div className={`max-w-4xl w-full transition-all duration-1000 delay-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <main className="flex-1 flex flex-col justify-center px-8 md:px-12 lg:px-24">
+          <div className={`max-w-3xl transition-all duration-1000 delay-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             
-            {/* Main Title */}
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 px-4 py-2 border border-[#4a4a4a] rounded-full mb-6">
-                <Sparkles className="w-4 h-4 text-[#2D8F6F]" />
-                <span className="font-mono text-xs text-[#8a8a8a] uppercase tracking-wider">
-                  Strategic Growth Initiative
-                </span>
-              </div>
-              <h2 className="font-mono text-5xl md:text-7xl font-bold mb-4 tracking-tight">
-                Where Will<br />
-                <span className="text-[#2D8F6F]">Growth</span> Come From?
+            {/* Hero Question */}
+            <div className="mb-16">
+              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal mb-6 tracking-tight leading-tight">
+                "Where will <span className="text-[#2D8F6F] italic">growth</span> come from?"
               </h2>
-              <p className="font-mono text-lg text-[#8a8a8a] max-w-2xl mx-auto">
-                Strategic segmentation based on 1800+ AI simulations,
-                <br />
-                powered by 300+ pages of research and 120 trusted sources.
+              <p className="font-mono text-base text-[#8a8a8a] max-w-xl">
+                We didn't assume. We excavated.
               </p>
             </div>
 
-            {/* Navigation Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {NAV_ITEMS.map((item, index) => {
+            {/* We Discovered... */}
+            <div className="mb-8">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-[1px] bg-[#2D8F6F]" />
+                <span className="font-mono text-xs text-[#2D8F6F] uppercase tracking-widest">We discovered...</span>
+              </div>
+            </div>
+
+            {/* Discovery Chapters */}
+            <div className="space-y-0">
+              {DISCOVERY_CHAPTERS.map((chapter, index) => {
+                const isClickable = chapter.status === 'active';
+                const isPrototypes = chapter.number === '05' && chapter.href === '#prototypes';
+                
                 const content = (
                   <>
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="font-mono text-[10px] text-[#2D8F6F]">
-                            0{index + 1}
-                          </span>
-                          <h3 className="font-mono text-lg font-bold uppercase tracking-wider">
-                            {item.label}
+                    <div className="flex items-start justify-between py-5 border-b border-[#2a2a2a] group-hover:border-[#4a4a4a] transition-colors">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-4 mb-1">
+                          <span className="font-mono text-[10px] text-[#4a4a4a]">{chapter.number}</span>
+                          <h3 className="font-serif text-xl md:text-2xl text-white group-hover:text-[#2D8F6F] transition-colors">
+                            {chapter.title}
                           </h3>
                         </div>
-                        <p className="font-mono text-xs text-[#8a8a8a]">
-                          {item.description}
+                        <p className="font-mono text-[11px] text-[#6a6a6a] ml-10">
+                          {chapter.excavation}
                         </p>
                       </div>
-                      {item.comingSoon ? (
-                        <span className="font-mono text-[10px] text-[#8a8a8a] uppercase">
-                          Coming Soon
-                        </span>
-                      ) : (
-                        <ArrowRight 
-                          className={`
-                            w-5 h-5 transition-all duration-300
-                            ${hoveredItem === index ? 'translate-x-2 text-[#2D8F6F]' : 'text-[#4a4a4a]'}
-                          `} 
-                        />
-                      )}
+                      <div className="flex items-center gap-3">
+                        {chapter.status === 'coming-soon' ? (
+                          <span className="font-mono text-[9px] text-[#4a4a4a] uppercase tracking-wider px-2 py-1 border border-[#2a2a2a]">
+                            Coming
+                          </span>
+                        ) : (
+                          <ArrowRight
+                            className={`w-4 h-4 transition-all duration-300 ${hoveredItem === index ? 'translate-x-1 text-[#2D8F6F]' : 'text-[#4a4a4a]'}`}
+                          />
+                        )}
+                      </div>
                     </div>
-                    
-                    {/* Hover glow effect */}
-                    <div 
-                      className={`
-                        absolute inset-0 opacity-0 transition-opacity duration-300 pointer-events-none
-                        ${hoveredItem === index ? 'opacity-100' : ''}
-                      `}
-                      style={{
-                        background: `linear-gradient(135deg, ${index === 0 ? '#2D8F6F' : index === 1 ? '#3B7DD8' : index === 2 ? '#4AA89D' : '#2D8F6F'}10 0%, transparent 100%)`
-                      }}
-                    />
                   </>
                 );
 
-                const className = `
-                  group relative p-6 border-2 transition-all duration-300 cursor-pointer block
-                  ${hoveredItem === index 
-                    ? 'border-white bg-white/5 translate-x-2' 
-                    : 'border-[#4a4a4a] hover:border-white'
-                  }
-                  ${item.comingSoon ? 'opacity-60 hover:opacity-100' : ''}
-                `;
-
-                if (item.comingSoon) {
+                if (!isClickable && !isPrototypes) {
                   return (
                     <div
-                      key={item.label}
-                      onClick={() => alert('Coming Soon')}
-                      onMouseEnter={() => setHoveredItem(index)}
-                      onMouseLeave={() => setHoveredItem(null)}
-                      className={className}
-                      style={{ transitionDelay: `${index * 100}ms` }}
+                      key={chapter.number}
+                      className="group cursor-default opacity-50"
                     >
                       {content}
                     </div>
                   );
                 }
 
+                if (isPrototypes) {
+                  return (
+                    <div
+                      key={chapter.number}
+                      className="group cursor-pointer"
+                      onClick={() => setExpandPrototypes(!expandPrototypes)}
+                      onMouseEnter={() => setHoveredItem(index)}
+                      onMouseLeave={() => setHoveredItem(null)}
+                    >
+                      {content}
+                      
+                      {/* Prototypes expansion */}
+                      <div className={`overflow-hidden transition-all duration-500 ${expandPrototypes ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'}`}>
+                        <div className="grid grid-cols-3 gap-3 py-4 ml-10">
+                          {PROTOTYPES.map((proto) => (
+                            <a
+                              key={proto.name}
+                              href={proto.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-4 border border-[#2a2a2a] hover:border-white transition-all group/proto"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="font-mono text-sm font-bold uppercase">{proto.name}</span>
+                                <ArrowRight className="w-3 h-3 text-[#4a4a4a] group-hover/proto:text-white transition-colors" />
+                              </div>
+                              <p className="font-mono text-[10px] text-[#6a6a6a]">{proto.description}</p>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+
                 return (
                   <a
-                    key={item.label}
-                    href={item.href}
+                    key={chapter.number}
+                    href={chapter.href}
+                    className="group block"
                     onMouseEnter={() => setHoveredItem(index)}
                     onMouseLeave={() => setHoveredItem(null)}
-                    className={className}
-                    style={{ transitionDelay: `${index * 100}ms` }}
                   >
                     {content}
                   </a>
                 );
               })}
             </div>
-
-            {/* Prototypes & Assets Section */}
-            <div className="mt-12 space-y-4">
-              {/* Prototypes Button */}
-              <div 
-                className="relative"
-                onMouseEnter={() => setActiveSection('prototypes')}
-                onMouseLeave={() => setActiveSection(null)}
-              >
-                <div className={`
-                  p-6 border-2 transition-all duration-300 cursor-pointer
-                  ${activeSection === 'prototypes' 
-                    ? 'border-white bg-white/5' 
-                    : 'border-[#4a4a4a] hover:border-white'
-                  }
-                `}>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <span className="font-mono text-[10px] text-[#2D8F6F]">05</span>
-                      <h3 className="font-mono text-lg font-bold uppercase tracking-wider">Prototypes</h3>
-                      <span className="font-mono text-xs text-[#8a8a8a] ml-4">Explore brand directions</span>
-                    </div>
-                    <ArrowRight className={`w-5 h-5 transition-all duration-300 ${activeSection === 'prototypes' ? 'translate-x-2 text-[#2D8F6F]' : 'text-[#4a4a4a]'}`} />
-                  </div>
-                </div>
-                
-                {/* Prototypes Sub-buttons */}
-                <div className={`
-                  grid grid-cols-3 gap-2 mt-2 overflow-hidden transition-all duration-300
-                  ${activeSection === 'prototypes' ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}
-                `}>
-                  <a
-                    href="https://classic-eta.vercel.app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-4 border-2 border-[#4a4a4a] hover:border-white hover:bg-[#bcd1ca] transition-all duration-300 group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-sm font-bold uppercase">Classic</span>
-                      <ArrowRight className="w-4 h-4 text-[#4a4a4a] group-hover:text-[#2D8F6F] group-hover:translate-x-1 transition-all" />
-                    </div>
-                    <p className="font-mono text-[10px] text-[#8a8a8a] mt-1">Georgia serif</p>
-                  </a>
-                  <a
-                    href="https://swiss-chi.vercel.app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-4 border-2 border-[#4a4a4a] hover:border-white hover:bg-[#cbcadb] transition-all duration-300 group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-sm font-bold uppercase">Swiss</span>
-                      <ArrowRight className="w-4 h-4 text-[#4a4a4a] group-hover:text-[#3B7DD8] group-hover:translate-x-1 transition-all" />
-                    </div>
-                    <p className="font-mono text-[10px] text-[#8a8a8a] mt-1">Helvetica</p>
-                  </a>
-                  <a
-                    href="https://bounce-sand-gamma.vercel.app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-4 border-2 border-[#4a4a4a] hover:border-white hover:bg-[#e2dacb] transition-all duration-300 group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-sm font-bold uppercase">Bounce</span>
-                      <ArrowRight className="w-4 h-4 text-[#4a4a4a] group-hover:text-[#4AA89D] group-hover:translate-x-1 transition-all" />
-                    </div>
-                    <p className="font-mono text-[10px] text-[#8a8a8a] mt-1">Rounded Sans</p>
-                  </a>
-                </div>
-              </div>
-
-              {/* Assets Button */}
-              <div 
-                className="relative"
-                onMouseEnter={() => setActiveSection('assets')}
-                onMouseLeave={() => setActiveSection(null)}
-              >
-                <div className={`
-                  p-6 border-2 transition-all duration-300 cursor-pointer
-                  ${activeSection === 'assets' 
-                    ? 'border-white bg-white/5' 
-                    : 'border-[#4a4a4a] hover:border-white'
-                  }
-                `}>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <span className="font-mono text-[10px] text-[#2D8F6F]">06</span>
-                      <h3 className="font-mono text-lg font-bold uppercase tracking-wider">Assets</h3>
-                      <span className="font-mono text-xs text-[#8a8a8a] ml-4">Brand system components</span>
-                    </div>
-                    <ArrowRight className={`w-5 h-5 transition-all duration-300 ${activeSection === 'assets' ? 'translate-x-2 text-[#2D8F6F]' : 'text-[#4a4a4a]'}`} />
-                  </div>
-                </div>
-                
-                {/* Assets Sub-buttons */}
-                <div className={`
-                  grid grid-cols-5 gap-2 mt-2 overflow-hidden transition-all duration-300
-                  ${activeSection === 'assets' ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}
-                `}>
-                  <a
-                    href="#"
-                    onClick={(e) => { e.preventDefault(); alert('Coming Soon'); }}
-                    className="p-4 border-2 border-[#4a4a4a] hover:border-white hover:bg-white/5 transition-all duration-300 group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-sm font-bold uppercase">Video</span>
-                      <ArrowRight className="w-4 h-4 text-[#4a4a4a] group-hover:text-[#2D8F6F] group-hover:translate-x-1 transition-all" />
-                    </div>
-                    <p className="font-mono text-[10px] text-[#8a8a8a] mt-1">Motion assets</p>
-                  </a>
-                  <a
-                    href="#"
-                    onClick={(e) => { e.preventDefault(); alert('Coming Soon'); }}
-                    className="p-4 border-2 border-[#4a4a4a] hover:border-white hover:bg-white/5 transition-all duration-300 group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-sm font-bold uppercase">Photo</span>
-                      <ArrowRight className="w-4 h-4 text-[#4a4a4a] group-hover:text-[#2D8F6F] group-hover:translate-x-1 transition-all" />
-                    </div>
-                    <p className="font-mono text-[10px] text-[#8a8a8a] mt-1">Image library</p>
-                  </a>
-                  <a
-                    href="#"
-                    onClick={(e) => { e.preventDefault(); alert('Coming Soon'); }}
-                    className="p-4 border-2 border-[#4a4a4a] hover:border-white hover:bg-white/5 transition-all duration-300 group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-sm font-bold uppercase">Logo</span>
-                      <ArrowRight className="w-4 h-4 text-[#4a4a4a] group-hover:text-[#2D8F6F] group-hover:translate-x-1 transition-all" />
-                    </div>
-                    <p className="font-mono text-[10px] text-[#8a8a8a] mt-1">Marks & variants</p>
-                  </a>
-                  <a
-                    href="#"
-                    onClick={(e) => { e.preventDefault(); alert('Coming Soon'); }}
-                    className="p-4 border-2 border-[#4a4a4a] hover:border-white hover:bg-white/5 transition-all duration-300 group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-sm font-bold uppercase">Guidelines</span>
-                      <ArrowRight className="w-4 h-4 text-[#4a4a4a] group-hover:text-[#2D8F6F] group-hover:translate-x-1 transition-all" />
-                    </div>
-                    <p className="font-mono text-[10px] text-[#8a8a8a] mt-1">Brand standards</p>
-                  </a>
-                  <a
-                    href="#"
-                    onClick={(e) => { e.preventDefault(); alert('Coming Soon'); }}
-                    className="p-4 border-2 border-[#4a4a4a] hover:border-white hover:bg-white/5 transition-all duration-300 group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-sm font-bold uppercase">Templates</span>
-                      <ArrowRight className="w-4 h-4 text-[#4a4a4a] group-hover:text-[#2D8F6F] group-hover:translate-x-1 transition-all" />
-                    </div>
-                    <p className="font-mono text-[10px] text-[#8a8a8a] mt-1">Presentation kits</p>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="mt-16 text-center">
-              <p className="font-mono text-[10px] text-[#4a4a4a] uppercase tracking-widest">
-                Select a section to explore
-              </p>
-            </div>
           </div>
         </main>
 
-        {/* Bottom Bar */}
-        <footer className={`p-6 border-t border-[#4a4a4a] transition-all duration-1000 delay-700 ${mounted ? 'opacity-100' : 'opacity-0'}`}>
-          <div className="flex justify-between items-center">
-            <div className="font-mono text-[10px] text-[#4a4a4a]">
-              © 2026 Fosfeen
-            </div>
-            <div className="flex gap-4">
-              <span className="font-mono text-[10px] text-[#4a4a4a]">Bradenton, FL</span>
-              <span className="font-mono text-[10px] text-[#4a4a4a]">34209</span>
+        {/* Excavation Footer */}
+        <footer className={`border-t border-[#1a1a1a] transition-all duration-1000 delay-700 ${mounted ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="px-8 md:px-12 lg:px-24 py-6">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <div className="flex items-center gap-6">
+                <span className="font-mono text-[10px] text-[#4a4a4a] uppercase tracking-wider">Excavation</span>
+                <div className="flex items-center gap-4 font-mono text-[10px] text-[#6a6a6a]">
+                  <span>{totalExcavation.simulations} simulations</span>
+                  <span className="text-[#2a2a2a]">|</span>
+                  <span>{totalExcavation.pages} pages</span>
+                  <span className="text-[#2a2a2a]">|</span>
+                  <span>{totalExcavation.sources} sources</span>
+                  <span className="text-[#2a2a2a]">|</span>
+                  <span>{totalExcavation.iterations} iterations</span>
+                </div>
+              </div>
+              <div className="font-mono text-[10px] text-[#4a4a4a]">
+                © 2026 Fosfeen — Bradenton, FL
+              </div>
             </div>
           </div>
         </footer>
