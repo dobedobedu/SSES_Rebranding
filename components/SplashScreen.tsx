@@ -157,32 +157,28 @@ export const SplashScreen: React.FC = () => {
 
       <div className="relative z-10 flex flex-col min-h-screen">
         {/* Header */}
-        <header className={`p-8 md:p-12 transition-all duration-1000 delay-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-          <div className="flex items-center gap-3">
-            <div>
-              <h1 className="font-mono text-sm uppercase tracking-widest">Saint Stephen's Episcopal School</h1>
-              <p className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-wider">A Strategic Rebranding</p>
-            </div>
-          </div>
+        <header className={`pt-12 pb-8 px-8 md:px-16 lg:px-24 transition-all duration-1000 delay-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
+          <h1 className="font-mono text-xs uppercase tracking-[0.2em] text-[#6a6a6a]">Saint Stephen's Episcopal School</h1>
+          <p className="font-mono text-[10px] text-[#4a4a4a] uppercase tracking-[0.15em] mt-1">Strategic Rebranding</p>
         </header>
 
         {/* Main Content */}
         <main className="flex-1 flex flex-col justify-center px-8 md:px-12 lg:px-24">
           <div className={`max-w-3xl transition-all duration-1000 delay-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             
-            {/* Hero Question with scramble effect - fixed height to prevent layout shift */}
-            <div className="mb-8">
-              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-normal mb-4 tracking-tight leading-tight h-[4rem] md:h-[5rem] lg:h-[5.5rem] flex items-center">
+            {/* Hero Question */}
+            <div className="mb-12">
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-normal tracking-tight leading-tight h-[4rem] md:h-[5rem] lg:h-[5.5rem] flex items-center">
                 "<ScrambleText text={heroText} speed={15} />"
               </h2>
-              <p className="font-mono text-sm text-[#8a8a8a] max-w-xl">
-                In 6 months, we excavated the answers.
+              <p className="font-mono text-xs text-[#5a5a5a] mt-6 max-w-md leading-relaxed">
+                Rooted in five decades. Designed for the next fifty.
               </p>
             </div>
 
             {/* Divider */}
-            <div className="mb-8">
-              <div className="w-full h-[1px] bg-[#2a2a2a]" />
+            <div className="mb-10">
+              <div className="w-full h-[1px] bg-[#1a1a1a]" />
             </div>
 
             {/* Discovery Chapters */}
@@ -193,11 +189,11 @@ export const SplashScreen: React.FC = () => {
                 
                 const content = (
                   <>
-                    <div className="flex items-start justify-between py-4 border-b border-[#1a1a1a] group-hover:border-[#2a2a2a] transition-colors">
+                    <div className="flex items-start justify-between py-5 border-b border-[#1a1a1a] group-hover:border-[#252525] transition-colors">
                       <div className="flex-1">
-                        <div className="flex items-center gap-4">
-                          <span className="font-mono text-[10px] text-[#4a4a4a] w-6">{chapter.number}</span>
-                          <h3 className="font-serif text-lg md:text-xl text-white group-hover:text-[#2D8F6F] transition-colors">
+                        <div className="flex items-center gap-5">
+                          <span className="font-mono text-[10px] text-[#3a3a3a] w-6">{chapter.number}</span>
+                          <h3 className="font-serif text-xl md:text-2xl text-white group-hover:text-[#2D8F6F] transition-colors">
                             {chapter.title}
                           </h3>
                         </div>
@@ -221,7 +217,7 @@ export const SplashScreen: React.FC = () => {
                   return (
                     <div
                       key={chapter.number}
-                      className="group cursor-default opacity-40"
+                      className="group cursor-default opacity-30"
                       onMouseEnter={() => setHoveredItem(index)}
                       onMouseLeave={() => setHoveredItem(null)}
                     >
@@ -282,24 +278,22 @@ export const SplashScreen: React.FC = () => {
           </div>
         </main>
 
-        {/* Excavation Footer */}
-        <footer className={`border-t border-[#1a1a1a] transition-all duration-1000 delay-700 ${mounted ? 'opacity-100' : 'opacity-0'}`}>
-          <div className="px-8 md:px-12 lg:px-24 py-5">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
-              <div className="flex items-center gap-5">
-                <span className="font-mono text-[9px] text-[#3a3a3a] uppercase tracking-wider">6 months</span>
-                <div className="flex items-center gap-3 font-mono text-[10px] text-[#5a5a5a]">
+        {/* Footer */}
+        <footer className={`border-t border-[#0f0f0f] transition-all duration-1000 delay-700 ${mounted ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="px-8 md:px-16 lg:px-24 py-8">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <div className="flex items-center gap-6">
+                <span className="font-mono text-[9px] text-[#2a2a2a] uppercase tracking-wider">2026</span>
+                <div className="flex items-center gap-4 font-mono text-[10px] text-[#3a3a3a]">
                   <span>{totalExcavation.simulations} simulations</span>
-                  <span className="text-[#2a2a2a]">·</span>
+                  <span className="text-[#1a1a1a]">·</span>
                   <span>{totalExcavation.pages} pages</span>
-                  <span className="text-[#2a2a2a]">·</span>
+                  <span className="text-[#1a1a1a]">·</span>
                   <span>{totalExcavation.sources} sources</span>
-                  <span className="text-[#2a2a2a]">·</span>
-                  <span>{totalExcavation.iterations} iterations</span>
                 </div>
               </div>
-              <div className="font-mono text-[9px] text-[#3a3a3a]">
-                Fosfeen · Bradenton, FL · 2026
+              <div className="font-mono text-[9px] text-[#2a2a2a] tracking-wide">
+                Fosfeen · Bradenton, FL
               </div>
             </div>
           </div>
