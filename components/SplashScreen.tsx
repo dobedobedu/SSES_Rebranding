@@ -67,7 +67,7 @@ const PROTOTYPES = [
   { name: 'Bounce', href: 'https://bounce-sand-gamma.vercel.app', description: 'Rounded Sans' },
 ];
 
-const DEFAULT_HERO = 'How might we meet the next generation of Falcons where they are?';
+const DEFAULT_HERO = 'Are we ready for the next generation of Falcons?';
 
 // Fast scramble effect
 const ScrambleText: React.FC<{ text: string; speed?: number }> = ({ text, speed = 20 }) => {
@@ -172,8 +172,8 @@ export const SplashScreen: React.FC = () => {
           <div className={`max-w-3xl transition-all duration-1000 delay-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             
             {/* Hero Question with scramble effect - fixed height to prevent layout shift */}
-            <div className="mb-8 min-h-[120px] md:min-h-[140px] lg:min-h-[160px]">
-              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-normal mb-4 tracking-tight leading-tight">
+            <div className="mb-8">
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-normal mb-4 tracking-tight leading-tight h-[4rem] md:h-[5rem] lg:h-[5.5rem] flex items-center">
                 "<ScrambleText text={heroText} speed={15} />"
               </h2>
               <p className="font-mono text-sm text-[#8a8a8a] max-w-xl">
