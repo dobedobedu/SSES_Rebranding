@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, Search } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface DiscoveryChapter {
   number: string;
@@ -159,7 +159,6 @@ export const SplashScreen: React.FC = () => {
         {/* Header */}
         <header className={`p-8 md:p-12 transition-all duration-1000 delay-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
           <div className="flex items-center gap-3">
-            <Search className="w-4 h-4 text-[#2D8F6F]" />
             <div>
               <h1 className="font-mono text-sm uppercase tracking-widest">Saint Stephen's Episcopal School</h1>
               <p className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-wider">A Strategic Rebranding</p>
