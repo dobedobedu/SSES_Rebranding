@@ -13,8 +13,6 @@ const App: React.FC = () => {
   });
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [selectedTactics, setSelectedTactics] = useState<Set<string>>(new Set());
-  const [isTouchPointModalOpen, setIsTouchPointModalOpen] = useState(false);
-  const [selectedPersonaForTouchPoints, setSelectedPersonaForTouchPoints] = useState<Persona | null>(null);
 
   // User-selectable priority segments
   const [prioritySegments, setPrioritySegments] = useState<string[]>(DEFAULT_PRIORITIES);
@@ -50,16 +48,6 @@ const App: React.FC = () => {
 
     setActiveCell(prev => ({ ...prev, colIndex: newColIndex }));
   }, [activeCell]);
-
-  const handleOpenTouchPointModal = useCallback((persona: Persona) => {
-    setSelectedPersonaForTouchPoints(persona);
-    setIsTouchPointModalOpen(true);
-  }, []);
-
-  const handleCloseTouchPointModal = useCallback(() => {
-    setIsTouchPointModalOpen(false);
-    setTimeout(() => setSelectedPersonaForTouchPoints(null), 300);
-  }, []);
 
   const handleSegmentClick = useCallback((segment: PrioritySegmentType) => {
     if (!segment) return;
@@ -158,7 +146,6 @@ const App: React.FC = () => {
           onSelectCell={handleSelectCell}
           activeCell={activeCell}
           isPanelOpen={isPanelOpen}
-          onOpenTouchPointModal={handleOpenTouchPointModal}
         />
       </main>
 
@@ -172,16 +159,6 @@ const App: React.FC = () => {
           onToggleTactic={handleToggleTactic}
           onClose={handleClosePanel}
           onNavigate={handleNavigate}
-          onOpenTouchPointModal={handleOpenTouchPointModal}
-        />
-      )}
-
-      {/* Touch Point Modal */}
-      {selectedPersonaForTouchPoints && (
-        <TouchPointModal
-          persona={selectedPersonaForTouchPoints}
-          isOpen={isTouchPointModalOpen}
-          onClose={handleCloseTouchPointModal}
         />
       )}
 

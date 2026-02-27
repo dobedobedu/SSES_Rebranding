@@ -16,7 +16,6 @@ const MatrixGrid: React.FC<MatrixGridProps> = ({
   onSelectCell,
   activeCell,
   isPanelOpen,
-  onOpenTouchPointModal
 }) => {
   const [quickViewSegment, setQuickViewSegment] = useState<{ personaId: string | null; colIndex: number | null }>({ personaId: null, colIndex: null });
   const [quickViewPosition, setQuickViewPosition] = useState({ x: 0, y: 0 });
@@ -107,11 +106,7 @@ const MatrixGrid: React.FC<MatrixGridProps> = ({
                   const isOtherActive = isPanelOpen && !isActive;
 
                   const handleClick = () => {
-                    if (colIdx === 0 && p.touchPoints) {
-                      onOpenTouchPointModal(p);
-                    } else {
-                      onSelectCell(p, colIdx);
-                    }
+                    onSelectCell(p, colIdx);
                   };
 
                   return (
@@ -173,56 +168,35 @@ const CellContent: React.FC<{
   switch (colIndex) {
     case 0:
       return (
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <Route className="w-4 h-4" style={{ color: accentColor }} />
-            <span className={`font-mono text-[10px] font-bold uppercase tracking-wider ${textColor}`}>
-              Journey Map
-            </span>
-          </div>
-          <span className={`font-mono text-[10px] ${mutedColor}`}>
-            {persona.touchPoints?.length || 0} touch points
+        <div className="flex flex-col items-center justify-center h-full text-center">
+          <span className={`font-mono text-3xl font-bold`} style={{ color: isActive ? 'white' : accentColor }}>
+            {persona.touchPoints?.length || 0}
+          </span>
+          <span className={`font-mono text-[9px] uppercase tracking-widest mt-1 ${isActive ? 'text-white/70' : 'text-[#8a8a8a]'}`}>
+            Touch Points
           </span>
         </div>
       );
     case 1:
       return (
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <MapPin className="w-4 h-4" style={{ color: accentColor }} />
-            <span className={`font-mono text-[10px] font-bold uppercase tracking-wider ${textColor}`}>
-              Location
-            </span>
-          </div>
-          <span className={`text-xs ${mutedColor} line-clamp-2`}>
+        <div className="flex flex-col justify-center h-full">
+          <span className={`text-sm font-medium line-clamp-3 ${textColor}`}>
             {persona.location.region}
           </span>
         </div>
       );
     case 2:
       return (
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <DollarSign className="w-4 h-4" style={{ color: accentColor }} />
-            <span className={`font-mono text-[10px] font-bold uppercase tracking-wider ${textColor}`}>
-              Budget
-            </span>
-          </div>
-          <span className={`text-xs ${mutedColor} line-clamp-2`}>
+        <div className="flex flex-col justify-center h-full">
+          <span className={`text-sm font-medium line-clamp-3 ${textColor}`}>
             {persona.spending.budgetRange}
           </span>
         </div>
       );
     case 3:
       return (
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <Trophy className="w-4 h-4" style={{ color: accentColor }} />
-            <span className={`font-mono text-[10px] font-bold uppercase tracking-wider ${textColor}`}>
-              Competition
-            </span>
-          </div>
-          <span className={`text-xs ${mutedColor} line-clamp-2`}>
+        <div className="flex flex-col justify-center h-full gap-1">
+          <span className={`text-sm font-medium line-clamp-2 ${textColor}`}>
             vs. {persona.competition.schools[0]?.name || 'N/A'}
           </span>
           <span className={`font-mono text-[10px] ${mutedColor}`}>
@@ -232,18 +206,9 @@ const CellContent: React.FC<{
       );
     case 4:
       return (
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <Zap className="w-4 h-4" style={{ color: accentColor }} />
-            <span className={`font-mono text-[10px] font-bold uppercase tracking-wider ${textColor}`}>
-              Strategy
-            </span>
-          </div>
-          <span className={`text-xs font-medium line-clamp-2`} style={{ color: accentColor }}>
-            High Value
-          </span>
-          <span className={`font-mono text-[10px] ${mutedColor}`}>
-            {persona.touchPoints?.length || 0} touch points
+        <div className="flex flex-col justify-center h-full">
+          <span className={`text-sm font-bold uppercase tracking-wider line-clamp-2`} style={{ color: isActive ? 'white' : accentColor }}>
+            High Value Strategy
           </span>
         </div>
       );
