@@ -18,18 +18,16 @@ const MatrixGrid: React.FC<MatrixGridProps> = ({
   isPanelOpen,
   onOpenTouchPointModal
 }) => {
-  const [quickViewSegment, setQuickViewSegment] = useState<PrioritySegmentType>(null);
+  const [quickViewSegment, setQuickViewSegment] = useState<{ personaId: string | null; colIndex: number | null }>({ personaId: null, colIndex: null });
   const [quickViewPosition, setQuickViewPosition] = useState({ x: 0, y: 0 });
 
-  const handleMouseEnter = (persona: Persona, e: React.MouseEvent) => {
-    if (persona.priorityType) {
-      setQuickViewSegment(persona.priorityType);
-      setQuickViewPosition({ x: e.clientX, y: e.clientY });
-    }
+  const handleMouseEnter = (persona: Persona, colIndex: number, e: React.MouseEvent) => {
+    setQuickViewSegment({ personaId: persona.id, colIndex });
+    setQuickViewPosition({ x: e.clientX, y: e.clientY });
   };
 
   const handleMouseLeave = () => {
-    setQuickViewSegment(null);
+    setQuickViewSegment({ personaId: null, colIndex: null });
   };
 
   const getPriorityColor = (priorityType: PrioritySegmentType) => {
@@ -78,8 +76,6 @@ const MatrixGrid: React.FC<MatrixGridProps> = ({
             <div
               key={p.id}
               className="border-b border-[#0a0a0a] last:border-b-0"
-              onMouseEnter={(e) => handleMouseEnter(p, e)}
-              onMouseLeave={handleMouseLeave}
             >
               {/* Persona Header Row */}
               <div
@@ -107,6 +103,7 @@ const MatrixGrid: React.FC<MatrixGridProps> = ({
               <div className="grid grid-cols-5">
                 {[0, 1, 2, 3, 4].map((colIdx) => {
                   const isActive = activeCell.personaId === p.id && activeCell.colIndex === colIdx;
+                  const isHovered = quickViewSegment.personaId === p.id && quickViewSegment.colIndex === colIdx;
                   const isOtherActive = isPanelOpen && !isActive;
 
                   const handleClick = () => {
@@ -121,11 +118,14 @@ const MatrixGrid: React.FC<MatrixGridProps> = ({
                     <div
                       key={colIdx}
                       onClick={handleClick}
+                      onMouseEnter={(e) => handleMouseEnter(p, colIdx, e)}
+                      onMouseLeave={handleMouseLeave}
                       className={`
                         p-4 min-h-[80px] flex flex-col justify-center cursor-pointer
-                        border-r border-[#e5e5e0] last:border-r-0
+                        border-r border-[#e5e5e0] last:border-r-0 relative
                         transition-all duration-150
                         ${isActive ? 'bg-[#0a0a0a] text-white' : 'bg-white hover:bg-[#f5f5f0]'}
+                        ${isHovered && !isActive ? 'shadow-[inset_0_0_0_2px_#2D8F6F] z-10' : ''}
                         ${isOtherActive ? 'opacity-30' : 'opacity-100'}
                       `}
                     >
@@ -152,8 +152,8 @@ const MatrixGrid: React.FC<MatrixGridProps> = ({
 
       {/* Quick View Overlay */}
       <SegmentQuickView
-        segmentType={quickViewSegment}
-        isVisible={quickViewSegment !== null}
+        segmentData={quickViewSegment}
+        isVisible={quickViewSegment.personaId !== null}
         position={quickViewPosition}
       />
     </div>

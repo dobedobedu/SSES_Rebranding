@@ -428,46 +428,48 @@ const DetailPanel: React.FC<DetailPanelProps> = ({
     <>
       {/* Backdrop */}
       {isOpen && (
-        <div className="fixed inset-0 bg-[#0a0a0a]/80 z-40 transition-opacity" onClick={onClose} />
+        <div className="fixed inset-0 bg-[#0a0a0a]/80 z-40 transition-opacity backdrop-blur-sm" onClick={onClose} />
       )}
 
       {/* Panel */}
       <div
-        className={`fixed bottom-0 left-0 right-0 z-50 bg-[#fafafa] transition-transform duration-300 ease-in-out border-t-2 border-[#0a0a0a] h-[80vh] overflow-hidden flex flex-col ${
-          isOpen ? 'translate-y-0' : 'translate-y-full'
-        }`}
+        className={`fixed bottom-0 md:bottom-8 left-1/2 w-full max-w-[96vw] xl:max-w-7xl z-50 bg-[#fafafa] transition-all duration-300 ease-in-out border-2 border-[#0a0a0a] border-b-0 md:border-b-2 h-[85vh] md:h-[80vh] flex flex-col`}
+        style={{
+          transform: isOpen ? 'translate(-50%, 0)' : 'translate(-50%, 120%)',
+          boxShadow: '8px 8px 0 #0a0a0a'
+        }}
       >
         {/* Navigation Arrows - Middle Y Position */}
         <button
           onClick={(e) => { e.stopPropagation(); onNavigate('left'); }}
           disabled={colIndex === MatrixColumn.SEGMENT}
-          className={`absolute left-4 top-1/2 -translate-y-1/2 p-4 border-2 z-[60] transition-all ${
+          className={`absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-4 border-2 z-[60] transition-all ${
             colIndex === MatrixColumn.SEGMENT
-              ? 'border-[#e5e5e0] opacity-30 cursor-not-allowed'
-              : 'bg-[#0a0a0a] border-[#0a0a0a] hover:bg-[#2D8F6F] hover:border-[#2D8F6F]'
+              ? 'border-[#e5e5e0] opacity-30 cursor-not-allowed bg-white'
+              : 'bg-white border-[#0a0a0a] hover:bg-[#2D8F6F] hover:border-[#2D8F6F] shadow-[4px_4px_0_#0a0a0a]'
           }`}
           aria-label="Previous Column"
         >
-          <ChevronLeft className={`w-6 h-6 ${colIndex === MatrixColumn.SEGMENT ? 'text-[#e5e5e0]' : 'text-white group-hover:text-white'}`} />
+          <ChevronLeft className={`w-6 h-6 ${colIndex === MatrixColumn.SEGMENT ? 'text-[#8a8a8a]' : 'text-[#0a0a0a] group-hover:text-white'}`} />
         </button>
         <button
           onClick={(e) => { e.stopPropagation(); onNavigate('right'); }}
           disabled={colIndex === MatrixColumn.STRATEGY}
-          className={`absolute right-4 top-1/2 -translate-y-1/2 p-4 border-2 z-[60] transition-all ${
+          className={`absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-4 border-2 z-[60] transition-all ${
             colIndex === MatrixColumn.STRATEGY
-              ? 'border-[#e5e5e0] opacity-30 cursor-not-allowed'
-              : 'bg-[#0a0a0a] border-[#0a0a0a] hover:bg-[#2D8F6F] hover:border-[#2D8F6F]'
+              ? 'border-[#e5e5e0] opacity-30 cursor-not-allowed bg-white'
+              : 'bg-white border-[#0a0a0a] hover:bg-[#2D8F6F] hover:border-[#2D8F6F] shadow-[4px_4px_0_#0a0a0a]'
           }`}
           aria-label="Next Column"
         >
-          <ChevronRight className={`w-6 h-6 ${colIndex === MatrixColumn.STRATEGY ? 'text-[#e5e5e0]' : 'text-white group-hover:text-white'}`} />
+          <ChevronRight className={`w-6 h-6 ${colIndex === MatrixColumn.STRATEGY ? 'text-[#8a8a8a]' : 'text-[#0a0a0a] group-hover:text-white'}`} />
         </button>
 
         {/* Header with Horizontal Tab Navigation */}
-        <div className="px-6 py-3 border-b-2 border-[#0a0a0a] bg-[#0a0a0a]">
+        <div className="px-6 md:px-10 py-5 border-b-2 border-[#0a0a0a] bg-[#0a0a0a]">
           {/* Tab Navigation Row */}
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-1">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar">
               {[
                 { key: MatrixColumn.SEGMENT, label: persona.name },
                 { key: MatrixColumn.LOCATION, label: 'Location' },
@@ -482,20 +484,20 @@ const DetailPanel: React.FC<DetailPanelProps> = ({
                         onNavigate(tab.key > colIndex ? 'right' : 'left');
                       }
                     }}
-                    className={`px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider border transition-all ${
+                    className={`px-5 py-2.5 font-mono text-xs uppercase tracking-wider border-2 transition-all whitespace-nowrap ${
                       colIndex === tab.key
-                        ? 'border-[#2D8F6F] bg-[#2D8F6F] text-white'
-                        : 'border-[#4a4a4a] text-[#8a8a8a] hover:border-[#2D8F6F] hover:text-[#2D8F6F]'
+                        ? 'border-[#2D8F6F] bg-[#2D8F6F] text-white shadow-[4px_4px_0_#fff]'
+                        : 'border-transparent text-[#8a8a8a] hover:text-white'
                     }`}
                   >
                     {tab.label}
                   </button>
-                  {idx < 4 && <span className="text-[#4a4a4a] mx-1">|</span>}
+                  {idx < 4 && <span className="text-[#4a4a4a] mx-2 hidden md:inline">|</span>}
                 </React.Fragment>
               ))}
             </div>
-            <button onClick={onClose} className="p-2 border-2 border-white hover:bg-white hover:text-[#0a0a0a] transition-all">
-              <X className="w-5 h-5" />
+            <button onClick={onClose} className="p-2 border-2 border-transparent hover:border-[#4a4a4a] text-white transition-all ml-4 shrink-0">
+              <X className="w-6 h-6" />
             </button>
           </div>
         </div>
