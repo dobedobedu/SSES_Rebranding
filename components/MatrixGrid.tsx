@@ -52,8 +52,8 @@ const MatrixGrid: React.FC<MatrixGridProps> = ({
       {/* Section Header */}
       <div className="flex items-center gap-3 mb-4">
         <div className="w-1 h-6 bg-[#0a0a0a]" />
-        <h2 className="font-mono text-sm font-bold uppercase tracking-wider">SEGMENT MATRIX</h2>
-        <span className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest ml-auto">
+        <h2 className="te-heading">SEGMENT MATRIX</h2>
+        <span className="te-label ml-auto">
           {personas.length} SEGMENTS
         </span>
       </div>
@@ -81,18 +81,18 @@ const MatrixGrid: React.FC<MatrixGridProps> = ({
                 className="flex items-center gap-3 px-4 py-2 bg-[#f0f0eb] border-b border-[#e5e5e0]"
                 style={p.priorityType ? { borderLeft: `4px solid ${priorityColor}` } : {}}
               >
-                <span className="font-mono text-[10px] text-[#8a8a8a]">[{String(personaIndex + 1).padStart(2, '0')}]</span>
-                <span className="font-bold text-sm uppercase tracking-wide">{p.name}</span>
+                <span className="te-micro te-muted">[{String(personaIndex + 1).padStart(2, '0')}]</span>
+                <span className="te-body-bold uppercase">{p.name}</span>
                 {priorityLabel && (
                   <span
-                    className="font-mono text-[10px] font-bold px-2 py-0.5 text-white"
+                    className="te-micro px-2 py-0.5 text-white"
                     style={{ backgroundColor: priorityColor }}
                   >
                     {priorityLabel}
                   </span>
                 )}
                 {p.touchPoints && (
-                  <span className="font-mono text-[10px] text-[#8a8a8a] ml-auto">
+                  <span className="te-micro te-muted ml-auto">
                     {p.touchPoints.length} TOUCH POINTS
                   </span>
                 )}
@@ -191,10 +191,10 @@ const CellContent: React.FC<{
     case 0:
       return (
         <div className="flex flex-col items-center justify-center h-full text-center">
-          <span className={`font-mono text-3xl font-bold`} style={{ color: isActive ? 'white' : accentColor }}>
+          <span className="te-display" style={{ color: isActive ? 'white' : accentColor }}>
             {persona.touchPoints?.length || 0}
           </span>
-          <span className={`font-mono text-[9px] uppercase tracking-widest mt-1 ${isActive ? 'text-white/70' : 'text-[#8a8a8a]'}`}>
+          <span className={`te-micro mt-1 ${isActive ? 'text-white/70' : 'te-muted'}`}>
             Touch Points
           </span>
         </div>
@@ -202,7 +202,7 @@ const CellContent: React.FC<{
     case 1:
       return (
         <div className="flex flex-col justify-center h-full">
-          <span className={`text-sm font-medium line-clamp-3 ${textColor}`}>
+          <span className={`te-body ${textColor}`}>
             {persona.location.region}
           </span>
         </div>
@@ -210,7 +210,7 @@ const CellContent: React.FC<{
     case 2:
       return (
         <div className="flex flex-col justify-center h-full">
-          <span className={`text-sm font-bold uppercase tracking-tight ${textColor}`}>
+          <span className={`te-body-bold uppercase ${textColor}`}>
             {getBudgetValue(persona.id)}
           </span>
         </div>
@@ -218,10 +218,10 @@ const CellContent: React.FC<{
     case 3:
       return (
         <div className="flex flex-col justify-center h-full gap-1">
-          <span className={`text-sm font-medium line-clamp-2 ${textColor}`}>
+          <span className={`te-body ${textColor}`}>
             vs. {persona.competition.schools[0]?.name || 'N/A'}
           </span>
-          <span className={`font-mono text-[10px] ${mutedColor}`}>
+          <span className={`te-micro ${mutedColor}`}>
             {persona.competition.schools.length} competitors
           </span>
         </div>
@@ -229,7 +229,7 @@ const CellContent: React.FC<{
     case 4:
       return (
         <div className="flex flex-col justify-center h-full">
-          <span className={`text-sm font-bold uppercase tracking-tight leading-snug`} style={{ color: isActive ? 'white' : accentColor }}>
+          <span className={`te-body-bold uppercase`} style={{ color: isActive ? 'white' : accentColor }}>
             {getAlignmentValue(persona.id)}
           </span>
         </div>

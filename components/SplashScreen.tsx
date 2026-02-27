@@ -47,7 +47,7 @@ const DISCOVERY_CHAPTERS: DiscoveryChapter[] = [
     number: '05',
     title: 'How might we reach them?',
     href: '#prototypes',
-    excavation: '3 prototypes • 15+ iterations',
+    excavation: '1 design study • 3 prototypes • 15+ iterations',
     heroText: '3 prototypes, 15 iterations',
     status: 'active',
   },
@@ -238,7 +238,30 @@ export const SplashScreen: React.FC = () => {
                       {content}
                       
                       {/* Prototypes expansion */}
-                      <div className={`overflow-hidden transition-all duration-500 ${expandPrototypes ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'}`}>
+                      <div className={`overflow-hidden transition-all duration-500 ${expandPrototypes ? 'max-h-72 opacity-100' : 'max-h-0 opacity-0'}`}>
+                        {/* Look & Feel Research — full-width featured link */}
+                        <a
+                          href="https://k12-research-report-design-exploration-98v2yshz4.vercel.app"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block mx-10 mt-4 mb-3 p-4 border border-[#2D8F6F] hover:bg-[#2D8F6F]/10 transition-all group/research"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <span className="font-mono text-[9px] font-bold uppercase tracking-wider text-[#2D8F6F] px-1.5 py-0.5 border border-[#2D8F6F]">
+                                RESEARCH
+                              </span>
+                              <span className="font-mono text-sm font-bold uppercase tracking-wide text-white">
+                                Look & Feel Study
+                              </span>
+                            </div>
+                            <ArrowRight className="w-4 h-4 text-[#2D8F6F] group-hover/research:translate-x-1 transition-transform" />
+                          </div>
+                          <p className="font-mono text-[10px] text-[#5a5a5a] mt-2 ml-[4.5rem]">
+                            Interactive moodboard, design directions & implementation roadmap
+                          </p>
+                        </a>
                         <div className="grid grid-cols-3 gap-3 py-4 ml-10">
                           {PROTOTYPES.map((proto) => (
                             <a

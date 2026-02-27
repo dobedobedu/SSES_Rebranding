@@ -160,8 +160,8 @@ SOURCE CITATIONS
           <div className="flex items-center gap-3">
             <div className="w-1 h-8 bg-[#2D8F6F]" />
             <div>
-              <h2 className="font-mono text-sm font-bold uppercase tracking-wider">EXECUTIVE SUMMARY</h2>
-              <p className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest">Select priority segments below</p>
+              <h2 className="te-heading">EXECUTIVE SUMMARY</h2>
+              <p className="te-label">Select priority segments below</p>
             </div>
           </div>
 
@@ -169,14 +169,14 @@ SOURCE CITATIONS
           <div className="flex items-center gap-2">
             <button
               onClick={handlePrint}
-              className="flex items-center gap-2 px-3 py-2 bg-[#0a0a0a] text-white border-2 border-[#0a0a0a] font-mono text-[10px] uppercase tracking-wider hover:bg-white hover:text-[#0a0a0a] transition-all"
+              className="flex items-center gap-2 px-3 py-2 bg-[#0a0a0a] text-white border-2 border-[#0a0a0a] te-heading hover:bg-white hover:text-[#0a0a0a] transition-all"
             >
               <Printer className="w-3 h-3" />
               <span className="hidden sm:inline">Print</span>
             </button>
             <button
               onClick={handleExport}
-              className="flex items-center gap-2 px-3 py-2 bg-[#2D8F6F] text-white border-2 border-[#2D8F6F] font-mono text-[10px] uppercase tracking-wider hover:bg-white hover:text-[#2D8F6F] hover:border-[#2D8F6F] transition-all"
+              className="flex items-center gap-2 px-3 py-2 bg-[#2D8F6F] text-white border-2 border-[#2D8F6F] te-heading hover:bg-white hover:text-[#2D8F6F] hover:border-[#2D8F6F] transition-all"
             >
               <Download className="w-3 h-3" />
               <span className="hidden sm:inline">Export</span>
@@ -195,11 +195,11 @@ SOURCE CITATIONS
               
               <div className="flex items-start justify-between mb-3">
                 <div className="flex flex-col gap-1">
-                  <span className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest">
+                  <span className="te-label">
                     {kpi.label}
                   </span>
                   {kpi.trend && (
-                    <span className="px-2 py-0.5 bg-[#e5e5e0] text-[#0a0a0a] text-[9px] font-mono font-bold uppercase w-fit">
+                    <span className="te-micro px-2 py-0.5 bg-[#e5e5e0] text-[#0a0a0a] w-fit">
                       {kpi.trend}
                     </span>
                   )}
@@ -210,10 +210,10 @@ SOURCE CITATIONS
               </div>
               
               <div className="flex items-baseline gap-2">
-                <div className="font-mono text-3xl md:text-4xl font-bold tracking-tight" style={{ color: kpi.color === 'amber' ? '#2D8F6F' : kpi.color === 'blue' ? '#0066ff' : '#00cc66' }}>
+                <div className="te-display-lg" style={{ color: kpi.color === 'amber' ? '#2D8F6F' : kpi.color === 'blue' ? '#0066ff' : '#00cc66' }}>
                   {kpi.value}
                 </div>
-                <div className="font-mono text-[10px] text-[#4a4a4a] uppercase tracking-wide">
+                <div className="te-label">
                   {kpi.unit}
                 </div>
               </div>
@@ -230,37 +230,37 @@ SOURCE CITATIONS
               <div className="mt-4 p-4 bg-[#f5f5f0] border-2 border-[#0a0a0a] border-t-0">
                 {kpi.breakdown && (
                   <>
-                    <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-3 border-b border-[#0a0a0a] pb-2">
+                    <div className="te-label mb-3 border-b border-[#0a0a0a] pb-2">
                       Calculation Breakdown
                     </div>
                     <div className="space-y-3">
                       {kpi.breakdown.map((item: any, i: number) => (
-                        <div key={i} className="flex items-start justify-between text-sm">
+                        <div key={i} className="flex items-start justify-between">
                           <div className="flex-1">
                             {item.url ? (
                               <a 
                                 href={item.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="font-bold text-[#0a0a0a] hover:text-[#0066ff] hover:underline cursor-pointer"
+                                className="te-body-bold text-[#0a0a0a] hover:text-[#0066ff] hover:underline cursor-pointer"
                               >
                                 {item.name} ↗
                               </a>
                             ) : (
-                              <div className="font-bold text-[#0a0a0a]">{item.name}</div>
+                              <div className="te-body-bold text-[#0a0a0a]">{item.name}</div>
                             )}
                             {item.sector && (
-                              <div className="font-mono text-[9px] text-[#8a8a8a]">{item.sector} | {item.distance}</div>
+                              <div className="te-micro te-muted">{item.sector} | {item.distance}</div>
                             )}
                             {item.detail && (
-                              <div className="font-mono text-[9px] text-[#8a8a8a]">{item.detail}</div>
+                              <div className="te-micro te-muted">{item.detail}</div>
                             )}
                             {item.investment && (
-                              <div className="font-mono text-[9px] text-[#8a8a8a]">{item.investment} • {item.jobs} • {item.timeline}</div>
+                              <div className="te-micro te-muted">{item.investment} • {item.jobs} • {item.timeline}</div>
                             )}
                           </div>
                           <div className="text-right">
-                            <div className="font-mono font-bold">{item.value || item.investment}</div>
+                            <div className="te-body-bold">{item.value || item.investment}</div>
                           </div>
                         </div>
                       ))}
@@ -272,35 +272,35 @@ SOURCE CITATIONS
                 {kpi.commuterBreakdown && kpi.commuterBreakdown.length > 0 && (
                   <>
                     <div className="my-4 border-t-2 border-[#0a0a0a] pt-3">
-                      <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-3">
+                      <div className="te-label mb-3">
                         Tampa Bay Commuter Opportunities
-                        <span className="block text-[8px] text-[#666] normal-case mt-1">20-50 miles from Bradenton - Remote/Hybrid Friendly</span>
+                        <span className="block te-micro mt-1 normal-case">20-50 miles from Bradenton - Remote/Hybrid Friendly</span>
                       </div>
                       <div className="space-y-3">
                         {kpi.commuterBreakdown.map((item: any, i: number) => (
-                          <div key={i} className="flex items-start justify-between text-sm">
+                          <div key={i} className="flex items-start justify-between">
                             <div className="flex-1">
                               {item.url ? (
                                 <a 
                                   href={item.url}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="font-bold text-[#0a0a0a] hover:text-[#0066ff] hover:underline cursor-pointer"
+                                  className="te-body-bold text-[#0a0a0a] hover:text-[#0066ff] hover:underline cursor-pointer"
                                 >
                                   {item.name} ↗
                                 </a>
                               ) : (
-                                <div className="font-bold text-[#0a0a0a]">{item.name}</div>
+                                <div className="te-body-bold text-[#0a0a0a]">{item.name}</div>
                               )}
                               {item.sector && (
-                                <div className="font-mono text-[9px] text-[#8a8a8a]">{item.sector} | {item.distance}</div>
+                                <div className="te-micro te-muted">{item.sector} | {item.distance}</div>
                               )}
                               {item.note && (
-                                <div className="font-mono text-[9px] text-[#8a8a8a]">{item.note}</div>
+                                <div className="te-micro te-muted">{item.note}</div>
                               )}
                             </div>
                             <div className="text-right">
-                              <div className="font-mono font-bold">{item.value}</div>
+                              <div className="te-body-bold">{item.value}</div>
                             </div>
                           </div>
                         ))}
@@ -309,12 +309,12 @@ SOURCE CITATIONS
                   </>
                 )}
                 
-                <div className="mt-4 pt-3 border-t border-[#0a0a0a] font-mono text-[9px] text-[#8a8a8a]">
+                <div className="mt-4 pt-3 border-t border-[#0a0a0a] te-micro te-muted">
                   Source: {kpi.source}
                 </div>
                 {kpi.isSankey && (
                   <div className="mt-4 pt-3 border-t border-[#0a0a0a]">
-                    <div className="font-mono text-[10px] text-[#8a8a8a] uppercase tracking-widest mb-3">
+                    <div className="te-label mb-3">
                       Student Flow Analysis
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -324,9 +324,9 @@ SOURCE CITATIONS
                         rel="noopener noreferrer"
                         className="block border-2 border-[#0a0a0a] p-4 bg-white hover:bg-[#f5f5f0] transition-colors"
                       >
-                        <div className="font-mono text-[10px] font-bold uppercase mb-2">Local Switcher Transfers</div>
-                        <div className="font-mono text-[9px] text-[#8a8a8a]">Click to view Sankey diagram</div>
-                        <div className="mt-2 text-[#2D8F6F] font-mono text-xs">Open in new tab →</div>
+                        <div className="te-heading mb-2">Local Switcher Transfers</div>
+                        <div className="te-micro te-muted">Click to view Sankey diagram</div>
+                        <div className="mt-2 text-[#2D8F6F] te-heading">Open in new tab →</div>
                       </a>
                       <a 
                         href={kpi.sankeySrc2} 
@@ -334,9 +334,9 @@ SOURCE CITATIONS
                         rel="noopener noreferrer"
                         className="block border-2 border-[#0a0a0a] p-4 bg-white hover:bg-[#f5f5f0] transition-colors"
                       >
-                        <div className="font-mono text-[10px] font-bold uppercase mb-2">K-8 Transitions</div>
-                        <div className="font-mono text-[9px] text-[#8a8a8a]">Click to view Sankey diagram</div>
-                        <div className="mt-2 text-[#2D8F6F] font-mono text-xs">Open in new tab →</div>
+                        <div className="te-heading mb-2">K-8 Transitions</div>
+                        <div className="te-micro te-muted">Click to view Sankey diagram</div>
+                        <div className="mt-2 text-[#2D8F6F] te-heading">Open in new tab →</div>
                       </a>
                     </div>
                   </div>
@@ -350,10 +350,10 @@ SOURCE CITATIONS
         {/* Priority Segment Selector */}
         <div className="border-2 border-[#0a0a0a] bg-white">
           <div className="border-b border-[#0a0a0a] px-4 py-2 bg-[#0a0a0a]">
-            <span className="font-mono text-[10px] text-white uppercase tracking-widest">
+            <span className="te-label text-white">
               Select Priority Segments (click to toggle)
             </span>
-            <span className="font-mono text-[10px] text-[#8a8a8a] ml-4">
+            <span className="te-micro text-[#8a8a8a] ml-4">
               {prioritySegments.length} selected
             </span>
           </div>
@@ -389,10 +389,10 @@ SOURCE CITATIONS
                       style={{ backgroundColor: segment.color }}
                     />
 
-                    <div className="font-mono text-[10px] font-bold uppercase tracking-wider mb-1">
+                    <div className="te-heading mb-1">
                       {segment.label}
                     </div>
-                    <div className="font-mono text-[9px] text-[#8a8a8a]">
+                    <div className="te-micro te-muted">
                       {segment.description}
                     </div>
 
@@ -407,16 +407,16 @@ SOURCE CITATIONS
                   </button>
                 );
               })}
-</div>
-      </div>
-    </div>
+            </div>
+          </div>
+        </div>
 
     {/* Voting Section */}
     <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
       <div>
         <div className="flex items-center gap-2 mb-4">
           <Vote className="w-4 h-4 text-[#2D8F6F]" />
-          <span className="font-mono text-xs font-bold uppercase tracking-wider">
+          <span className="te-heading">
             Stakeholder Voting
           </span>
         </div>
