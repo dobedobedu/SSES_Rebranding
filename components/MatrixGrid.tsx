@@ -165,6 +165,28 @@ const CellContent: React.FC<{
   const mutedColor = isActive ? 'text-[#8a8a8a]' : 'text-[#4a4a4a]';
   const accentColor = priorityColor || (isActive ? '#2D8F6F' : '#0a0a0a');
 
+  const getBudgetValue = (id: string) => {
+    switch (id) {
+      case 'corp': return '$250K - $600K+ income';
+      case 'life': return '$180K - $400K+ income';
+      case 'pivot': return '$120K - $300K+ income';
+      case 'bridge': return '$90K - $200K income';
+      case 'teen': return '$100K - $250K+ income';
+      default: return persona.spending.budgetRange;
+    }
+  };
+
+  const getAlignmentValue = (id: string) => {
+    switch (id) {
+      case 'corp': return 'Elite professional networks & Ivy legacy';
+      case 'life': return 'Innovative energy & real-world mentors';
+      case 'pivot': return 'Athletic excellence & recruitment visibility';
+      case 'bridge': return 'Deep local roots & stable multi-year enrollment';
+      case 'teen': return 'Authentic peer recruitment & social content';
+      default: return 'Core strategic contribution';
+    }
+  };
+
   switch (colIndex) {
     case 0:
       return (
@@ -188,8 +210,8 @@ const CellContent: React.FC<{
     case 2:
       return (
         <div className="flex flex-col justify-center h-full">
-          <span className={`text-sm font-medium line-clamp-3 ${textColor}`}>
-            {persona.spending.budgetRange}
+          <span className={`text-sm font-bold uppercase tracking-tight ${textColor}`}>
+            {getBudgetValue(persona.id)}
           </span>
         </div>
       );
@@ -207,8 +229,8 @@ const CellContent: React.FC<{
     case 4:
       return (
         <div className="flex flex-col justify-center h-full">
-          <span className={`text-sm font-bold uppercase tracking-wider line-clamp-2`} style={{ color: isActive ? 'white' : accentColor }}>
-            High Value Strategy
+          <span className={`text-sm font-bold uppercase tracking-tight leading-snug`} style={{ color: isActive ? 'white' : accentColor }}>
+            {getAlignmentValue(persona.id)}
           </span>
         </div>
       );

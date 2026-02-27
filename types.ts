@@ -199,9 +199,9 @@ export interface Persona {
 export const COLUMNS = [
   "Segment",
   "Current Location",
-  "Spending Pattern",
+  "Budget",
   "Competition",
-  "Strategic Value"
+  "Value Alignment"
 ];
 
 // Helper to create sourced values
